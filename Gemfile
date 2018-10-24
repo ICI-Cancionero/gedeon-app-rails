@@ -38,6 +38,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'devise'
 gem 'activeadmin'
+gem 'active_skin'
 gem 'versionist'
 gem 'active_model_serializers'
 

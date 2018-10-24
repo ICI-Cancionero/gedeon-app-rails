@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   root to: "admin/dashboard#index"
 
   api_version(module: 'api/v1', path: { value: 'api/v1' }, defaults: { format: :json }) do
-  	resources :songs, only: [:show, :index]
+    resources :songs, only: [:show, :index]
+    resources :playlists, only: [:show, :index]
   end
 end

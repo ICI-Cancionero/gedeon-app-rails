@@ -39,6 +39,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'devise'
 gem 'activeadmin'
 gem 'active_skin'
+gem 'activeadmin_addons'
 gem 'versionist'
 gem 'active_model_serializers'
 gem 'newrelic_rpm'

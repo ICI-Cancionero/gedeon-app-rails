@@ -1,5 +1,9 @@
 class Playlist < ApplicationRecord
-  has_and_belongs_to_many :songs
+  has_many :playlist_sections, dependent: :destroy
+  has_many :playlist_items, through: :playlist_sections
+  has_many :songs, through: :playlist_items
+
+  accepts_nested_attributes_for :playlist_sections, reject_if: :all_blank, allow_destroy: true
 
   def song_titles
     self.songs.pluck(:title)

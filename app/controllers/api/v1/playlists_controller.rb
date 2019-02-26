@@ -6,6 +6,6 @@ class Api::V1::PlaylistsController < ApplicationController
   end
 
   def index
-    render json: Playlist.all
+    render json: Playlist.all.includes(playlist_sections: [playlist_items: [:song]]), include: "playlist_sections,playlist_sections.playlist_items"
   end
 end

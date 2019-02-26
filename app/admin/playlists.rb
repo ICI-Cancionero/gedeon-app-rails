@@ -26,9 +26,27 @@ ActiveAdmin.register Playlist do
     f.inputs do
       f.input :name
       f.input :active
-      f.input :songs, as: :select, collection: Song.pluck(:title, :id)
+    end
+
+    f.inputs do
+      f.has_many :playlist_sections, heading: 'Secciones', allow_destroy: true do |ps|
+        ps.input :name
+        ps.has_many :playlist_items, heading: 'Canciones', allow_destroy: true do |pi|
+          pi.input :position
+          pi.input :song
+        end
+      end
     end
     f.actions
   end
+
+  permit_params :name,
+                :active,
+                playlist_sections_attributes: [
+                  :id,
+                  :name,
+                  :_destroy,
+                  playlist_items_attributes: [:id, :position, :song_id, :_destroy]
+                ]
 
 end

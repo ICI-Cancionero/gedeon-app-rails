@@ -40,6 +40,15 @@ ActiveAdmin.register Playlist do
     f.actions
   end
 
+  member_action :view_pdf, method: :get do
+    @playlist = resource
+    respond_to do |format|
+      format.pdf do
+        render pdf: @playlist.name
+      end
+    end
+  end
+
   permit_params :name,
                 :active,
                 playlist_sections_attributes: [
@@ -48,5 +57,4 @@ ActiveAdmin.register Playlist do
                   :_destroy,
                   playlist_items_attributes: [:id, :position, :song_id, :_destroy]
                 ]
-
 end

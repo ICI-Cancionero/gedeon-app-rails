@@ -40,6 +40,27 @@ ActiveAdmin.register Playlist do
     f.actions
   end
 
+  action_item :view, only: :show do
+    link_to 'View Document', view_pdf_admin_playlist_path(playlist, format: :pdf)
+  end
+
+  member_action :view_pdf, method: :get do
+    @playlist = resource
+    respond_to do |format|
+      format.pdf do
+        render pdf: @playlist.name,
+               disposition: 'attachment',
+               encoding: 'utf-8',
+               layout: 'pdf',
+               page_size: 'A4',
+               lowquality: true,
+               zoom: 1,
+               dpi: 75
+               #show_as_html: true
+      end
+    end
+  end
+
   permit_params :name,
                 :active,
                 playlist_sections_attributes: [
@@ -48,5 +69,4 @@ ActiveAdmin.register Playlist do
                   :_destroy,
                   playlist_items_attributes: [:id, :position, :song_id, :_destroy]
                 ]
-
 end

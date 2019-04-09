@@ -7,8 +7,8 @@
       <ul>
         <% p_section.playlist_items.each do |p_item|%>
           <li>
-            <h3><%= p_item.song.title.titleize %></h3>
-            <p><%= raw p_item.song.content.gsub("/n", "<br/>") %></p>
+            <h3><%= "#{p_item.position}. #{p_item.song.title.titleize}" %></h3>
+            <p><%= simple_format p_item.song.content %></p>
           </li>
         <% end %>
       </ul>

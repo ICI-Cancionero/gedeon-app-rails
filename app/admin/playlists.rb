@@ -52,6 +52,11 @@ ActiveAdmin.register Playlist do
                disposition: 'attachment',
                encoding: 'utf-8',
                layout: 'pdf',
+               margin: {
+                 top: 20,
+                 left: 30,
+                 right: 30
+               },
                page_size: 'A4',
                lowquality: true,
                zoom: 1,

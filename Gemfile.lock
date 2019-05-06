@@ -79,6 +79,7 @@ GEM
     byebug (11.0.1)
     case_transform (0.2)
       activesupport
+    coderay (1.1.2)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0)
@@ -96,6 +97,8 @@ GEM
       warden (~> 1.2.3)
     erubi (1.8.0)
     execjs (2.7.0)
+    faker (1.9.3)
+      i18n (>= 0.7)
     ffi (1.10.0)
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
@@ -161,6 +164,9 @@ GEM
       mini_portile2 (~> 2.4.0)
     orm_adapter (0.5.0)
     pg (1.1.4)
+    pry (0.12.2)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
     puma (3.12.1)
     rack (2.0.7)
     rack-test (1.1.0)
@@ -279,11 +285,13 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.2)
   devise (= 4.6.2)
+  faker
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   lograge
   newrelic_rpm
   pg (>= 0.18, < 2.0)
+  pry
   puma (~> 3.11)
   rails (~> 5.2.3)
   rollbar

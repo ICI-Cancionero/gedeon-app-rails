@@ -2,6 +2,14 @@ ActiveAdmin.register Playlist do
 
   permit_params :name, :active, song_ids: []
 
+  scope :active
+  scope :inactive
+
+  filter :name
+  filter :active
+  filter :created_at
+  filter :updated_at
+
   index do
     selectable_column
     id_column

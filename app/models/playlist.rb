@@ -4,6 +4,7 @@ class Playlist < ApplicationRecord
   has_many :songs, through: :playlist_items
 
   scope :active, -> { where(active: true) }
+  scope :inactive, -> { where(active: [nil, false]) }
 
   accepts_nested_attributes_for :playlist_sections, reject_if: :all_blank, allow_destroy: true
 

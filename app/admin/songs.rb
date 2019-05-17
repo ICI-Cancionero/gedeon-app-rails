@@ -1,15 +1,18 @@
 ActiveAdmin.register Song do
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-#
-permit_params :title, :content, :position
-#
-# or
-#
-# permit_params do
-#   permitted = [:permitted, :attributes]
-#   permitted << :other if params[:action] == 'create' && current_user.admin?
-#   permitted
-# end
+  permit_params :title, :content, :position
+
+  show do
+    attributes_table do
+      row :position
+      row :title
+      row :content do |song|
+        simple_format song.content
+      end
+      row :created_at
+      row :updated_at
+
+      active_admin_comments
+    end
+  end
 
 end

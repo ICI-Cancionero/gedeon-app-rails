@@ -44,6 +44,10 @@ ActiveAdmin.register Playlist do
     link_to 'View Document', view_pdf_admin_playlist_path(playlist, format: :pdf)
   end
 
+  action_item :duplicate, only: :show do
+    link_to 'Duplicate', duplicate_admin_playlist_path(playlist)
+  end
+
   member_action :view_pdf, method: :get do
     @playlist = resource
     respond_to do |format|
@@ -62,6 +66,16 @@ ActiveAdmin.register Playlist do
                zoom: 1,
                dpi: 75
                #show_as_html: true
+      end
+    end
+  end
+
+  member_action :duplicate, method: :get do
+    @playlist = resource
+    @new_playlist = @playlist.duplicate
+    respond_to do |format|
+      format.html do
+        redirect_to edit_admin_playlist_path(@new_playlist), notice: "You have duplicate the playlist succesfully"
       end
     end
   end

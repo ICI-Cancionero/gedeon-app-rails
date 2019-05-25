@@ -61,7 +61,6 @@ ActiveAdmin.register Playlist do
     respond_to do |format|
       format.pdf do
         render pdf: @playlist.name,
-               disposition: 'attachment',
                encoding: 'utf-8',
                layout: 'pdf',
                margin: {

@@ -1,7 +1,7 @@
 class Playlist < ApplicationRecord
-  has_many :playlist_sections, dependent: :destroy
-  has_many :playlist_items, through: :playlist_sections
-  has_many :songs, through: :playlist_items
+  has_many :playlist_sections, -> { order(created_at: :asc) },  dependent: :destroy
+  has_many :playlist_items, -> { order(created_at: :asc) }, through: :playlist_sections
+  has_many :songs, -> { order(created_at: :asc) }, through: :playlist_items
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: [nil, false]) }

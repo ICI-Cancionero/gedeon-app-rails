@@ -162,7 +162,7 @@ GEM
     puma (3.12.1)
     quiet_safari (1.0.0)
       railties (>= 3.1.0)
-    rack (2.0.7)
+    rack (2.0.8)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (5.2.3)

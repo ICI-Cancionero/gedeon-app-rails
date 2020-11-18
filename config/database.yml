@@ -80,6 +80,9 @@ test:
 #
 production:
   <<: *default
-  database: gedeon-app-rails_production
-  username: gedeon-app-rails
-  password: <%= ENV['GEDEON-APP-RAILS_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
+#production:
+#  <<: *default
+#  database: gedeon-app-rails_production
+#  username: gedeon-app-rails
+#  password: <%= ENV['GEDEON-APP-RAILS_DATABASE_PASSWORD'] %>

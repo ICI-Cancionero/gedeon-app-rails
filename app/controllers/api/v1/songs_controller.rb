@@ -5,6 +5,6 @@ class Api::V1::SongsController < ApplicationController
   end
 
   def index
-    render json: Song.all
+    render json: Song.all.order(title: :asc)
   end
 end

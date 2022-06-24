@@ -43,11 +43,12 @@ gem 'activeadmin_addons'
 gem 'versionist'
 gem 'active_model_serializers'
 gem 'newrelic_rpm'
-gem 'sqreen', '>= 1.16'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'rollbar'
 gem 'quiet_safari'
+gem 'mimemagic', '0.3.10'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

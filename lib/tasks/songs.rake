@@ -21,7 +21,7 @@ namespace :songs do
       Song.all.order(title: :asc).find_each(batch_size: 100).with_index do |song, index|
         puts "Song title: #{song.title} position: #{song.position} updated_position: #{index + 1}"
 
-        Song.update(position: index + 1)
+        song.update(position: index + 1)
       end
     end
   end

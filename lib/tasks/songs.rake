@@ -18,7 +18,7 @@ namespace :songs do
   desc 'Sort songs by title'
   task sort_by_title: :environment do
     ActiveRecord::Base.transaction do
-      Song.all.order(title: :asc).find_each(batch_size: 100).with_index do |song, index|
+      Song.all.order(title: :asc).find_each.with_index do |song, index|
         puts "Song title: #{song.title} position: #{song.position} updated_position: #{index + 1}"
 
         song.update(position: index + 1)

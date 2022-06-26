@@ -48,6 +48,7 @@ gem 'wkhtmltopdf-binary'
 gem 'rollbar'
 gem 'quiet_safari'
 gem 'mimemagic', '0.3.10'
+gem 'rack', '2.2.3.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

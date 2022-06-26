@@ -165,7 +165,7 @@ GEM
       nio4r (~> 2.0)
     quiet_safari (1.0.0)
       railties (>= 3.1.0)
-    rack (2.2.3)
+    rack (2.2.3.1)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (5.2.3)
@@ -296,6 +296,7 @@ DEPENDENCIES
   pg (>= 0.18, < 2.0)
   puma (~> 4.3)
   quiet_safari
+  rack (= 2.2.3.1)
   rails (~> 5.2.3)
   rollbar
   sass-rails (~> 5.0)

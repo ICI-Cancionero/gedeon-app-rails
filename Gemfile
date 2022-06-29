@@ -39,7 +39,7 @@ gem 'bootsnap', '1.12.0', require: false
 gem 'devise', '4.7.1'
 gem 'activeadmin', '2.9.0'
 gem 'active_skin'
-gem 'activeadmin_addons'
+gem 'activeadmin_addons', '1.9.0'
 gem 'versionist'
 gem 'active_model_serializers', '0.10.13'
 gem 'newrelic_rpm'
@@ -53,6 +53,7 @@ gem 'nokogiri', '1.13.6'
 gem 'minitest', '5.16.1'
 gem 'inherited_resources', '1.13.1'
 gem 'ffi', '1.15.5'
+gem 'thor', '1.0.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

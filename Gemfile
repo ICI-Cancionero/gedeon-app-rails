@@ -10,7 +10,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 4.3'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', '~> 6.0.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -41,7 +41,7 @@ gem 'activeadmin'
 gem 'active_skin'
 gem 'activeadmin_addons'
 gem 'versionist'
-gem 'active_model_serializers'
+gem 'active_model_serializers', '0.10.13'
 gem 'newrelic_rpm'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
@@ -51,6 +51,7 @@ gem 'mimemagic', '0.3.10'
 gem 'rack', '2.2.3.1'
 gem 'nokogiri', '1.13.6'
 gem 'minitest', '5.16.1'
+gem 'inherited_resources', '1.13.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

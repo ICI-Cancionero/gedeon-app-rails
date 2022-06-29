@@ -53,7 +53,7 @@ gem 'nokogiri', '1.13.6'
 gem 'minitest', '5.16.1'
 gem 'inherited_resources', '1.13.1'
 gem 'ffi', '1.15.5'
-gem 'thor', '1.0.0'
+gem 'thor', '1.2.1'
 gem 'formtastic', '4.0.0.rc1'
 gem 'net-smtp', require: false
 gem 'net-imap', require: false

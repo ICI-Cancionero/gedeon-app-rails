@@ -37,7 +37,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '1.12.0', require: false
 
 gem 'devise', '4.7.1'
-gem 'activeadmin'
+gem 'activeadmin', '2.9.0'
 gem 'active_skin'
 gem 'activeadmin_addons'
 gem 'versionist'

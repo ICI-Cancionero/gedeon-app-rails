@@ -54,6 +54,7 @@ gem 'minitest', '5.16.1'
 gem 'inherited_resources', '1.13.1'
 gem 'ffi', '1.15.5'
 gem 'thor', '1.0.0'
+gem 'net-smtp', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

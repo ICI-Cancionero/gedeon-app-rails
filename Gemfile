@@ -36,7 +36,7 @@ gem 'jbuilder', '~> 2.5'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '1.12.0', require: false
 
-gem 'devise', '4.7.1'
+gem 'devise', '4.8.1'
 gem 'activeadmin', '2.9.0'
 gem 'active_skin'
 gem 'activeadmin_addons', '1.9.0'
@@ -54,6 +54,7 @@ gem 'minitest', '5.16.1'
 gem 'inherited_resources', '1.13.1'
 gem 'ffi', '1.15.5'
 gem 'thor', '1.0.0'
+gem 'formtastic', '4.0.0.rc1'
 gem 'net-smtp', require: false
 gem 'net-imap', require: false
 gem 'net-pop', require: false

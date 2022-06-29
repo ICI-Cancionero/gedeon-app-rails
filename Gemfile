@@ -52,6 +52,7 @@ gem 'rack', '2.2.3.1'
 gem 'nokogiri', '1.13.6'
 gem 'minitest', '5.16.1'
 gem 'inherited_resources', '1.13.1'
+gem 'ffi', '1.15.5'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -61,6 +62,7 @@ end
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
+  gem 'listen', '3.7.1'
 end
 
 

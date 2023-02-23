@@ -4,7 +4,7 @@ RUN mkdir /gedeon-app-rails
 WORKDIR /gedeon-app-rails
 
 # Instala las dependencias necesarias
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+RUN apt-get update -qq && apt-get install -y nodejs postgresql-client wkhtmltopdf
 
 # Copia los archivos necesarios al contenedor
 COPY Gemfile Gemfile.lock ./

@@ -11,6 +11,7 @@ COPY Gemfile Gemfile.lock ./
 RUN bundle install
 
 COPY . .
+RUN ["cp", "/usr/bin/wkhtmltopdf", "/usr/local/bundle/bin/"]
 
 # Establece las variables de entorno necesarias para ejecutar la aplicación
 ENV RAILS_ENV development

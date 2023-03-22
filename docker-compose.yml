@@ -14,9 +14,11 @@ services:
 
   web:
     build: .
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    env_file:
+      - .env
+    command: foreman start
     ports:
-      - "3000:3000"
+      - "5050:5050"
     depends_on:
       - db
     environment:

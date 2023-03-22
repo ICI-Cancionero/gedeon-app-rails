@@ -8,15 +8,29 @@ Things you may want to cover:
 * Ruby version: 3.1.2
 
 * System dependencies:
-  - Postgresql Database
+  - Docker
 
 * Configuration
+  ```bash
+  docker-compose build
+  ```
 
 * Database creation
-  ```rake db:create```
-  ```rake db:seed```
+  ```bash
+  docker-compose run web rails db:create
+  ```
+
 
 * Database initialization
+    ```bash
+  docker-compose run web rails db:migrate
+  docker-compose run web rails db:seed
+  ```
+
+* Running on local
+    ```bash
+  docker-compose up
+  ```
 
 * How to run the test suite
 

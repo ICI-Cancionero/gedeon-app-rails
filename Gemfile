@@ -48,8 +48,8 @@ gem 'wkhtmltopdf-binary'
 gem 'rollbar'
 gem 'quiet_safari'
 gem 'mimemagic', '0.3.10'
-gem 'rack', '2.2.3.1'
-gem 'nokogiri', '1.13.6'
+gem 'rack', '2.2.6.3'
+gem 'nokogiri', '1.13.9'
 gem 'minitest', '5.16.1'
 gem 'inherited_resources', '1.13.1'
 gem 'ffi', '1.15.5'
@@ -60,6 +60,7 @@ gem 'net-imap', require: false
 gem 'net-pop', require: false
 
 group :development, :test do
+  gem 'dotenv-rails', groups: [:development, :test], require: 'dotenv/rails-now'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
@@ -69,7 +70,6 @@ group :development do
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '3.7.1'
 end
-
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

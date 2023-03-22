@@ -8,7 +8,7 @@ RUN apt-get update -qq && apt-get install -y nodejs postgresql-client wkhtmltopd
 
 # Copia los archivos necesarios al contenedor
 COPY Gemfile Gemfile.lock ./
-RUN bundle install
+RUN gem install foreman && bundle install
 
 COPY . .
 RUN ["cp", "/usr/bin/wkhtmltopdf", "/usr/local/bundle/bin/"]

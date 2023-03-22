@@ -17,6 +17,11 @@ require "sprockets/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# Load dotenv only in development or test environment
+if ['development', 'test'].include? ENV['RAILS_ENV']
+  Dotenv::Railtie.load
+end
+
 module GedeonAppRails
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.

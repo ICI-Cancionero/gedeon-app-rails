@@ -27,3 +27,5 @@
 /config/master.key
 
 latest.dump
+.env
+.env.development.local

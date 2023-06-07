@@ -4,9 +4,13 @@
 #
 #  id          :bigint           not null, primary key
 #  name        :string           default("")
-#  playlist_id :bigint
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  playlist_id :bigint
+#
+# Indexes
+#
+#  index_playlist_sections_on_playlist_id  (playlist_id)
 #
 class PlaylistSection < ApplicationRecord
   belongs_to :playlist, optional: true

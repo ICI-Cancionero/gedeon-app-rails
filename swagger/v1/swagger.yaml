@@ -1,0 +1,42 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/songs":
+    get:
+      summary: Retrieves songs
+      tags:
+      - Songs
+      responses:
+        '200':
+          description: success
+  "/api/v1/songs/{id}":
+    get:
+      summary: Retrieves a song
+      tags:
+      - Songs
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Song found
+components:
+  schemas:
+    song:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000

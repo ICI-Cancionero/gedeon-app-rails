@@ -4,10 +4,15 @@
 #
 #  id                  :bigint           not null, primary key
 #  position            :integer
-#  song_id             :bigint
-#  playlist_section_id :bigint
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
+#  playlist_section_id :bigint
+#  song_id             :bigint
+#
+# Indexes
+#
+#  index_playlist_items_on_playlist_section_id  (playlist_section_id)
+#  index_playlist_items_on_song_id              (song_id)
 #
 FactoryBot.define do
   factory :playlist_item do

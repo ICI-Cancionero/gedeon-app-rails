@@ -33,17 +33,15 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby-version }}
 
-      - name: Install dependencies
-        run: |
-          gem install bundler
-          bundle install --jobs 4 --retry 3
-
       - name: Dependencies
         run: |
           # Install dependencies
-          sudo apt-get update
-          sudo apt-get install docker.io
-          sudo apt-get install -y nodejs postgresql-client wkhtmltopdf
+          sudo apt-get update -qq && apt-get install -y nodejs postgresql-client wkhtmltopdf
+
+      - name: Install Gems dependencies
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
 
       - name: Prepare DB
         run: |

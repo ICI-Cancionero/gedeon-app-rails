@@ -31,3 +31,4 @@ latest.dump
 .env.local
 .env.development
 .env.test
+bin/*

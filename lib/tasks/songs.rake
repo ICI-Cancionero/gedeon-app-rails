@@ -1,7 +1,7 @@
 namespace :songs do
-	SONGS_CSV_PATH = Rails.root.join('db', 'seeds', 'songs.csv')
+  SONGS_CSV_PATH = Rails.root.join('db', 'seeds', 'songs.csv')
 
-	desc 'Import songs from CSV'
+  desc 'Import songs from CSV'
   task import: :environment do
     ActiveRecord::Base.transaction do
       CSV.foreach(SONGS_CSV_PATH, headers: true, col_sep: ',') do |row|

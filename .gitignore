@@ -27,3 +27,8 @@
 /config/master.key
 
 latest.dump
+.env
+.env.local
+.env.development
+.env.test
+bin/*

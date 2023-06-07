@@ -109,7 +109,12 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    diff-lcs (1.5.0)
     digest (3.1.0)
+    dotenv (2.8.1)
+    dotenv-rails (2.8.1)
+      dotenv (= 2.8.1)
+      railties (>= 3.2)
     erubi (1.10.0)
     execjs (2.7.0)
     ffi (1.15.5)
@@ -185,7 +190,7 @@ GEM
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     orm_adapter (0.5.0)
-    pg (1.1.4)
+    pg (1.5.3)
     puma (4.3.12)
       nio4r (~> 2.0)
     quiet_safari (1.0.0)
@@ -234,6 +239,27 @@ GEM
       railties (>= 5.0)
     rollbar (2.20.2)
       multi_json
+    rspec (3.12.0)
+      rspec-core (~> 3.12.0)
+      rspec-expectations (~> 3.12.0)
+      rspec-mocks (~> 3.12.0)
+    rspec-core (3.12.2)
+      rspec-support (~> 3.12.0)
+    rspec-expectations (3.12.3)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-mocks (3.12.5)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-rails (4.0.2)
+      actionpack (>= 4.2)
+      activesupport (>= 4.2)
+      railties (>= 4.2)
+      rspec-core (~> 3.10)
+      rspec-expectations (~> 3.10)
+      rspec-mocks (~> 3.10)
+      rspec-support (~> 3.10)
+    rspec-support (3.12.0)
     ruby2_keywords (0.0.5)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
@@ -299,24 +325,26 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.2)
   devise (= 4.8.1)
+  dotenv-rails
   ffi (= 1.15.5)
   formtastic (= 4.0.0.rc1)
   inherited_resources (= 1.13.1)
   jbuilder (~> 2.5)
   listen (= 3.7.1)
   mimemagic (= 0.3.10)
-  minitest (= 5.16.1)
   net-imap
   net-pop
   net-smtp
   newrelic_rpm
   nokogiri (= 1.13.6)
-  pg (>= 0.18, < 2.0)
+  pg (>= 1.5)
   puma (~> 4.3)
   quiet_safari
   rack (= 2.2.3.1)
   rails (~> 6.1.5)
   rollbar
+  rspec (~> 3.0)
+  rspec-rails (~> 4.0.0)
   sass-rails (~> 6.0.0)
   thor (= 1.2.1)
   turbolinks (~> 5)
@@ -328,7 +356,7 @@ DEPENDENCIES
   wkhtmltopdf-binary
 
 RUBY VERSION
-   ruby 3.1.2p20
+   ruby 3.2.1p31
 
 BUNDLED WITH
    2.3.17

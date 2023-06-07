@@ -25,12 +25,32 @@ jobs:
         ruby-version: ['3.2.1']
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Docker
-      uses: Dockerfile
-    - name: Build Docker image
-      run: docker-compose build
-    - name: Prepare DB
-      run: docker-compose run web bundle exec rails db:create && bundle exec rake db:test:prepare RAILS_ENV=test
-    - name: Run tests
-      run: docker-compose run bundle exec rspec spec
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
+
+      - name: Set up Docker
+        run: |
+          # Install Docker (if needed)
+          sudo apt-get update
+          sudo apt-get install docker.io
+
+      - name: Build Docker image
+        run: docker-compose build
+
+      - name: Prepare DB
+        run: |
+          docker-compose run web bundle exec rails db:create
+          docker-compose run web bundle exec rake db:test:prepare RAILS_ENV=test
+
+      - name: Run tests
+        run: docker-compose run bundle exec rspec spec

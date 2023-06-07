@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: playlists
+#
+#  id         :bigint           not null, primary key
+#  name       :string
+#  active     :boolean
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 class Playlist < ApplicationRecord
   has_many :playlist_sections, -> { order(created_at: :asc) },  dependent: :destroy
   has_many :playlist_items, -> { order(created_at: :asc) }, through: :playlist_sections

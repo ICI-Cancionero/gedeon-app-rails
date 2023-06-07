@@ -9,3 +9,4 @@ AdminUser.create!(email: 'admin@example.com', password: 'password', password_con
 
 puts "Importing songs"
 Rake::Task['songs:import'].invoke
+Rake::Task['songs:sort_by_title'].invoke

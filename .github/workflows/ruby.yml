@@ -36,7 +36,8 @@ jobs:
       - name: Dependencies
         run: |
           # Install dependencies
-          sudo apt-get update -qq && apt-get install -y nodejs postgresql-client wkhtmltopdf
+          sudo apt-get update -qq
+          sudo apt-get install -y nodejs postgresql-client wkhtmltopdf
 
       - name: Install Gems dependencies
         run: |

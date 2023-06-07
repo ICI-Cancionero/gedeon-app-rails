@@ -17,14 +17,14 @@ Things you may want to cover:
 
 * Database creation
   ```bash
-  docker-compose run web rails db:create
+  docker-compose run web bundle exec rails db:create
   ```
 
 
 * Database initialization
     ```bash
-  docker-compose run web rails db:migrate
-  docker-compose run web rails db:seed
+  docker-compose run web bundle exec rails db:migrate
+  docker-compose run web bundle exec rails db:seed
   ```
 
 * Running on local

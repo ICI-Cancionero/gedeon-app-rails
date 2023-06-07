@@ -9,7 +9,8 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-class SongSerializer < ActiveModel::Serializer
-  attributes :id, :title, :content, :position
-  attributes :created_at, :updated_at
+require 'rails_helper'
+
+RSpec.describe Song, type: :model do
+  it { should have_and_belong_to_many(:playlists) }
 end

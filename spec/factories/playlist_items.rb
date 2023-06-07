@@ -9,6 +9,12 @@
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #
-class PlaylistItemSerializer < ActiveModel::Serializer
-  attributes :id, :position, :song
+FactoryBot.define do
+  factory :playlist_item do
+    sequence(:position) { |n| n }
+
+    trait :with_song do
+      association :song, factory: :song
+    end
+  end
 end

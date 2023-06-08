@@ -1,6 +1,6 @@
 require 'swagger_helper'
 
-describe 'Songs API' do
+describe Api::V1::SongsController do
 
   path '/api/v1/songs' do
     get 'Retrieves songs' do

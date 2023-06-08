@@ -1,17 +1,21 @@
-<h1><%= @playlist.name.titleize%></h1>
+<div>
+  <div class="flex flex-col space-y-10">
+    <h1 class="text-center"><%= @playlist.name.titleize%></h1>
+  </div>
 
-<ul>
   <% @playlist.playlist_sections.each do |p_section|%>
-    <li>
-      <h2><%= p_section.name.titleize %></h2>
-      <ul>
+    <div class="flex flex-col space-y-10">
+      <div class="flex flex-col">
+        <h2 class="text-center"><%= p_section.name.titleize %></h2>
+      </div>
+      <div class="flex flex-col space-y-10">
         <% p_section.playlist_items.each do |p_item|%>
-          <li>
-            <h3><%= "#{p_item.position}. #{p_item.song.title.titleize}" %></h3>
-            <p><%= simple_format p_item.song.content %></p>
-          </li>
+          <div class="flex flex-col space-y-5">
+            <h3 class="text-center"><%= "#{p_item.position}. #{p_item.song.title.titleize}" %></h3>
+            <div class="flex flex-col space-y-2"><%= simple_format(p_item.song.content, class: "text-center") %></div>
+          </div>
         <% end %>
-      </ul>
-    </li>
+      </div>
+    </div>
   <% end %>
-</ul>
+</div>

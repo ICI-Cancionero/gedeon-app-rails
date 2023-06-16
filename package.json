@@ -1,5 +1,7 @@
 {
   "name": "holymusic_app_rails",
   "private": true,
-  "dependencies": {}
+  "devDependencies": {
+    "daisyui": "^3.0.22"
+  }
 }

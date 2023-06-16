@@ -4,6 +4,7 @@ class HomeController < ApplicationController
   end
 
   def app
+    @songs = Song.all.order(title: :asc)
   end
 
   private

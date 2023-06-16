@@ -1,1 +1,21 @@
-<h1>Home#app</h1>
+<div class="overflow-x-auto">
+  <table class="table table-pin-rows">
+  <%- grouped_songs.each_pair do |letter, songs|%>
+    <thead>
+      <tr>
+        <th><%= letter %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%- songs.each do |song|%>
+        <tr>
+          <td><%= song.title %></td>
+        </tr>
+        <tr>
+          <td class=""><%= song.content %></td>
+        </tr>
+      <%- end %>
+    </tbody>
+  <%- end %>
+  </table>
+</div>

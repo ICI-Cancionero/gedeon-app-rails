@@ -4,11 +4,8 @@
     <meta charset='utf-8' />
     <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
   </head>
-  <body onload='number_pages'>
-    <div id="header">
-    </div>
-    <div id="content">
-      <%= yield %>
-    </div>
+
+  <body onload='number_pages' class="flex flex-col bg-slate-50">
+    <%= yield %>
   </body>
 </html>

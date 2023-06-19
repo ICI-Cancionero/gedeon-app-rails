@@ -1,0 +1,68 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
+# For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
+
+name: Ruby
+
+on:
+  push:
+    branches: [ "master", "development" ]
+  pull_request:
+    branches: [ "master" ]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:10
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        ports:
+        - 5432:5432
+
+    strategy:
+      matrix:
+        ruby-version: ['3.2.1']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+
+      - name: Dependencies
+        run: |
+          # Install dependencies
+          sudo apt-get update -qq
+          sudo apt-get install -y nodejs postgresql-client wkhtmltopdf libpq-dev
+
+      - name: Install Gems dependencies
+        env:
+          RAILS_ENV: test
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
+
+      - name: Prepare DB
+        env:
+          RAILS_ENV: test
+        run: |
+          bundle exec rake db:create
+          bundle exec rake db:test:prepare
+
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+        run: bundle exec rspec spec

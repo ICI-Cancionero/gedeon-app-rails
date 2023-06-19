@@ -1,0 +1,38 @@
+<div class="flex flex-col w-full">
+  <%= search_form_for @q, url: app_url do |f| %>
+    <%= f.search_field :title_or_content_cont,
+      placeholder: "Buscar canción por título o letra",
+      class: "input input-bordered w-full max-w-xs",
+      type: "text"
+    %>
+    <%= f.submit "Búscar", class: "btn btn-neutral" %>
+  <% end %>
+</div>
+
+<div class="divider"></div>
+
+<div class="flex flex-col w-full overflow-x-auto">
+  <table class="table table-pin-rows">
+  <%- grouped_songs.each_pair do |letter, songs|%>
+    <thead>
+      <tr>
+        <th><span class="font-bold font-black text-blue-600"><%= letter %></span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%- songs.each do |song|%>
+        <tr class="card card-compact">
+          <td><span class="font-bold font-black text-blue-400"><%= song.title %></span></td>
+        </tr>
+        <tr>
+          <td class="card card-compact">
+            <article class="prose">
+              <%= song.content %>
+            </article>
+          </td>
+        </tr>
+      <%- end %>
+    </tbody>
+  <%- end %>
+  </table>
+</div>

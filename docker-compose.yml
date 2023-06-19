@@ -4,7 +4,7 @@ services:
   db:
     image: postgres:12
     environment:
-      POSTGRES_DB: gedeon-app-rails_development
+      POSTGRES_DB: holymusic_app_rails_development
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     ports:
@@ -23,7 +23,7 @@ services:
       POSTGRES_HOST: db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      DATABASE_URL: postgres://postgres:password@db/gedeon-app-rails_development
+      DATABASE_URL: postgres://postgres:password@db/holymusic_app_rails_development
 
 volumes:
   postgres-data:

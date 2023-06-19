@@ -27,3 +27,11 @@
 /config/master.key
 
 latest.dump
+.env
+.env.local
+.env.development
+.env.test
+bin/*
+/app/assets/builds/*
+!/app/assets/builds/.keep
+app/assets/builds

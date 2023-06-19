@@ -58,6 +58,7 @@ ActiveAdmin.register Playlist do
 
   member_action :view_pdf, method: :get do
     @playlist = resource
+
     respond_to do |format|
       format.pdf do
         render pdf: @playlist.name,

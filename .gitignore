@@ -29,7 +29,7 @@
 latest.dump
 .env
 .env.local
-.env.development
+.env.*.local
 .env.test
 bin/*
 /app/assets/builds/*

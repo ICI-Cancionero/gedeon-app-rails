@@ -4,7 +4,8 @@ class HomeController < ApplicationController
   end
 
   def app
-    @songs = Song.all.order(title: :asc)
+    @q = Song.ransack(params[:q])
+    @songs = @q.result(distinct: true).order(title: :asc).all
   end
 
   private

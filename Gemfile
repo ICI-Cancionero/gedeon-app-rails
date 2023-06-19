@@ -58,6 +58,7 @@ gem 'net-smtp', require: false
 gem 'net-imap', require: false
 gem 'net-pop', require: false
 
+gem 'ransack', '~> 2.5.0'
 gem 'rswag'
 
 group :development, :test do

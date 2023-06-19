@@ -383,6 +383,7 @@ DEPENDENCIES
   quiet_safari
   rack (= 2.2.3.1)
   rails (~> 6.1.5)
+  ransack (~> 2.5.0)
   rollbar
   rspec (~> 3.0)
   rspec-rails (~> 4.0.0)

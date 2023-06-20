@@ -216,8 +216,12 @@ GEM
       net-protocol
     newrelic_rpm (9.2.2)
     nio4r (2.5.9)
-    nokogiri (1.13.6)
-      mini_portile2 (~> 2.8.0)
+    nokogiri (1.15.2)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
+    nokogiri (1.15.2-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.15.2-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
     pg (1.5.3)
@@ -397,7 +401,7 @@ DEPENDENCIES
   net-pop
   net-smtp
   newrelic_rpm
-  nokogiri (= 1.13.6)
+  nokogiri (~> 1.14)
   pg (>= 1.5)
   puma (~> 4.3)
   quiet_safari

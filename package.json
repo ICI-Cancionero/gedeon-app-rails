@@ -2,6 +2,7 @@
   "name": "holymusic_app_rails",
   "private": true,
   "devDependencies": {
+    "tailwindcss": "3.3.2",
     "daisyui": "^3.0.22"
   }
 }

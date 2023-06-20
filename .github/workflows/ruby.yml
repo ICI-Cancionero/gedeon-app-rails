@@ -62,6 +62,9 @@ jobs:
           bundle exec rake db:create
           bundle exec rake db:test:prepare
 
+      - name: Build Esbuild
+        run: yarn build
+
       - name: Run tests
         env:
           RAILS_ENV: test

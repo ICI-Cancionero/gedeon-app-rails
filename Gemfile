@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.2.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1.5'
+gem 'rails', '~> 7.0.5'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.5'
 # Use Puma as the app server
@@ -37,7 +37,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '1.12.0', require: false
 
 gem 'devise', '4.8.1'
-gem 'activeadmin', '2.9.0'
+gem 'activeadmin', github: 'activeadmin/activeadmin', branch: 'master'
 gem 'active_skin'
 gem 'activeadmin_addons', '1.9.0'
 gem 'versionist'
@@ -48,7 +48,7 @@ gem 'wkhtmltopdf-binary'
 gem 'rollbar'
 gem 'quiet_safari'
 gem 'mimemagic', '0.3.10'
-gem 'rack', '2.2.3.1'
+gem 'rack'
 gem 'nokogiri', '1.13.6'
 gem 'inherited_resources', '1.13.1'
 gem 'ffi', '1.15.5'
@@ -58,7 +58,7 @@ gem 'net-smtp', require: false
 gem 'net-imap', require: false
 gem 'net-pop', require: false
 
-gem 'ransack', '~> 2.5.0'
+gem 'ransack'
 gem 'rswag'
 
 group :development, :test do

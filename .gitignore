@@ -35,3 +35,4 @@ bin/*
 /app/assets/builds/*
 !/app/assets/builds/.keep
 app/assets/builds
+vendor/bundle/

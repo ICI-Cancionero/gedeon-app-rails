@@ -18,6 +18,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jsbundling-rails'
 gem 'turbo-rails'
 gem 'turbolinks', '~> 5'
+gem "tailwindcss-rails", "~> 2.0"
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
@@ -85,8 +86,5 @@ group :test do
   gem 'database_cleaner-active_record'
 end
 
-
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
-gem "tailwindcss-rails", "~> 2.0"

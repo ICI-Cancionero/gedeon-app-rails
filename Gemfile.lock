@@ -326,6 +326,8 @@ GEM
       railties (>= 6.0.0)
     tailwindcss-rails (2.0.29-arm64-darwin)
       railties (>= 6.0.0)
+    tailwindcss-rails (2.0.29-x86_64-linux)
+      railties (>= 6.0.0)
     thor (1.2.1)
     tilt (2.2.0)
     timeout (0.3.2)
@@ -362,6 +364,7 @@ GEM
 PLATFORMS
   arm64-darwin-22
   ruby
+  x86_64-linux
 
 DEPENDENCIES
   active_model_serializers (= 0.10.13)

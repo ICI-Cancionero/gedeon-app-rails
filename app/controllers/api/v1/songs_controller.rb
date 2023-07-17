@@ -5,6 +5,6 @@ class Api::V1::SongsController < ApplicationController
   end
 
   def index
-    render json: Song.all.order(title: :asc)
+    render json: Song.all.includes(:video_links).order(title: :asc)
   end
 end

@@ -1,6 +1,12 @@
 ActiveAdmin.register Playlist do
-
-  permit_params :name, :active, song_ids: []
+  permit_params :name,
+                :active,
+                playlist_sections_attributes: [
+                  :id,
+                  :name,
+                  :_destroy,
+                  playlist_items_attributes: [:id, :position, :song_id, :_destroy]
+                ]
 
   scope :active
   scope :inactive
@@ -87,13 +93,4 @@ ActiveAdmin.register Playlist do
       end
     end
   end
-
-  permit_params :name,
-                :active,
-                playlist_sections_attributes: [
-                  :id,
-                  :name,
-                  :_destroy,
-                  playlist_items_attributes: [:id, :position, :song_id, :_destroy]
-                ]
 end

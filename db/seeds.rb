@@ -5,8 +5,12 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+account = Account.find_or_create_by(name: "ICI Santiago", subdomain: "ici-santiago")
 
-puts "Importing songs"
-Rake::Task['songs:import'].invoke
-Rake::Task['songs:sort_by_title'].invoke
+ActsAsTenant.with_tenant(account) do
+  AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+
+  puts "Importing songs"
+  Rake::Task['songs:import'].invoke
+  Rake::Task['songs:sort_by_title'].invoke
+end

@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_15_174749) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_30_163426) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accounts", force: :cascade do |t|
+    t.string "name"
+    t.string "subdomain"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subdomain"], name: "index_accounts_on_subdomain"
+  end
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -36,6 +44,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_15_174749) do
     t.datetime "remember_created_at", precision: nil
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_admin_users_on_account_id"
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
@@ -63,6 +73,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_15_174749) do
     t.boolean "active"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_playlists_on_account_id"
   end
 
   create_table "playlists_songs", force: :cascade do |t|
@@ -78,6 +90,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_15_174749) do
     t.integer "position"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_songs_on_account_id"
   end
 
   create_table "songs_video_links", id: false, force: :cascade do |t|
@@ -95,4 +109,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_15_174749) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "admin_users", "accounts"
+  add_foreign_key "playlists", "accounts"
+  add_foreign_key "songs", "accounts"
 end

@@ -95,6 +95,8 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    acts_as_tenant (1.0.1)
+      rails (>= 6.0)
     addressable (2.8.4)
       public_suffix (>= 2.0.2, < 6.0)
     annotate (3.2.0)
@@ -382,6 +384,7 @@ DEPENDENCIES
   active_skin
   activeadmin!
   activeadmin_addons (= 1.9.0)
+  acts_as_tenant
   annotate
   bootsnap (= 1.12.0)
   byebug

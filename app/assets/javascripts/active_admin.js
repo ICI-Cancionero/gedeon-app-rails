@@ -1,0 +1,8 @@
+//= require active_admin/base
+//= require activeadmin_addons/all
+//= require stimulus
+//= require controllers
+
+const application = Stimulus.Application.start()
+
+application.register("hello", HelloController)

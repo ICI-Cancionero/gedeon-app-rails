@@ -292,8 +292,8 @@ ActiveAdmin.setup do |config|
   # config.order_clause = MyOrderClause
   config.before_action do
     if admin_user_signed_in?
-      desired_subdomain = current_admin_user.account.subdomain
-      if request.subdomain != desired_subdomain
+      desired_subdomain = current_admin_user.account&.subdomain
+      if desired_subdomain.present? && request.subdomain != desired_subdomain
         # Redirect to the same path on the desired subdomain
         redirect_to url_for(subdomain: desired_subdomain, only_path: false)
       end

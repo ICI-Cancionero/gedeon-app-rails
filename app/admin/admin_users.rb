@@ -8,6 +8,9 @@ ActiveAdmin.register AdminUser do
     column :current_sign_in_at
     column :sign_in_count
     column :created_at
+    if ActsAsTenant.current_tenant.nil?
+      column :account
+    end
     actions
   end
 

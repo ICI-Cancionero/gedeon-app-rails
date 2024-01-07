@@ -1,4 +1,4 @@
-<div class="flex flex-col w-full">
+<div class="flex flex-col w-full" data-controller="main">
   <%= search_form_for @q, url: app_url do |f| %>
     <%= f.search_field :title_or_content_cont,
       placeholder: "Buscar canción por título o letra",

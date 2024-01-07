@@ -33,5 +33,7 @@ module GedeonAppRails
     config.assets.configure do |env|
       env.export_concurrent = false
     end
+
+    config.hosts = nil
   end
 end

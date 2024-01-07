@@ -16,8 +16,12 @@ ActiveAdmin.register Song do
   form do |f|
     f.inputs do
       f.input :title
-      f.input :content
       f.input :position
+      f.input :content
+    end
+
+    panel "Slide", id: "song-slide" do
+      render partial: "iframe", locals: {song: song}
     end
 
     f.inputs do
@@ -50,6 +54,21 @@ ActiveAdmin.register Song do
       row :updated_at
     end
 
+    div do
+      h2 do
+        "Slide"
+      end
+      iframe src: slide_admin_song_path(song), width: "100%", height: 500 do
+      end
+    end
     active_admin_comments
+  end
+
+  member_action :slide, method: :get do
+    @song = resource
+
+    respond_to do |format|
+      format.html { render layout: "reveal_js" }
+    end
   end
 end

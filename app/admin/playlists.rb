@@ -54,12 +54,22 @@ ActiveAdmin.register Playlist do
     f.actions
   end
 
-  action_item :view, only: :show do
-    link_to 'View Document', view_pdf_admin_playlist_path(playlist, format: :pdf)
+  action_item :view, only: [:show, :slides] do
+    link_to 'View PDF', view_pdf_admin_playlist_path(playlist, format: :pdf), target: "_blank"
   end
 
   action_item :duplicate, only: :show do
     link_to 'Duplicate', duplicate_admin_playlist_path(playlist)
+  end
+
+  action_item :slides, only: :show do
+    link_to 'Presentation', slides_admin_playlist_path(playlist), target: "_blank"
+  end
+
+  member_action :slides, method: :get do
+    @playlist = resource
+
+    render layout: "reveal_js"
   end
 
   member_action :view_pdf, method: :get do

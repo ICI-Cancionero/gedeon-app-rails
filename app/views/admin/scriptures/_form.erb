@@ -1,5 +1,5 @@
-<% @scripture.book_id = "GEN" if @scripture.book_id.nil? %>
-<% book = @bible.books.find{|book| book.id == @scripture.book_id }%>
+<% @scripture.book_id = @bible.books.first.title if @scripture.book_id.nil? %>
+<% book = @bible.books.find{|book| book.title == @scripture.book_id }%>
 <% chapters = book.chapters.map{|chapter| ["#{chapter.book_title} ##{chapter.num}", chapter.num]}%>
 <% chapter = book.chapters.find{|chapter| chapter.num == @scripture.chapter_num.to_i } %>
 <% verses = chapter ? chapter.verses.map{|verse| verse.num} : []%>
@@ -8,7 +8,7 @@
   <%= f.inputs "Details" do %>
     <%= f.input :book_id,
         as: :select,
-        collection: @bible.books.map{|book| [book.title, book.id]},
+        collection: @bible.books.map{|book| [book.title, book.title]},
         input_html: {
           "data-scripture-form-target": "book",
           "data-action": "change->scripture-form#handleBookChange"

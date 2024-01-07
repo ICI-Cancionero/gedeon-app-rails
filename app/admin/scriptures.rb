@@ -10,7 +10,8 @@ ActiveAdmin.register Scripture do
     before_action :parse_verses, only: [:create]
 
     def set_bible
-      bible_path = Rails.root.join("lib/open-bibles/spa-rv1909.usfx.xml")
+      #bible_path = Rails.root.join("lib/open-bibles/spa-rv1909.usfx.xml")
+      bible_path = Rails.root.join("lib/open-bibles/NVI-utf8.xmm.xml")
       @bible = BibleParser.new(File.open(bible_path))
     end
 
@@ -25,7 +26,7 @@ ActiveAdmin.register Scripture do
     @chapters = []
 
     if params[:book_id]
-      book = @bible.books.find{|book| book.id == params[:book_id]}
+      book = @bible.books.find{|book| book.title == params[:book_id]}
     end
 
     book = @bible.books.first if book.nil?
@@ -46,7 +47,7 @@ ActiveAdmin.register Scripture do
     @verses = []
 
     if params[:book_id]
-      book = @bible.books.find{|book| book.id == params[:book_id]}
+      book = @bible.books.find{|book| book.title == params[:book_id]}
     end
 
     if params[:chapter_num]

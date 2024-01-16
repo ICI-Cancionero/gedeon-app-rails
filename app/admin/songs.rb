@@ -20,8 +20,10 @@ ActiveAdmin.register Song do
       f.input :content
     end
 
-    panel "Slide", id: "song-slide" do
-      render partial: "iframe", locals: {song: song}
+    if song.persisted?
+      panel "Slide", id: "song-slide" do
+        render partial: "iframe", locals: {song: song}
+      end
     end
 
     f.inputs do

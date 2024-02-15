@@ -8,7 +8,7 @@ ActiveAdmin.register Playlist do
                   :name,
                   :_destroy,
                   playlist_items_attributes: [:id, :position, :song_id, :_destroy],
-                  scriptures_attributes: [:id, :book_id, :chapter_num, :content, :from, :to]
+                  scriptures_attributes: [:id, :book_id, :chapter_num, :content, :from, :to, :_destroy]
                 ]
 
   scope :active

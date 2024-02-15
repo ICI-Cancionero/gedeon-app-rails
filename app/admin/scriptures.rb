@@ -1,0 +1,94 @@
+require 'bible_parser'
+
+ActiveAdmin.register Scripture do
+  menu priority: 5
+
+  permit_params :book_id, :chapter_num, :content, :from, :to
+
+  form partial: 'form'
+
+  filter :book_id
+  filter :chapter_num
+  filter :from
+  filter :to
+  filter :created_at
+  filter :updated_at
+
+  index do
+    selectable_column
+    id_column
+    column :bible_reference
+    column :content do |scripture|
+      div scripture.content, style: "max-width: 25rem"
+    end
+    column :playlist
+    column :created_at
+    column :updated_at
+
+    actions
+  end
+
+  controller do
+    before_action :set_bible
+
+    def set_bible
+      #bible_path = Rails.root.join("lib/open-bibles/spa-rv1909.usfx.xml")
+      bible_path = Rails.root.join("lib/open-bibles/NVI-utf8.xmm.xml")
+      @bible = BibleParser.new(File.open(bible_path))
+    end
+
+    def scoped_collection
+      super.includes(playlist_section: [:playlist])
+    end
+  end
+
+  collection_action :chapters, method: :get do
+    @chapters = []
+
+    if params[:book_id]
+      book = @bible.books.find{|book| book.title == params[:book_id]}
+    end
+
+    book = @bible.books.first if book.nil?
+
+    @chapters = book.chapters.map do |chapter|
+      {
+        chapter_num: chapter.num,
+        book_title: chapter.book_title
+      }
+    end
+
+    respond_to do |format|
+      format.json { render json: @chapters }
+    end
+  end
+
+  collection_action :verses, method: :get do
+    @verses = []
+
+    if params[:book_id]
+      book = @bible.books.find{|book| book.title == params[:book_id]}
+    end
+
+    if params[:chapter_num]
+      chapter = book.chapters.find{|chapter| chapter.num == params[:chapter_num].to_i }
+    end
+
+    book = @bible.books.first if book.nil?
+    chapter = book.chapters.first if chapter.nil?
+
+    @verses = chapter.verses.map do |verse|
+      {
+        num: verse.num,
+        book_id: verse.book_id,
+        book_title: verse.book_title,
+        chapter_num: verse.chapter_num,
+        text: verse.text
+      }
+    end
+
+    respond_to do |format|
+      format.json { render json: @verses }
+    end
+  end
+end

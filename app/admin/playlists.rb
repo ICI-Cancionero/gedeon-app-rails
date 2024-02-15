@@ -1,11 +1,14 @@
 ActiveAdmin.register Playlist do
+  menu priority: 4
+
   permit_params :name,
                 :active,
                 playlist_sections_attributes: [
                   :id,
                   :name,
                   :_destroy,
-                  playlist_items_attributes: [:id, :position, :song_id, :_destroy]
+                  playlist_items_attributes: [:id, :position, :song_id, :_destroy],
+                  scriptures_attributes: [:id, :book_id, :chapter_num, :content, :from, :to, :_destroy]
                 ]
 
   scope :active
@@ -30,29 +33,14 @@ ActiveAdmin.register Playlist do
       row :name
       row :active
       list_row :song_titles
+      list_row :bible_references
       row :created_at
       row :updated_at
     end
     active_admin_comments
   end
 
-  form do |f|
-    f.inputs do
-      f.input :name
-      f.input :active
-    end
-
-    f.inputs do
-      f.has_many :playlist_sections, heading: 'Secciones', allow_destroy: true do |ps|
-        ps.input :name
-        ps.has_many :playlist_items, heading: 'Canciones', allow_destroy: true do |pi|
-          pi.input :position
-          pi.input :song
-        end
-      end
-    end
-    f.actions
-  end
+  form partial: 'form'
 
   action_item :view, only: [:show, :slides] do
     link_to 'View PDF', view_pdf_admin_playlist_path(playlist, format: :pdf), target: "_blank"
@@ -101,6 +89,15 @@ ActiveAdmin.register Playlist do
       format.html do
         redirect_to edit_admin_playlist_path(@new_playlist), notice: "You have duplicate the playlist succesfully"
       end
+    end
+  end
+
+  controller do
+    before_action :set_bible, only: [:new, :edit]
+
+    def set_bible
+      bible_path = Rails.root.join("lib/open-bibles/NVI-utf8.xmm.xml")
+      @bible = BibleParser.new(File.open(bible_path))
     end
   end
 end

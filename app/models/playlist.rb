@@ -23,6 +23,7 @@ class Playlist < ApplicationRecord
   has_many :playlist_sections, -> { order(created_at: :asc) },  dependent: :destroy
   has_many :playlist_items, -> { order(created_at: :asc) }, through: :playlist_sections
   has_many :songs, -> { order(created_at: :asc) }, through: :playlist_items
+  has_many :scriptures, through: :playlist_sections
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: [nil, false]) }
@@ -31,6 +32,10 @@ class Playlist < ApplicationRecord
 
   def song_titles
     self.songs.pluck(:title)
+  end
+
+  def bible_references
+    self.scriptures.collect(&:bible_reference)
   end
 
   def duplicate

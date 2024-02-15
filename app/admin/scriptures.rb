@@ -1,7 +1,7 @@
 require 'bible_parser'
 
 ActiveAdmin.register Scripture do
-  permit_params :book_id, :chapter_num, :content, verses: []
+  permit_params :book_id, :chapter_num, :content, :from, :to, verses: []
 
   form partial: 'form'
 

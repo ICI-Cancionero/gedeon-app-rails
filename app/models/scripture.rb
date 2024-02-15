@@ -26,6 +26,11 @@
 class Scripture < ApplicationRecord
   acts_as_tenant(:account)
   belongs_to :playlist_section
+  has_one :playlist, through: :playlist_section
 
   serialize :verses, Array
+
+  def bible_reference
+    "#{book_id} #{chapter_num} : #{from} #{to.present? ? "- #{to}" : nil}"
+  end
 end

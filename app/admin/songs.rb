@@ -1,6 +1,8 @@
 require 'video_player'
 
 ActiveAdmin.register Song do
+  menu priority: 3
+
   permit_params :title, :content, :position,
                 video_links_attributes: [
                   :provider,
@@ -12,6 +14,20 @@ ActiveAdmin.register Song do
   filter :position
   filter :created_at
   filter :updated_at
+
+  index do
+    selectable_column
+    id_column
+    column :title
+    column :content do |song|
+      div song.content, style: "max-width: 25rem"
+    end
+    column :position
+    column :created_at
+    column :updated_at
+
+    actions
+  end
 
   form do |f|
     f.inputs do

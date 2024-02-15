@@ -22,7 +22,21 @@
           "data-action": "change->scripture-form#handleChapterNumChange"
         }
     %>
-    <%= f.input :verses,
+    <%= f.input :from,
+        as: :select,
+        collection: verses,
+        input_html: {
+          "data-scripture-form-target": "from"
+        }
+    %>
+    <%= f.input :to,
+        as: :select,
+        collection: verses,
+        input_html: {
+          "data-scripture-form-target": "to"
+        }
+    %>
+    <%#= f.input :verses,
         as: :tags,
         collection: verses,
         input_html: {
@@ -30,6 +44,7 @@
           "data-action": "change->scripture-form#handleVersesChange"
         }
     %>
+    <%= button_tag "Search Scripture", data: {action: "click->scripture-form#handleSearchScriptureClick"} %>
     <%= f.input :content,
         input_html: {
           "data-scripture-form-target": "content"

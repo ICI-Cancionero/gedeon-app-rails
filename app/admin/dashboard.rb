@@ -22,6 +22,15 @@ ActiveAdmin.register_page "Dashboard" do
           end
         end
       end
+      column do
+        panel "Recent Scriptures" do
+          ul do
+            Scripture.order('created_at desc').limit(5).map do |scripture|
+              li link_to(scripture.bible_reference, admin_scripture_path(scripture))
+            end
+          end
+        end
+      end
     end
   end # content
 end

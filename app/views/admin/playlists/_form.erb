@@ -38,15 +38,21 @@
                         "data-action": "change->scripture-form#handleChapterNumChange"
                       }
           %>
-          <% sc.input :verses,
-                      as: :select,
-                      multiple: true,
-                      collection: verses,
-                      input_html: {
-                        "data-scripture-form-target": "verses",
-                        "data-action": "change->scripture-form#handleVersesChange"
-                      }
+          <% sc.input :from,
+              as: :select,
+              collection: verses,
+              input_html: {
+                "data-scripture-form-target": "from"
+              }
           %>
+          <% sc.input :to,
+              as: :select,
+              collection: verses,
+              input_html: {
+                "data-scripture-form-target": "to"
+              }
+          %>
+          <%= button_tag "Search Scripture", data: {action: "click->scripture-form#handleSearchScriptureClick"} %>
           <% sc.input :content,
                       input_html: {
                         "data-scripture-form-target": "content"

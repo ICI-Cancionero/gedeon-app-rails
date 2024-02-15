@@ -1,4 +1,6 @@
 ActiveAdmin.register Playlist do
+  menu priority: 4
+
   permit_params :name,
                 :active,
                 playlist_sections_attributes: [
@@ -6,7 +8,7 @@ ActiveAdmin.register Playlist do
                   :name,
                   :_destroy,
                   playlist_items_attributes: [:id, :position, :song_id, :_destroy],
-                  scriptures_attributes: [:id, :book_id, :chapter_num, :content, verses: []]
+                  scriptures_attributes: [:id, :book_id, :chapter_num, :content, :from, :to]
                 ]
 
   scope :active
@@ -31,6 +33,7 @@ ActiveAdmin.register Playlist do
       row :name
       row :active
       list_row :song_titles
+      list_row :bible_references
       row :created_at
       row :updated_at
     end

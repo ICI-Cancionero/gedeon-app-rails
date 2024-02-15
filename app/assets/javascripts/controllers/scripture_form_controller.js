@@ -3,11 +3,16 @@ class ScriptureFormController extends Stimulus.Controller {
     'book',
     'chapterNum',
     'verses',
-    'content'
+    'content',
+    'from',
+    'to'
   ]
 
   connect() {
     console.log("ScriptureForm attached");
+
+    this.oldFrom = this.fromTarget.value;
+    this.oldTo = this.toTarget.value;
 
     $(this.bookTarget).on('select2:select', function () {
       let event = new Event('change', { bubbles: true }) // fire a native event
@@ -19,15 +24,19 @@ class ScriptureFormController extends Stimulus.Controller {
       this.dispatchEvent(event);
     });
 
-    $(this.versesTarget).on('select2:select', function () {
-      let event = new Event('change', { bubbles: true }) // fire a native event
-      this.dispatchEvent(event);
-    });
+    if (this.bookTarget.value.length > 0 && this.chapterNumTarget.value.length > 0){
+      this.handleChapterNumChange();
+    }
 
-    $(this.versesTarget).on('select2:unselect', function() {
-      let event = new Event('change', { bubbles: true }) // fire a native event
-      this.dispatchEvent(event);
-    });
+    // $(this.versesTarget).on('select2:select', function () {
+    //   let event = new Event('change', { bubbles: true }) // fire a native event
+    //   this.dispatchEvent(event);
+    // });
+
+    // $(this.versesTarget).on('select2:unselect', function() {
+    //   let event = new Event('change', { bubbles: true }) // fire a native event
+    //   this.dispatchEvent(event);
+    // });
   }
 
   // bookTargetConnected(element) {
@@ -94,39 +103,74 @@ class ScriptureFormController extends Stimulus.Controller {
     const response = await fetch(`/admin/scriptures/verses?book_id=${this.bookTarget.value}&chapter_num=${this.chapterNumTarget.value}`);
     this.versesData = await response.json();
 
-    const select2 = $(this.versesTarget);
-    // Clear existing options
+    // Filling From Select with verses
+    let select2 = $(this.fromTarget);
     select2.empty();
 
     // empty option
-    const option = new Option("", "", false, false);
+    let option = new Option("", "", false, false);
     select2.append(option);
 
     // Add new options
     this.versesData.forEach(item => {
-      const option = new Option(item.num, item.num, false, false);
+      let option = new Option(item.num, item.num, false, false);
       select2.append(option);
     });
 
-    // Trigger change event to refresh Select2
     select2.trigger('change');
+
+    // Filling To Select with verses
+    select2 = $(this.toTarget);
+    select2.empty();
+
+    // empty option
+    option = new Option("", "", false, false);
+    select2.append(option);
+
+    // Add new options
+    this.versesData.forEach(item => {
+      let option = new Option(item.num, item.num, false, false);
+      select2.append(option);
+    });
+
+    select2.trigger('change');
+
+    if (this.oldFrom.length > 0){
+      this.fromTarget.value = this.oldFrom;
+    }
+
+    if (this.oldTo.length > 0){
+      this.toTarget.value = this.oldTo;
+    }
+
   }
 
-  async handleVersesChange(element) {
-    var content = this.contentTarget.value;
+  handleSearchScriptureClick(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
 
-    var selectedVerseNums = Array.from(this.versesTarget.selectedOptions).map((option) => {
-      return parseInt(option.value)
-    });
+    if (this.fromTarget.value.length == 0 || (this.fromTarget.value.length == 0 && this.toTarget.value.length == 0)) {
+      alert("You must select the versicles");
+      this.contentTarget.value = "";
+    } else {
+      let from = parseInt(this.fromTarget.value);
+      let to = parseInt(this.toTarget.value) || from;
 
-    var selectedVerses = this.versesData.filter((verse) => {
-      return selectedVerseNums.includes(verse.num)
-    });
+      if (from > to) {
+        alert("From must be less than To");
+        this.contentTarget.value = "";
+      } else {
+        let selectedContent = this.versesData.reduce((acc, verse) => {
+          if (verse.num >= from && verse.num <= to) {
+            return `${acc} ${verse.num}. ${verse.text}\n`
+          } else {
+            return acc;
+          }
+        }, '');
 
-    var selectedContent = selectedVerses.reduce((acc, verse) => {
-      return `${acc} ${verse.num}. ${verse.text}`
-    }, '');
-
-    this.contentTarget.value = selectedContent
+        this.contentTarget.value = selectedContent
+      }
+    }
   }
 }

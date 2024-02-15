@@ -1,13 +1,35 @@
 require 'bible_parser'
 
 ActiveAdmin.register Scripture do
-  permit_params :book_id, :chapter_num, :content, :from, :to, verses: []
+  menu priority: 5
+
+  permit_params :book_id, :chapter_num, :content, :from, :to
 
   form partial: 'form'
 
+  filter :book_id
+  filter :chapter_num
+  filter :from
+  filter :to
+  filter :created_at
+  filter :updated_at
+
+  index do
+    selectable_column
+    id_column
+    column :bible_reference
+    column :content do |scripture|
+      div scripture.content, style: "max-width: 25rem"
+    end
+    column :playlist
+    column :created_at
+    column :updated_at
+
+    actions
+  end
+
   controller do
     before_action :set_bible
-    before_action :parse_verses, only: [:create]
 
     def set_bible
       #bible_path = Rails.root.join("lib/open-bibles/spa-rv1909.usfx.xml")
@@ -15,10 +37,8 @@ ActiveAdmin.register Scripture do
       @bible = BibleParser.new(File.open(bible_path))
     end
 
-    def parse_verses
-      if params[:scripture] && params[:scripture][:verses]
-        params[:scripture][:verses] = params[:scripture][:verses].split(",")
-      end
+    def scoped_collection
+      super.includes(playlist_section: [:playlist])
     end
   end
 

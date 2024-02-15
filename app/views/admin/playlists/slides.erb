@@ -2,13 +2,41 @@
   <h1><a href="#"><%= @playlist.name.titleize%></a></h1>
 </section>
 
-<% @playlist.songs.each do |song|%>
+<%# @playlist.songs.each do |song|%>
+<%#  <section>
+<%#    <h3><a href="#"><%= song.title.titleize %></a></h3>
+<%#    <% song.content.split("\n").each_slice(5) do |lines| %>
+<%#      <section>
+<%#        <p><%= raw lines.join("</br>") %></p>
+<%#      </section>
+<%#    <%end%>
+<%#  </section>
+<%#<% end %>
+
+<% @playlist.playlist_sections.each do |section| %>
   <section>
-    <h3><a href="#"><%= song.title.titleize %></a></h3>
-    <% song.content.split("\n").each_slice(5) do |lines| %>
-      <section>
-        <p><%= raw lines.join("</br>") %></p>
-      </section>
-    <%end%>
+    <h3><a href="#"><%= section.name %></a></h3>
   </section>
+  <% section.songs.each do |song| %>
+    <section>
+      <h3><a href="#"><%= song.title.titleize %></a></h3>
+
+      <% song.content.split("\n").each_slice(5) do |lines| %>
+        <section>
+          <p><%= raw lines.join("</br>") %></p>
+        </section>
+      <% end %>
+    </section>
+  <% end %>
+
+  <% section.scriptures.each do |scripture| %>
+    <section>
+      <h3><%= scripture.book_id%> <%= scripture.chapter_num %> : <%= scripture.verses.select{|verse| verse.present? }.join(",") %></h3>
+      <% scripture.content.split("\n").each_slice(5) do |lines| %>
+        <section>
+          <p><%= raw lines.join("</br>") %></p>
+        </section>
+      <% end %>
+    </section>
+  <% end %>
 <% end %>

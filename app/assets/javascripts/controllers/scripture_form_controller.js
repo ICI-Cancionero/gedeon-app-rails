@@ -7,6 +7,8 @@ class ScriptureFormController extends Stimulus.Controller {
   ]
 
   connect() {
+    console.log("ScriptureForm attached");
+
     $(this.bookTarget).on('select2:select', function () {
       let event = new Event('change', { bubbles: true }) // fire a native event
       this.dispatchEvent(event);
@@ -21,11 +23,48 @@ class ScriptureFormController extends Stimulus.Controller {
       let event = new Event('change', { bubbles: true }) // fire a native event
       this.dispatchEvent(event);
     });
+
     $(this.versesTarget).on('select2:unselect', function() {
       let event = new Event('change', { bubbles: true }) // fire a native event
       this.dispatchEvent(event);
-    })
+    });
   }
+
+  // bookTargetConnected(element) {
+  //   console.log("Book Target connected");
+
+  //   $(this.bookTarget).on('select2:select', function () {
+  //     let event = new Event('change', { bubbles: true }) // fire a native event
+  //     this.dispatchEvent(event);
+  //   });
+  // }
+
+  // chapterNumTargetConnected(element) {
+  //   console.log("Chapter Target connected");
+
+  //   $(this.chapterNumTarget).on('select2:select', function () {
+  //     let event = new Event('change', { bubbles: true }) // fire a native event
+  //     this.dispatchEvent(event);
+  //   });
+  // }
+
+  // versesTargetConnected(element) {
+  //   console.log("Verses Target connected");
+
+  //   $(this.versesTarget).on('select2:select', function () {
+  //     let event = new Event('change', { bubbles: true }) // fire a native event
+  //     this.dispatchEvent(event);
+  //   });
+
+  //   $(this.versesTarget).on('select2:unselect', function() {
+  //     let event = new Event('change', { bubbles: true }) // fire a native event
+  //     this.dispatchEvent(event);
+  //   });
+  // }
+
+  // contentTargetConnected(element) {
+  //   console.log("Content Target connected");
+  // }
 
   async handleBookChange(element){
     console.log(this.bookTarget.value);

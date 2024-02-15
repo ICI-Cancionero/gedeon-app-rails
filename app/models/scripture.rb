@@ -25,6 +25,7 @@
 #
 class Scripture < ApplicationRecord
   acts_as_tenant(:account)
+  belongs_to :playlist_section
 
   serialize :verses, Array
 end

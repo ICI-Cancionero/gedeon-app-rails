@@ -36,13 +36,14 @@ class Scripture < ApplicationRecord
   end
 
   def self.bible_versions
-    ["NVI", "RVR09"]
+    ["NVI", "RVR09", "RVR1960"]
   end
 
   def self.open_bible_files
     {
       "NVI": "spa-NVI.xmm.xml",
-      "RVR09": "spa-RVR09.usfx.xml"
+      "RVR09": "spa-RVR09.usfx.xml",
+      "RVR1960": "spa-RVR1960.xml"
     }
   end
 

@@ -7,6 +7,7 @@ ActiveAdmin.register Scripture do
 
   form partial: 'form'
 
+  filter :bible_version, as: :select, collection: Scripture.bible_versions
   filter :book_id
   filter :chapter_num
   filter :from
@@ -30,15 +31,34 @@ ActiveAdmin.register Scripture do
 
   controller do
     before_action :set_bible
+    before_action :set_bible_from_scripture, only: [:edit]
 
     def set_bible
-      #bible_path = Rails.root.join("lib/open-bibles/spa-rv1909.usfx.xml")
-      bible_path = Rails.root.join("lib/open-bibles/NVI-utf8.xmm.xml")
+      params[:bible_version] ||= "NVI"
+      bible_path = Scripture.open_bible_file_path(params[:bible_version])
+      @bible = BibleParser.new(File.open(bible_path))
+    end
+
+    def set_bible_from_scripture
+      params[:bible_version] = resource.bible_version
+      bible_path = Scripture.open_bible_file_path(params[:bible_version])
       @bible = BibleParser.new(File.open(bible_path))
     end
 
     def scoped_collection
       super.includes(playlist_section: [:playlist])
+    end
+  end
+
+  collection_action :books, method: :get do
+    @books = @bible.books.map do |book|
+      {
+        book_title: book.title,
+      }
+    end
+
+    respond_to do |format|
+      format.json { render json: @books }
     end
   end
 

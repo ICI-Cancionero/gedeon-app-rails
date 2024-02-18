@@ -3,6 +3,7 @@
 # Table name: scriptures
 #
 #  id                  :bigint           not null, primary key
+#  bible_version       :string
 #  chapter_num         :string
 #  content             :text
 #  from                :integer
@@ -31,6 +32,30 @@ class Scripture < ApplicationRecord
   serialize :verses, Array
 
   def bible_reference
-    "#{book_id} #{chapter_num} : #{from} #{to.present? ? "- #{to}" : nil}"
+    "#{book_id} #{chapter_num} : #{from} #{to.present? ? "- #{to}" : nil} #{bible_version}"
+  end
+
+  def self.bible_versions
+    ["NVI", "RVR09"]
+  end
+
+  def self.open_bible_files
+    {
+      "NVI": "spa-NVI.xmm.xml",
+      "RVR09": "spa-RVR09.usfx.xml"
+    }
+  end
+
+  def self.open_bible_file_path(version)
+    Rails.root.join("lib/open-bibles/#{open_bible_files[version.to_sym]}")
+  end
+
+  def bible_version
+    super || "NVI"
+  end
+
+  def bible
+    bible_path = Scripture.open_bible_file_path(self.bible_version)
+    @bible = BibleParser.new(File.open(bible_path))
   end
 end

@@ -15,17 +15,25 @@
 
       <% ps.has_many :scriptures, heading: 'Escrituras', allow_destroy: true do |sc| %>
         <div data-controller="scripture-form">
+          <% sc.input :bible_version,
+              as: :select,
+              collection: Scripture.bible_versions,
+              input_html: {
+                "data-scripture-form-target": "bibleVersion",
+                "data-action": "change->scripture-form#handleBibleChange"
+              }
+          %>
           <% sc.input :book_id,
                       as: :select,
-                      collection: @bible.books.map{|book| [book.title, book.title]},
+                      collection: sc.object.bible.books.map{|book| [book.title, book.title]},
                       input_html: {
                         "data-scripture-form-target": "book",
                         "data-action": "change->scripture-form#handleBookChange"
                       }
           %>
 
-        <% sc.object.book_id = @bible.books.first.title if sc.object.book_id.nil? %>
-        <% book = @bible.books.find{|book| book.title == sc.object.book_id }%>
+        <% sc.object.book_id = sc.object.bible.books.first.title if sc.object.book_id.nil? %>
+        <% book = sc.object.bible.books.find{|book| book.title == sc.object.book_id }%>
         <% chapters = book.chapters.map{|chapter| ["#{chapter.book_title} ##{chapter.num}", chapter.num]}%>
         <% chapter = book.chapters.find{|chapter| chapter.num == sc.object.chapter_num.to_i } %>
         <% verses = chapter ? chapter.verses.map{|verse| verse.num} : []%>

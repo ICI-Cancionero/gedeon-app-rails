@@ -6,6 +6,14 @@
 
 <%= semantic_form_for [:admin, @scripture], builder: ActiveAdmin::FormBuilder, html: {"data-controller": "scripture-form"} do |f| %>
   <%= f.inputs "Details" do %>
+    <%= f.input :bible_version,
+        as: :select,
+        collection: Scripture.bible_versions,
+        input_html: {
+          "data-scripture-form-target": "bibleVersion",
+          "data-action": "change->scripture-form#handleBibleChange"
+        }
+    %>
     <%= f.input :book_id,
         as: :select,
         collection: @bible.books.map{|book| [book.title, book.title]},

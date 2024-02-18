@@ -8,7 +8,7 @@ ActiveAdmin.register Playlist do
                   :name,
                   :_destroy,
                   playlist_items_attributes: [:id, :position, :song_id, :_destroy],
-                  scriptures_attributes: [:id, :book_id, :chapter_num, :content, :from, :to, :_destroy]
+                  scriptures_attributes: [:id, :bible_version, :book_id, :chapter_num, :content, :from, :to, :_destroy]
                 ]
 
   scope :active
@@ -89,15 +89,6 @@ ActiveAdmin.register Playlist do
       format.html do
         redirect_to edit_admin_playlist_path(@new_playlist), notice: "You have duplicate the playlist succesfully"
       end
-    end
-  end
-
-  controller do
-    before_action :set_bible, only: [:new, :edit]
-
-    def set_bible
-      bible_path = Rails.root.join("lib/open-bibles/NVI-utf8.xmm.xml")
-      @bible = BibleParser.new(File.open(bible_path))
     end
   end
 end

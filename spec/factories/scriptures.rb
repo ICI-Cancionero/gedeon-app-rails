@@ -3,6 +3,7 @@
 # Table name: scriptures
 #
 #  id                  :bigint           not null, primary key
+#  bible_version       :string
 #  chapter_num         :string
 #  content             :text
 #  from                :integer

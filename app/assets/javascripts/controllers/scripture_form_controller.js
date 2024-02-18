@@ -1,5 +1,6 @@
 class ScriptureFormController extends Stimulus.Controller {
   static targets = [
+    'bibleVersion',
     'book',
     'chapterNum',
     'verses',
@@ -14,6 +15,11 @@ class ScriptureFormController extends Stimulus.Controller {
     this.oldFrom = this.fromTarget.value;
     this.oldTo = this.toTarget.value;
 
+    $(this.bibleVersionTarget).on('select2:select', function () {
+      let event = new Event('change', { bubbles: true }) // fire a native event
+      this.dispatchEvent(event);
+    });
+
     $(this.bookTarget).on('select2:select', function () {
       let event = new Event('change', { bubbles: true }) // fire a native event
       this.dispatchEvent(event);
@@ -27,58 +33,41 @@ class ScriptureFormController extends Stimulus.Controller {
     if (this.bookTarget.value.length > 0 && this.chapterNumTarget.value.length > 0){
       this.handleChapterNumChange();
     }
-
-    // $(this.versesTarget).on('select2:select', function () {
-    //   let event = new Event('change', { bubbles: true }) // fire a native event
-    //   this.dispatchEvent(event);
-    // });
-
-    // $(this.versesTarget).on('select2:unselect', function() {
-    //   let event = new Event('change', { bubbles: true }) // fire a native event
-    //   this.dispatchEvent(event);
-    // });
   }
 
-  // bookTargetConnected(element) {
-  //   console.log("Book Target connected");
+  async handleBibleChange(event){
+    console.log(this.bibleVersionTarget.value);
 
-  //   $(this.bookTarget).on('select2:select', function () {
-  //     let event = new Event('change', { bubbles: true }) // fire a native event
-  //     this.dispatchEvent(event);
-  //   });
-  // }
+    const response = await fetch(`/admin/scriptures/books?bible_version=${this.bibleVersionTarget.value}`);
+    const data = await response.json();
 
-  // chapterNumTargetConnected(element) {
-  //   console.log("Chapter Target connected");
+    const select2 = $(this.bookTarget);
+    // Clear existing options
+    select2.empty();
 
-  //   $(this.chapterNumTarget).on('select2:select', function () {
-  //     let event = new Event('change', { bubbles: true }) // fire a native event
-  //     this.dispatchEvent(event);
-  //   });
-  // }
+    // empty option
+    const option = new Option("", "", false, false);
+    select2.append(option);
 
-  // versesTargetConnected(element) {
-  //   console.log("Verses Target connected");
+    // Add new options
+    data.forEach(item => {
+      const option = new Option(`${item.book_title}`, item.book_title, false, false);
+      select2.append(option);
+    });
 
-  //   $(this.versesTarget).on('select2:select', function () {
-  //     let event = new Event('change', { bubbles: true }) // fire a native event
-  //     this.dispatchEvent(event);
-  //   });
+    // Trigger change event to refresh Select2
+    select2.trigger('change');
 
-  //   $(this.versesTarget).on('select2:unselect', function() {
-  //     let event = new Event('change', { bubbles: true }) // fire a native event
-  //     this.dispatchEvent(event);
-  //   });
-  // }
+    $(this.chapterNumTarget).empty();
+    $(this.fromTarget).empty();
+    $(this.toTarget).empty();
+    this.contentTarget.value = "";
+  }
 
-  // contentTargetConnected(element) {
-  //   console.log("Content Target connected");
-  // }
-
-  async handleBookChange(element){
+  async handleBookChange(event){
     console.log(this.bookTarget.value);
 
-    const response = await fetch(`/admin/scriptures/chapters?book_id=${this.bookTarget.value}`);
+    const response = await fetch(`/admin/scriptures/chapters?bible_version=${this.bibleVersionTarget.value}&book_id=${this.bookTarget.value}`);
     const data = await response.json();
 
     const select2 = $(this.chapterNumTarget);
@@ -99,8 +88,8 @@ class ScriptureFormController extends Stimulus.Controller {
     select2.trigger('change');
   }
 
-  async handleChapterNumChange(element) {
-    const response = await fetch(`/admin/scriptures/verses?book_id=${this.bookTarget.value}&chapter_num=${this.chapterNumTarget.value}`);
+  async handleChapterNumChange(event) {
+    const response = await fetch(`/admin/scriptures/verses?bible_version=${this.bibleVersionTarget.value}&book_id=${this.bookTarget.value}&chapter_num=${this.chapterNumTarget.value}`);
     this.versesData = await response.json();
 
     // Filling From Select with verses

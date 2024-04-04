@@ -7,7 +7,8 @@ ActiveAdmin.register Song do
                 video_links_attributes: [
                   :id,
                   :provider,
-                  :url
+                  :url,
+                  :_destroy
                 ]
 
   filter :title

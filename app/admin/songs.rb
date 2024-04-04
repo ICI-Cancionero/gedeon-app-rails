@@ -5,6 +5,7 @@ ActiveAdmin.register Song do
 
   permit_params :title, :content, :position, :author,
                 video_links_attributes: [
+                  :id,
                   :provider,
                   :url
                 ]

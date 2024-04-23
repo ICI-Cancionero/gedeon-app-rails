@@ -36,3 +36,4 @@ bin/*
 !/app/assets/builds/.keep
 app/assets/builds
 vendor/bundle/
+.DS_Store

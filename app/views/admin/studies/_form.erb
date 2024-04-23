@@ -1,0 +1,15 @@
+<%= javascript_include_tag Ckeditor.cdn_url %>
+
+<%= semantic_form_for [:admin, @study], builder: ActiveAdmin::FormBuilder do |f| %>
+  <%= f.inputs "Details" do %>
+    <%= f.input :title %>
+    <li class="text input optional" id="study_content_input">
+      <label for="study_content" class="label">Content</label>
+      <fieldset>
+        <%= f.cktext_area :content, data: {controller: "ckeditor"}, ckeditor: { uiColor: '#efefef', toolbar: 'Full' } %>
+      </fieldset>
+    </li>
+  <% end %>
+
+  <%= f.actions %>
+<% end %>

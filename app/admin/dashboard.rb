@@ -23,10 +23,10 @@ ActiveAdmin.register_page "Dashboard" do
         end
       end
       column do
-        panel "Recent Scriptures" do
+        panel "Recent Studies" do
           ul do
-            Scripture.order('created_at desc').limit(5).map do |scripture|
-              li link_to(scripture.bible_reference, admin_scripture_path(scripture))
+            Study.order('created_at desc').limit(5).map do |study|
+              li link_to(study.title, admin_study_path(study))
             end
           end
         end

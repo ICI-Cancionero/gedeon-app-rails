@@ -65,6 +65,10 @@ gem 'ransack'
 gem 'rswag'
 gem 'video_player'
 gem 'bible_parser'
+gem 'ckeditor', github: 'galetahub/ckeditor'
+gem 'carrierwave'
+gem 'carrierwave-aws'
+gem 'mini_magick'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

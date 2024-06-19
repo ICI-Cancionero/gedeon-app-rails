@@ -1,4 +1,4 @@
-class Api::V1::SongsController < ApplicationController
+class Api::V1::SongsController < Api::V1::ApiBaseController
   def show
     @song = Song.find(params[:id])
     render json: @song

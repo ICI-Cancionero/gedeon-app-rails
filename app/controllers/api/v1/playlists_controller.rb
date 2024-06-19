@@ -1,4 +1,4 @@
-class Api::V1::PlaylistsController < ApplicationController
+class Api::V1::PlaylistsController < Api::V1::ApiBaseController
 
   def show
     @playlist = Playlist.find(params[:id])

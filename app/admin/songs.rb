@@ -3,10 +3,12 @@ require 'video_player'
 ActiveAdmin.register Song do
   menu priority: 3
 
-  permit_params :title, :content, :position,
+  permit_params :title, :content, :position, :author,
                 video_links_attributes: [
+                  :id,
                   :provider,
-                  :url
+                  :url,
+                  :_destroy
                 ]
 
   filter :title
@@ -22,6 +24,7 @@ ActiveAdmin.register Song do
     column :content do |song|
       div song.content, style: "max-width: 25rem"
     end
+    column :author
     column :position
     column :created_at
     column :updated_at
@@ -34,6 +37,7 @@ ActiveAdmin.register Song do
       f.input :title
       f.input :position
       f.input :content
+      f.input :author
     end
 
     if song.persisted?
@@ -59,7 +63,7 @@ ActiveAdmin.register Song do
       row :content do |song|
         simple_format song.content
       end
-
+      row :author
       row :video_links do |song|
         song.video_links.each do |video_link|
           div do

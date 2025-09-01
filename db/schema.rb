@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_18_182313) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_23_182442) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,6 +48,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_18_182313) do
     t.index ["account_id"], name: "index_admin_users_on_account_id"
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
+
+  create_table "ckeditor_assets", force: :cascade do |t|
+    t.string "data_file_name", null: false
+    t.string "data_content_type"
+    t.integer "data_file_size"
+    t.string "type", limit: 30
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["type"], name: "index_ckeditor_assets_on_type"
   end
 
   create_table "playlist_items", force: :cascade do |t|
@@ -107,6 +117,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_18_182313) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.bigint "account_id"
+    t.string "author"
     t.index ["account_id"], name: "index_songs_on_account_id"
   end
 
@@ -115,6 +126,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_18_182313) do
     t.bigint "video_link_id", null: false
     t.index ["song_id"], name: "index_songs_video_links_on_song_id"
     t.index ["video_link_id"], name: "index_songs_video_links_on_video_link_id"
+  end
+
+  create_table "studies", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "account_id"
+    t.text "raw_content"
+    t.index ["account_id"], name: "index_studies_on_account_id"
   end
 
   create_table "video_links", force: :cascade do |t|
@@ -129,4 +150,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_18_182313) do
   add_foreign_key "playlists", "accounts"
   add_foreign_key "scriptures", "accounts"
   add_foreign_key "songs", "accounts"
+  add_foreign_key "studies", "accounts"
 end

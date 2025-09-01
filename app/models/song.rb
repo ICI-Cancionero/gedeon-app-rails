@@ -3,6 +3,7 @@
 # Table name: songs
 #
 #  id         :bigint           not null, primary key
+#  author     :string
 #  content    :text
 #  position   :integer
 #  title      :string

@@ -7,3 +7,4 @@ const application = Stimulus.Application.start()
 
 application.register("hello", HelloController)
 application.register("scripture-form", ScriptureFormController)
+application.register("ckeditor", CkeditorController)

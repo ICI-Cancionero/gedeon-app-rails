@@ -15,7 +15,6 @@ RUN ["cp", "/usr/bin/wkhtmltopdf", "/usr/local/bundle/bin/"]
 
 # Establece las variables de entorno necesarias para ejecutar la aplicación
 ENV RAILS_ENV development
-ENV DATABASE_URL postgres://postgres@localhost/holymusic_app_rails_development
 
 # Expone el puerto en el que se ejecutará la aplicación
 EXPOSE 3000

@@ -11,7 +11,12 @@ services:
       - postgres-data:/var/lib/postgresql/data
 
   web:
-    build: .
+    image: gedeon-app-rails:web
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    pull_policy: never
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
     ports:
       - "3000:3000"

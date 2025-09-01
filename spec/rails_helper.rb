@@ -78,9 +78,13 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
   end
 
+  # Ensure each example runs within a tenant for acts_as_tenant models
   config.around(:each) do |example|
     DatabaseCleaner.cleaning do
-      example.run
+      account = FactoryBot.create(:account)
+      ActsAsTenant.with_tenant(account) do
+        example.run
+      end
     end
   end
 end

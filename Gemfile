@@ -47,7 +47,6 @@ gem 'versionist'
 gem 'active_model_serializers', '0.10.13'
 gem 'newrelic_rpm'
 gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary-edge'
 gem 'rollbar'
 gem 'quiet_safari'
 gem 'mimemagic', '0.3.10'
@@ -79,6 +78,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 4.0.0'
   gem "pry"
   gem "pry-remote"
+  gem 'wkhtmltopdf-binary-edge'
 end
 
 group :development do

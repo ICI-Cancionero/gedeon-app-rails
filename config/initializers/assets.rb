@@ -8,8 +8,9 @@ Rails.application.config.assets.version = '1.0.2'
 # Add Yarn node_modules folder to the asset load path.
 Rails.application.config.assets.paths << Rails.root.join('node_modules')
 Rails.application.config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+Rails.application.config.assets.paths << Rails.root.join('app', 'assets', 'builds')
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
-Rails.application.config.assets.precompile += %w( default_logo.jpeg pdf.css revealjs.js stimulus.js revealjs.css ckeditor/config.js ckeditor/plugins/chat-gpt/plugin.js)
+Rails.application.config.assets.precompile += %w( application.css default_logo.jpeg pdf.css revealjs.js stimulus.js revealjs.css ckeditor/config.js ckeditor/plugins/chat-gpt/plugin.js)

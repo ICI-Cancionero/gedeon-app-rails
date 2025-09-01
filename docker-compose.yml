@@ -1,8 +1,6 @@
-version: '3.8'
-
 services:
   db:
-    image: postgres:12
+    image: postgres:17
     environment:
       POSTGRES_DB: holymusic_app_rails_development
       POSTGRES_USER: postgres

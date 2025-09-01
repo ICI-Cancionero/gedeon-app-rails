@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.2.1'
+ruby '3.2.9'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 7.0.5'
@@ -47,14 +47,14 @@ gem 'versionist'
 gem 'active_model_serializers', '0.10.13'
 gem 'newrelic_rpm'
 gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary'
+gem 'wkhtmltopdf-binary-edge'
 gem 'rollbar'
 gem 'quiet_safari'
 gem 'mimemagic', '0.3.10'
 gem 'rack'
 gem 'nokogiri', '~> 1.14'
 gem 'inherited_resources', '1.13.1'
-gem 'ffi', '1.15.5'
+gem 'ffi', '~> 1.16'
 gem 'thor', '1.2.1'
 gem 'formtastic', '4.0.0.rc1'
 gem 'net-smtp', require: false

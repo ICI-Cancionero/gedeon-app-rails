@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :playlist do
+    association :account
     add_attribute(:name) { Faker::Name.name }
     add_attribute(:active) { true }
 

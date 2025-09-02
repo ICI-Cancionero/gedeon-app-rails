@@ -1,38 +1,83 @@
-<div class="flex flex-col w-full" data-controller="main">
-  <%= search_form_for @q, url: app_url do |f| %>
-    <%= f.search_field :title_or_content_cont,
-      placeholder: "Buscar canción por título o letra",
-      class: "input input-bordered w-full max-w-xs",
-      type: "text"
-    %>
-    <%= f.submit "Búscar", class: "btn btn-neutral" %>
-  <% end %>
+<%# search form moved below the fixed A–Z bar spacer %>
+
+<%# Page header with church/account name (scrolls away) %>
+<div class="max-w-screen-lg px-2 mb-2">
+  <% account_name = ActsAsTenant.current_tenant&.name || 'Tu Iglesia' %>
+  <div class="card">
+    <div class="card-body py-3 px-4">
+      <h1 class="text-xl sm:text-2xl font-extrabold">
+        Canciones de la Iglesia <span class="text-primary"><%= account_name %></span>
+      </h1>
+    </div>
+  </div>
 </div>
 
+<%# Sticky A–Z index and search (remains visible) %>
+<div class="sticky top-0 left-0 right-0 z-40 bg-base-100/95 backdrop-blur border-b border-base-300">
+  <!-- Letters row: single-line, scrollable on mobile -->
+  <div class="px-2 py-2">
+    <div class="flex flex-wrap items-center gap-1 sm:gap-2">
+      <%- grouped_songs.keys.sort.each do |letter| %>
+        <a href="#letter-<%= letter %>" class="btn btn-ghost btn-xs">
+          <%= letter %>
+        </a>
+      <%- end %>
+    </div>
+  </div>
+  <!-- Search row: full-width input + button; label hidden -->
+  <div class="px-2 pb-2" data-controller="main">
+    <%= search_form_for @q, url: app_url, html: { class: "w-full" } do |f| %>
+      <label class="sr-only" for="q_title_or_content_cont">Buscar canciones</label>
+      <div class="join w-full">
+        <%= f.search_field :title_or_content_cont,
+          placeholder: "Busca por título o letra…",
+          class: "input input-bordered join-item w-full",
+          type: "text"
+        %>
+        <%= f.submit "Buscar", class: "btn btn-primary join-item" %>
+      </div>
+    <% end %>
+  </div>
+</div>
 <div class="divider"></div>
 
-<div class="flex flex-col w-full overflow-x-auto">
-  <table class="table table-pin-rows">
-  <%- grouped_songs.each_pair do |letter, songs|%>
-    <thead>
-      <tr>
-        <th><span class="font-bold font-black text-blue-600"><%= letter %></span></th>
-      </tr>
-    </thead>
-    <tbody>
-      <%- songs.each do |song|%>
-        <tr class="card card-compact">
-          <td><span class="font-bold font-black text-blue-400"><%= song.title %></span></td>
-        </tr>
-        <tr>
-          <td class="card card-compact">
-            <article class="prose">
-              <%= simple_format song.content %>
-            </article>
-          </td>
-        </tr>
-      <%- end %>
-    </tbody>
+<% if @songs.any? %>
+<div class="flex flex-col w-full gap-10 mt-3">
+  <%- grouped_songs.each_pair do |letter, songs| %>
+    <section id="letter-<%= letter %>" class="scroll-mt-32 sm:scroll-mt-24">
+      <div class="-mx-2 px-2 py-2 bg-base-100/95 border-b border-base-300">
+        <h2 class="text-2xl font-extrabold text-primary"><%= letter %> <span class="badge badge-neutral align-middle ml-2"><%= songs.size %></span></h2>
+      </div>
+      <div class="mt-2 flex flex-col gap-3">
+        <%- songs.each do |song| %>
+          <details class="group collapse collapse-arrow bg-base-100 border border-base-300 rounded-xl transition duration-200 hover:border-primary/60 hover:shadow-sm">
+            <summary class="collapse-title list-none font-semibold text-blue-600 flex items-center justify-between">
+              <%= song.title %>
+              <span class="badge badge-ghost group-open:hidden">ver letra</span>
+            </summary>
+            <div class="collapse-content pt-0">
+              <article class="prose max-w-none mt-2">
+                <%= simple_format song.content %>
+              </article>
+            </div>
+          </details>
+        <%- end %>
+      </div>
+    </section>
   <%- end %>
-  </table>
 </div>
+<% else %>
+  <div class="mx-auto max-w-screen-lg px-2 mt-6">
+    <div class="card bg-base-100 border border-base-300 shadow-sm">
+      <div class="card-body items-center text-center">
+        <h3 class="card-title">No se encontraron canciones</h3>
+        <% if params[:q].present? %>
+          <p class="text-sm opacity-70">Intenta ajustar tu búsqueda.</p>
+          <%= link_to 'Limpiar búsqueda', app_path, class: 'btn btn-ghost btn-sm mt-2' %>
+        <% else %>
+          <p class="text-sm opacity-70">Aún no hay canciones.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

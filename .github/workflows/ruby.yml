@@ -73,6 +73,9 @@ jobs:
         run: |
           bundle exec rails db:prepare
 
+      - name: Install Node dependencies
+        run: yarn install --frozen-lockfile
+
       - name: Build Esbuild
         run: yarn build
 

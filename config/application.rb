@@ -34,6 +34,10 @@ module GedeonAppRails
       env.export_concurrent = false
     end
 
+    # Rails 7: opt-in to the new connection handling to silence deprecation
+    # and ensure compatibility with multiple databases behavior.
+    config.active_record.legacy_connection_handling = false
+
     config.hosts = nil
   end
 end

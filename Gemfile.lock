@@ -456,6 +456,7 @@ DEPENDENCIES
   formtastic (= 4.0.0.rc1)
   inherited_resources (= 1.13.1)
   jbuilder (~> 2.5)
+  jquery-rails (~> 4.5.1)
   jsbundling-rails
   listen (= 3.7.1)
   mimemagic (= 0.3.10)

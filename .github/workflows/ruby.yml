@@ -96,6 +96,7 @@ jobs:
           fail_ci_if_error: true
           verbose: true
           token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/.resultset.json
 
       - name: Upload coverage artifact
         if: always()

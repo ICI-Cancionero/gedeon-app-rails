@@ -2,6 +2,8 @@
 import "@hotwired/turbo-rails"
 import './controllers';
 
+
+console.log("application.js loaded")
 // Register PWA Service Worker scoped to /app/
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {

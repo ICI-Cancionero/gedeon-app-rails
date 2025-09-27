@@ -1,0 +1,28 @@
+{
+  "name": "gedeon-app-rails",
+  "description": "Holy Music App Rails with JRuby",
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-apt"
+    },
+    {
+      "url": "https://github.com/dscout/wkhtmltopdf-buildpack"
+    },
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "heroku/ruby"
+    }
+  ],
+  "addons": [
+    "heroku-postgresql:mini"
+  ],
+  "env": {
+    "RAILS_ENV": "production",
+    "RACK_ENV": "production"
+  },
+  "scripts": {
+    "postdeploy": "jruby -S bundle exec rails db:migrate && jruby -S bundle exec rails db:seed"
+  }
+}

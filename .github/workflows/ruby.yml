@@ -31,7 +31,7 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: ['3.2.9']
+        ruby-version: ['jruby-9.4.13.0']
 
     steps:
       - name: Checkout code
@@ -45,7 +45,7 @@ jobs:
       - name: Dependencies
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y nodejs postgresql-client wkhtmltopdf libpq-dev
+          sudo apt-get install -y nodejs postgresql-client wkhtmltopdf libpq-dev openjdk-11-jdk
 
       - name: Install Gems dependencies
         env:
@@ -79,7 +79,7 @@ jobs:
           PGUSER: postgres
           PGPASSWORD: postgres
           PGDATABASE: holymusic_app_rails_test
-        run: bundle exec rspec spec
+        run: jruby -S bundle exec rspec spec
 
       - name: Upload coverage to Codecov
         if: always()

@@ -1,12 +1,13 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.2.9'
+ruby '3.1.4', :engine => 'jruby', :engine_version => '9.4.13.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 7.0.5'
 # Use postgresql as the database for Active Record
-gem 'pg', '>= 1.5'
+gem 'activerecord-jdbcpostgresql-adapter', platforms: :jruby
+gem 'pg', '>= 1.5', platforms: :ruby
 # Use Puma as the app server
 gem 'puma', '~> 4.3'
 # Use SCSS for stylesheets
@@ -17,7 +18,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'mini_racer', platforms: :ruby
 gem 'jsbundling-rails', '1.1.2'
 gem 'turbo-rails', '1.4.0'
-gem "tailwindcss-rails", "~> 2.0"
+# gem "tailwindcss-rails", "~> 2.0"  # Disabled for JRuby compatibility
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
@@ -63,8 +64,8 @@ gem 'net-pop', '0.1.2', require: false
 gem 'ransack', '3.2.1'
 gem 'rswag', '2.9.0'
 gem 'video_player', '1.0.0'
-gem 'bible_parser', '1.1.1'
-gem 'ckeditor', github: 'galetahub/ckeditor'
+# gem 'bible_parser', '1.1.1'  # Replaced with SimpleBibleLoader for JRuby compatibility
+gem 'ckeditor', '5.1.1'
 gem 'carrierwave', '3.0.7'
 gem 'carrierwave-aws', '1.6.0'
 gem 'mini_magick', '4.12.0'
@@ -72,7 +73,7 @@ gem 'jquery-rails', '~> 4.5.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', '11.1.3', platforms: [:mri, :mingw, :x64_mingw]
+  #gem 'byebug', '11.1.3', platforms: [:mri, :mingw, :x64_mingw]
   gem 'dotenv-rails', '2.8.1'
   gem 'factory_bot_rails', '6.2.0'
   gem 'faker', '3.2.0'

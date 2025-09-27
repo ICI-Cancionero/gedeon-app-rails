@@ -42,5 +42,10 @@ module GedeonAppRails
     config.action_controller.urlsafe_csrf_tokens = true
 
     config.hosts = nil
+
+    # JRuby compatibility: prevent FrozenError on autoload_paths
+    if RUBY_ENGINE == 'jruby'
+      config.autoload_paths = config.autoload_paths.dup
+    end
   end
 end

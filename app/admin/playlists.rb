@@ -46,6 +46,10 @@ ActiveAdmin.register Playlist do
     link_to 'View PDF', view_pdf_admin_playlist_path(playlist, format: :pdf), target: "_blank"
   end
 
+  action_item :iron_pdf, only: [:show, :slides] do
+    link_to 'Generate with IronPDF', iron_pdf_admin_playlist_path(playlist, format: :pdf), target: "_blank"
+  end
+
   action_item :duplicate, only: :show do
     link_to 'Duplicate', duplicate_admin_playlist_path(playlist)
   end
@@ -78,6 +82,34 @@ ActiveAdmin.register Playlist do
                zoom: 1,
                dpi: 75
                #show_as_html: true
+      end
+    end
+  end
+
+  member_action :iron_pdf, method: :get do
+    @playlist = resource
+    
+    respond_to do |format|
+      format.html do
+        render layout: 'pdf'
+      end
+      format.pdf do
+        begin
+          result = Pdf::IronPdfService.generate_playlist_pdf(@playlist)
+          
+          if result[:success]
+            send_file result[:file_path],
+                      filename: "#{@playlist.name.parameterize}_ironpdf.pdf",
+                      type: 'application/pdf',
+                      disposition: 'inline'  # Changed from 'attachment' to 'inline' for browser PDF viewer
+          else
+            redirect_to admin_playlist_path(@playlist), 
+                        alert: "Failed to generate PDF: #{result[:message]}"
+          end
+        rescue => e
+          redirect_to admin_playlist_path(@playlist), 
+                      alert: "Error generating PDF with IronPDF: #{e.message}"
+        end
       end
     end
   end

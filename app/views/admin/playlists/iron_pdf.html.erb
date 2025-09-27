@@ -1,0 +1,93 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+  <div class="max-w-4xl mx-auto bg-white shadow-2xl rounded-lg overflow-hidden">
+    <!-- Header Section -->
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-8">
+      <div class="text-center">
+        <h1 class="text-4xl font-bold mb-2">
+          <%= @playlist.name.titleize%>
+        </h1>
+        <div class="text-blue-100 text-sm">
+          <%= Time.current.strftime('%B %d, %Y at %I:%M %p') %> • 
+          <span class="<%= @playlist.active? ? 'text-green-300' : 'text-red-300' %>">
+            <%= @playlist.active? ? 'Active' : 'Inactive' %>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Section -->
+    <div class="p-8">
+      <% @playlist.playlist_sections.each_with_index do |p_section, section_index|%>
+        <div class="mb-12 <%= 'border-t border-gray-200 pt-8' if section_index > 0 %>">
+          <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-2"><%= p_section.name.titleize %></h2>
+            <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-600 mx-auto"></div>
+          </div>
+          
+          <div class="space-y-8">
+            <% if p_section.playlist_items.any? %>
+              <div class="songs-section">
+                <div class="flex items-center mb-6">
+                  <div class="flex-1 h-px bg-blue-200"></div>
+                  <h3 class="px-4 text-xl font-semibold text-blue-800 bg-blue-50 rounded-full py-2">
+                    🎵 Songs
+                  </h3>
+                  <div class="flex-1 h-px bg-blue-200"></div>
+                </div>
+                
+                <% p_section.playlist_items.each_with_index do |p_item, item_index|%>
+                  <div class="mb-8 p-6 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl shadow-lg border-l-4 border-blue-500">
+                    <div class="text-center mb-4">
+                      <h4 class="text-2xl font-bold text-blue-900 mb-1">
+                        <%= "#{p_item.position}. #{p_item.song.title.titleize}" %>
+                      </h4>
+                      <% if p_item.song.author.present? %>
+                        <div class="text-blue-700 font-medium">by <%= p_item.song.author %></div>
+                      <% end %>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-inner">
+                      <%= simple_format(p_item.song.content, class: "text-center leading-relaxed text-gray-700") %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+            
+            <% if p_section.scriptures.any? %>
+              <div class="scriptures-section">
+                <div class="flex items-center mb-6">
+                  <div class="flex-1 h-px bg-green-200"></div>
+                  <h3 class="px-4 text-xl font-semibold text-green-800 bg-green-50 rounded-full py-2">
+                    📖 Scriptures
+                  </h3>
+                  <div class="flex-1 h-px bg-green-200"></div>
+                </div>
+                
+                <% p_section.scriptures.each do |scripture| %>
+                  <div class="mb-6 p-6 bg-gradient-to-r from-green-50 to-emerald-100 rounded-xl shadow-lg border-l-4 border-green-500">
+                    <h4 class="font-bold text-green-900 text-center mb-3 text-lg">
+                      <%= scripture.bible_version %> - <%= scripture.book_id || 'Unknown' %> 
+                      <%= scripture.chapter_num %>:<%= scripture.from %>-<%= scripture.to %>
+                    </h4>
+                    <div class="bg-white p-4 rounded-lg shadow-inner">
+                      <div class="text-center italic leading-relaxed text-gray-700 font-medium">
+                        <%= simple_format(scripture.content) %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    
+    <!-- Footer Section -->
+    <div class="bg-gray-50 p-6 text-center border-t border-gray-200">
+      <div class="text-gray-600 text-sm">
+        <p><em>Proof of Concept</em></p>
+      </div>
+    </div>
+  </div>
+</div>

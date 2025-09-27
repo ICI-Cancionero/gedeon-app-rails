@@ -17,7 +17,7 @@ services:
       context: .
       dockerfile: Dockerfile
     pull_policy: never
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    command: jruby -S foreman start -f Procfile.docker
     ports:
       - "3000:3000"
     depends_on:
@@ -26,7 +26,7 @@ services:
       POSTGRES_HOST: db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      DATABASE_URL: postgres://postgres:password@db/holymusic_app_rails_development
+      DATABASE_URL: jdbc:postgresql://db:5432/holymusic_app_rails_development?user=postgres&password=password
 
 volumes:
   postgres-data:

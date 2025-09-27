@@ -65,7 +65,7 @@ gem 'ransack', '3.2.1'
 gem 'rswag', '2.9.0'
 gem 'video_player', '1.0.0'
 # gem 'bible_parser', '1.1.1'  # Replaced with SimpleBibleLoader for JRuby compatibility
-gem 'ckeditor', github: 'galetahub/ckeditor'
+gem 'ckeditor', '5.1.1'
 gem 'carrierwave', '3.0.7'
 gem 'carrierwave-aws', '1.6.0'
 gem 'mini_magick', '4.12.0'

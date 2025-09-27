@@ -1,10 +1,3 @@
-GIT
-  remote: https://github.com/galetahub/ckeditor.git
-  revision: 8200ccdbf789669d154b800aab329db8f46aabdc
-  specs:
-    ckeditor (5.1.1)
-      orm_adapter (~> 0.5.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -145,6 +138,8 @@ GEM
       carrierwave (>= 2.0, < 4)
     case_transform (0.2)
       activesupport
+    ckeditor (5.1.1)
+      orm_adapter (~> 0.5.0)
     coderay (1.1.3)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
@@ -182,9 +177,7 @@ GEM
       railties (>= 5.0.0)
     faker (3.2.0)
       i18n (>= 1.8.11, < 2)
-    ffi (1.17.2-arm64-darwin)
     ffi (1.17.2-java)
-    ffi (1.17.2-x86_64-linux-gnu)
     formtastic (4.0.0.rc1)
       actionpack (>= 5.2.0)
     formtastic_i18n (0.7.0)
@@ -262,14 +255,9 @@ GEM
     newrelic_rpm (9.2.2)
     nio4r (2.5.9)
     nio4r (2.5.9-java)
-    nokogiri (1.15.2-arm64-darwin)
-      racc (~> 1.4)
     nokogiri (1.15.2-java)
       racc (~> 1.4)
-    nokogiri (1.15.2-x86_64-linux)
-      racc (~> 1.4)
     orm_adapter (0.5.0)
-    pg (1.5.3)
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -287,7 +275,6 @@ GEM
       nio4r (~> 2.0)
     quiet_safari (1.0.0)
       railties (>= 3.1.0)
-    racc (1.7.1)
     racc (1.7.1-java)
     rack (2.2.7)
     rack-test (2.1.0)
@@ -439,10 +426,7 @@ GEM
     zeitwerk (2.6.8)
 
 PLATFORMS
-  arm64-darwin-22
-  arm64-darwin-24
   universal-java-21
-  x86_64-linux
 
 DEPENDENCIES
   active_model_serializers (= 0.10.13)
@@ -455,7 +439,7 @@ DEPENDENCIES
   bootsnap (= 1.12.0)
   carrierwave (= 3.0.7)
   carrierwave-aws (= 1.6.0)
-  ckeditor!
+  ckeditor (= 5.1.1)
   coffee-rails (~> 4.2)
   database_cleaner-active_record (= 2.1.0)
   devise (= 4.8.1)

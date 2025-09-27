@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.2.9'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.5'
+gem 'rails', '~> 7.0.8'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 1.5'
 # Use Puma as the app server
@@ -39,7 +39,7 @@ gem 'redis', '~> 4.0'
 gem 'bootsnap', '1.12.0', require: false
 
 gem 'devise', '4.8.1'
-gem 'activeadmin', '~> 2.13.1'
+gem 'activeadmin', '~> 3.3.0'
 gem 'active_skin', '0.0.13'
 gem 'activeadmin_addons', '1.9.0'
 gem 'acts_as_tenant', '1.0.1'
@@ -51,7 +51,7 @@ gem 'rollbar', '3.4.0'
 gem 'quiet_safari', '1.0.0'
 gem 'mimemagic', '0.3.10'
 gem 'rack', '2.2.7'
-gem 'nokogiri', '~> 1.14'
+gem 'nokogiri', '~> 1.18'
 gem 'inherited_resources', '1.13.1'
 gem 'ffi', '~> 1.16'
 gem 'thor', '1.2.1'
@@ -60,7 +60,7 @@ gem 'net-smtp', '0.3.3', require: false
 gem 'net-imap', '0.3.6', require: false
 gem 'net-pop', '0.1.2', require: false
 
-gem 'ransack', '3.2.1'
+gem 'ransack', '4.3.0'
 gem 'rswag', '2.9.0'
 gem 'video_player', '1.0.0'
 gem 'bible_parser', '1.1.1'
@@ -90,7 +90,7 @@ group :development do
 end
 
 group :test do
-  gem 'rspec', '~> 3.0'
+  gem 'rspec', '~> 3.13'
   gem 'shoulda-matchers', '~> 5.0'
   gem 'database_cleaner-active_record', '2.1.0'
   gem 'simplecov', '0.22.0', require: false

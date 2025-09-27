@@ -1,10 +1,53 @@
 module.exports = {
-  darkMode: 'class', // Enable class-based dark mode
+  darkMode: 'class',
   content: [
-    './public/*.html',
+    './app/views/**/*.erb',
+    './app/views/**/*.html.erb',
     './app/helpers/**/*.rb',
     './app/javascript/**/*.js',
-    './app/views/**/*.{erb,haml,html,slim}'
+    './app/javascript/**/*.ts'
+  ],
+  safelist: [
+    'bg-base-100',
+    'bg-base-200', 
+    'bg-base-300',
+    'border',
+    'border-base-300',
+    'collapse',
+    'collapse-arrow',
+    'collapse-title',
+    'collapse-content',
+    'group',
+    'prose',
+    'max-w-none',
+    'rounded-xl',
+    'transition',
+    'duration-200',
+    'hover:border-primary/60',
+    'hover:shadow-sm',
+    'font-semibold',
+    'text-primary',
+    'hover:text-primary-focus',
+    'flex',
+    'items-center',
+    'justify-between',
+    'badge',
+    'badge-ghost',
+    'group-open:hidden',
+    'pt-0',
+    'mt-2',
+    'sticky',
+    'top-0',
+    'left-0',
+    'right-0',
+    'z-40',
+    'backdrop-blur',
+    'border-b',
+    'card',
+    'shadow-sm',
+    'alert',
+    'shadow',
+    'rounded-t-xl'
   ],
   theme: {
     extend: {
@@ -19,25 +62,8 @@ module.exports = {
     },
   },
   daisyui: {
-    darkTheme: 'dark', // Force dark theme to be 'dark'
-    themes: [
-      'light',
-      'dark',
-      {
-        dark: {
-          ...require('daisyui/src/theming/themes')['dark'],
-          "primary": "#ed74b8",
-          "secondary": "#dd4e44",
-          "accent": "#0088cc",
-          "neutral": "#2a2e37",
-          "base-100": "#1f2937",
-          "info": "#3b82f6",
-          "success": "#10b981",
-          "warning": "#f59e0b",
-          "error": "#ef4444",
-        },
-      },
-    ],
+    themes: ['light', 'dark'],
+    darkTheme: 'dark'
   },
   plugins: [
     require('@tailwindcss/forms'),

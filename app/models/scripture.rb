@@ -26,7 +26,7 @@
 #
 class Scripture < ApplicationRecord
   acts_as_tenant(:account)
-  belongs_to :playlist_section
+  belongs_to :playlist_section, optional: true
   has_one :playlist, through: :playlist_section
 
   serialize :verses, Array
@@ -56,7 +56,6 @@ class Scripture < ApplicationRecord
   end
 
   def bible
-    bible_path = Scripture.open_bible_file_path(self.bible_version)
-    @bible = BibleParser.new(File.open(bible_path))
+    @bible ||= SimpleBibleLoader.load_bible(self.bible_version)
   end
 end

@@ -15,6 +15,8 @@ Rails.application.config.assets.paths << Rails.root.join('app', 'assets', 'build
 # folder are already added.
 Rails.application.config.assets.precompile += %w(
   application.css
+  application.js
+  tailwind.css
   default_logo.jpeg
   pdf.css
   revealjs.js

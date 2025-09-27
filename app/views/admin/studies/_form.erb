@@ -2,9 +2,48 @@
   window.OVERRIDE_API_KEY = "<%= ENV["TXT42_KEY"]%>";
 </script>
 
-<%= javascript_include_tag Ckeditor.cdn_url %>
-<%= javascript_include_tag "ckeditor/config" %>
-<%= javascript_include_tag "ckeditor/plugins/chat-gpt/plugin" %>
+<script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
+<script>
+  // Load local CKEditor config if available
+  <% if File.exist?(Rails.root.join('app/assets/javascripts/ckeditor/config.js')) %>
+    <%= File.read(Rails.root.join('app/assets/javascripts/ckeditor/config.js')).html_safe %>
+  <% end %>
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof CKEDITOR !== 'undefined') {
+      CKEDITOR.replace('study_content', {
+        uiColor: '#efefef',
+        toolbar: 'Full',
+        filebrowserUploadUrl: '/ckeditor/attachment_files',
+        filebrowserImageUploadUrl: '/ckeditor/pictures',
+        filebrowserBrowseUrl: '/ckeditor/attachment_files',
+        filebrowserImageBrowseUrl: '/ckeditor/pictures',
+        // Add CSRF token to uploads
+        filebrowserUploadMethod: 'form',
+        filebrowserImageUploadMethod: 'form',
+        // Suppress security warnings for known legacy version
+        versionCheck: false
+      });
+      
+      // Add CSRF token to all CKEditor uploads
+      CKEDITOR.on('dialogDefinition', function(ev) {
+        var dialogName = ev.data.name;
+        var dialogDefinition = ev.data.definition;
+        
+        if (dialogName == 'image' || dialogName == 'link') {
+          var uploadTab = dialogDefinition.getContents('Upload');
+          if (uploadTab) {
+            var uploadButton = uploadTab.get('upload');
+            if (uploadButton && uploadButton.filebrowser) {
+              uploadButton.filebrowser.params = uploadButton.filebrowser.params || {};
+              uploadButton.filebrowser.params['authenticity_token'] = '<%= form_authenticity_token %>';
+            }
+          }
+        }
+      });
+    }
+  });
+</script>
 
 <%= semantic_form_for [:admin, @study], builder: ActiveAdmin::FormBuilder do |f| %>
   <%= f.inputs "Details" do %>
@@ -12,7 +51,7 @@
     <li class="text input optional" id="study_content_input">
       <label for="study_content" class="label">Content</label>
       <fieldset>
-        <%= f.cktext_area :content, data: {controller: "ckeditor"}, ckeditor: { uiColor: '#efefef', toolbar: 'Full' } %>
+        <%= f.text_area :content, id: 'study_content', rows: 15, cols: 80 %>
       </fieldset>
     </li>
   <% end %>

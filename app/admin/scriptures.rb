@@ -1,9 +1,10 @@
 require 'bible_parser'
+require 'stringio'
 
 ActiveAdmin.register Scripture do
   menu priority: 5
 
-  permit_params :book_id, :chapter_num, :content, :from, :to
+  permit_params :book_id, :chapter_num, :content, :from, :to, :bible_version, :playlist_section_id
 
   form partial: 'form'
 
@@ -35,18 +36,29 @@ ActiveAdmin.register Scripture do
 
     def set_bible
       params[:bible_version] ||= "NVI"
-      bible_path = Scripture.open_bible_file_path(params[:bible_version])
-      @bible = BibleParser.new(File.open(bible_path))
+      @bible = get_cached_bible(params[:bible_version])
     end
 
     def set_bible_from_scripture
       params[:bible_version] = resource.bible_version
-      bible_path = Scripture.open_bible_file_path(params[:bible_version])
-      @bible = BibleParser.new(File.open(bible_path))
+      @bible = get_cached_bible(params[:bible_version])
     end
 
     def scoped_collection
       super.includes(playlist_section: [:playlist])
+    end
+
+    def create
+      super do |success, failure|
+        success.html { redirect_to admin_scriptures_path(bible_version: resource.bible_version) and return }
+        failure.html { redirect_to admin_scriptures_path(bible_version: params[:scripture][:bible_version]) and return }
+      end
+    end
+
+    private
+
+    def get_cached_bible(version)
+      SimpleBibleLoader.load_bible(version)
     end
   end
 

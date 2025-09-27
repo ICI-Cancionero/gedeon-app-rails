@@ -53,7 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_23_182442) do
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string "data_file_name", null: false
     t.string "data_content_type"
-    t.integer "data_file_size"
+    t.integer "data_file_size", limit: 4
     t.string "type", limit: 30
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -61,7 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_23_182442) do
   end
 
   create_table "playlist_items", force: :cascade do |t|
-    t.integer "position"
+    t.integer "position", limit: 4
     t.bigint "song_id"
     t.bigint "playlist_section_id"
     t.datetime "created_at", precision: nil, null: false
@@ -103,8 +103,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_23_182442) do
     t.datetime "updated_at", null: false
     t.bigint "account_id"
     t.bigint "playlist_section_id"
-    t.integer "from"
-    t.integer "to"
+    t.integer "from", limit: 4
+    t.integer "to", limit: 4
     t.string "bible_version"
     t.index ["account_id"], name: "index_scriptures_on_account_id"
     t.index ["playlist_section_id"], name: "index_scriptures_on_playlist_section_id"
@@ -113,7 +113,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_23_182442) do
   create_table "songs", force: :cascade do |t|
     t.string "title"
     t.text "content"
-    t.integer "position"
+    t.integer "position", limit: 4
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.bigint "account_id"
@@ -140,7 +140,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_23_182442) do
 
   create_table "video_links", force: :cascade do |t|
     t.string "url", null: false
-    t.integer "provider", default: 0, null: false
+    t.integer "provider", limit: 4, default: 0, null: false
     t.string "video_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

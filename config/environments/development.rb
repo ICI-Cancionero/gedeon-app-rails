@@ -37,6 +37,14 @@ Rails.application.configure do
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
+  
+  # Force log output for JRuby
+  if RUBY_ENGINE == 'jruby'
+    config.logger = ActiveSupport::Logger.new(STDOUT)
+    config.logger.level = Logger::DEBUG
+    STDOUT.sync = true
+    STDERR.sync = true
+  end
 
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
@@ -48,6 +56,11 @@ Rails.application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+  
+  # JRuby specific asset configuration
+  if RUBY_ENGINE == 'jruby'
+    config.assets.digest = false
+  end
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true
@@ -63,6 +76,7 @@ Rails.application.configure do
   config.hosts ||= []
   config.hosts << /.+\.localhost/
   config.hosts << /.+\.lvh\.me/
+  config.hosts << "lvh.me:3000"
   # Allow ngrok tunnels (both legacy and new domains)
   config.hosts << /.+\.ngrok\.io/
   config.hosts << /.+\.ngrok-free\.app/

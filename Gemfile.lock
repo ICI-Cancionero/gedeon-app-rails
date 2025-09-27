@@ -129,8 +129,6 @@ GEM
       aws-eventstream (~> 1, >= 1.0.2)
     bcrypt (3.1.18)
     bcrypt (3.1.18-java)
-    bible_parser (1.1.1)
-      nokogiri (>= 1.6.0)
     bindex (0.8.1)
     bootsnap (1.12.0)
       msgpack (~> 1.2)
@@ -454,7 +452,6 @@ DEPENDENCIES
   activerecord-jdbcpostgresql-adapter
   acts_as_tenant (= 1.0.1)
   annotate (= 3.2.0)
-  bible_parser (= 1.1.1)
   bootsnap (= 1.12.0)
   carrierwave (= 3.0.7)
   carrierwave-aws (= 1.6.0)

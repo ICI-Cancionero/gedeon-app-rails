@@ -64,7 +64,7 @@ gem 'net-pop', '0.1.2', require: false
 gem 'ransack', '3.2.1'
 gem 'rswag', '2.9.0'
 gem 'video_player', '1.0.0'
-gem 'bible_parser', '1.1.1'
+# gem 'bible_parser', '1.1.1'  # Replaced with SimpleBibleLoader for JRuby compatibility
 gem 'ckeditor', github: 'galetahub/ckeditor'
 gem 'carrierwave', '3.0.7'
 gem 'carrierwave-aws', '1.6.0'

@@ -1,6 +1,9 @@
 require 'tempfile'
 
 class JfreePdfGenerator
+  # Set headless mode before any Java AWT imports
+  Java::JavaLang::System.setProperty('java.awt.headless', 'true') if defined?(Java)
+
   java_import 'org.jfree.pdf.PDFDocument'
   java_import 'org.jfree.pdf.PDFGraphics2D'
   java_import 'org.jfree.pdf.Page'
@@ -15,6 +18,9 @@ class JfreePdfGenerator
   end
 
   def generate_playlist_pdf(playlist)
+    # Ensure headless mode for Java AWT
+    Java::JavaLang::System.setProperty('java.awt.headless', 'true')
+
     # Create a new PDF document
     pdf_document = PDFDocument.new
 

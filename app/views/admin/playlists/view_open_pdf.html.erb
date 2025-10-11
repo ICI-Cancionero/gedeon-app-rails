@@ -1,0 +1,25 @@
+<%# OpenPDF HTMLWorker has very limited CSS support, so we use simple HTML tags %>
+<p align="left"><font size="6"><b><%= @playlist.name.titleize %></b></font></p>
+<br/><br/>
+
+<% @playlist.playlist_sections.each do |section| %>
+  <p align="left"><font size="5"><b><%= section.name.titleize %></b></font></p>
+  <br/>
+
+  <% section.playlist_items.each do |item| %>
+    <% next unless item.song %>
+
+    <p align="left"><font size="4"><b><%= "#{item.position}. #{item.song.title.titleize}" %></b></font></p>
+
+    <% if item.song.content.present? %>
+      <% item.song.content.split(/\n+/).each do |para| %>
+        <% next if para.strip.empty? %>
+        <p align="left"><%= para %></p>
+      <% end %>
+    <% end %>
+
+    <br/>
+  <% end %>
+
+  <br/>
+<% end %>

@@ -11,16 +11,13 @@ class OpenPdfHtmlGenerator
   java_import 'java.io.ByteArrayOutputStream'
   java_import 'java.io.StringReader'
 
-  def self.generate_playlist_pdf(playlist)
-    new.generate_playlist_pdf(playlist)
+  def self.generate_pdf_from_html(html_content)
+    new.generate_pdf_from_html(html_content)
   end
 
-  def generate_playlist_pdf(playlist)
+  def generate_pdf_from_html(html_content)
     # Ensure headless mode for Java AWT
     Java::JavaLang::System.setProperty('java.awt.headless', 'true')
-
-    # Create HTML content from the playlist
-    html_content = generate_html(playlist)
 
     # Create a new PDF document
     document = Document.new(PageSize::A4)
@@ -52,52 +49,5 @@ class OpenPdfHtmlGenerator
       document.close if document.isOpen
       raise e
     end
-  end
-
-  private
-
-  def generate_html(playlist)
-    # HTMLWorker has very limited CSS support, so we use simple HTML without style tags
-    html = ""
-
-    # Title - using font tag with left alignment
-    html += "<p align=\"left\"><font size=\"6\"><b>#{escape_html(playlist.name.titleize)}</b></font></p>\n"
-    html += "<br/><br/>\n"
-
-    playlist.playlist_sections.each do |section|
-      # Section title
-      html += "<p align=\"left\"><font size=\"5\"><b>#{escape_html(section.name.titleize)}</b></font></p>\n"
-      html += "<br/>\n"
-
-      section.playlist_items.each do |item|
-        next unless item.song
-
-        # Song title
-        html += "<p align=\"left\"><font size=\"4\"><b>#{escape_html("#{item.position}. #{item.song.title.titleize}")}</b></font></p>\n"
-
-        if item.song.content.present?
-          # Song content - split by newlines and create left-aligned paragraphs
-          item.song.content.split(/\n+/).each do |para|
-            next if para.strip.empty?
-            html += "<p align=\"left\">#{escape_html(para)}</p>\n"
-          end
-        end
-
-        html += "<br/>\n"
-      end
-
-      html += "<br/>\n"
-    end
-
-    html
-  end
-
-  def escape_html(text)
-    text.to_s
-      .gsub('&', '&amp;')
-      .gsub('<', '&lt;')
-      .gsub('>', '&gt;')
-      .gsub('"', '&quot;')
-      .gsub("'", '&#39;')
   end
 end

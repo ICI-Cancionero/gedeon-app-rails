@@ -111,7 +111,14 @@ ActiveAdmin.register Playlist do
     @playlist = resource
 
     begin
-      pdf_bytes = OpenPdfHtmlGenerator.generate_playlist_pdf(@playlist)
+      # Render the HTML from the ERB template
+      html_content = render_to_string(
+        template: 'admin/playlists/view_open_pdf',
+        layout: false
+      )
+
+      # Generate PDF from the HTML
+      pdf_bytes = OpenPdfHtmlGenerator.generate_pdf_from_html(html_content)
 
       send_data pdf_bytes,
                 filename: "#{@playlist.name.parameterize}-openpdf.pdf",
@@ -119,6 +126,7 @@ ActiveAdmin.register Playlist do
                 disposition: 'inline'
     rescue => e
       Rails.logger.error "OpenPDF generation error: #{e.message}"
+      Rails.logger.error e.backtrace.join("\n")
       flash[:error] = "Error generating PDF: #{e.message}"
       redirect_to admin_playlist_path(@playlist)
     end

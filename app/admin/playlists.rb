@@ -50,6 +50,10 @@ ActiveAdmin.register Playlist do
     link_to 'View JFree PDF', view_jfree_pdf_admin_playlist_path(playlist), target: "_blank"
   end
 
+  action_item :view_open_pdf, only: [:show, :slides] do
+    link_to 'View OpenPDF HTML', view_open_pdf_admin_playlist_path(playlist), target: "_blank"
+  end
+
   action_item :duplicate, only: :show do
     link_to 'Duplicate', duplicate_admin_playlist_path(playlist)
   end
@@ -91,13 +95,30 @@ ActiveAdmin.register Playlist do
 
     begin
       pdf_bytes = JfreePdfGenerator.generate_playlist_pdf(@playlist)
-      
+
       send_data pdf_bytes,
                 filename: "#{@playlist.name.parameterize}-jfree.pdf",
                 type: 'application/pdf',
                 disposition: 'inline'
     rescue => e
       Rails.logger.error "JFree PDF generation error: #{e.message}"
+      flash[:error] = "Error generating PDF: #{e.message}"
+      redirect_to admin_playlist_path(@playlist)
+    end
+  end
+
+  member_action :view_open_pdf, method: :get do
+    @playlist = resource
+
+    begin
+      pdf_bytes = OpenPdfHtmlGenerator.generate_playlist_pdf(@playlist)
+
+      send_data pdf_bytes,
+                filename: "#{@playlist.name.parameterize}-openpdf.pdf",
+                type: 'application/pdf',
+                disposition: 'inline'
+    rescue => e
+      Rails.logger.error "OpenPDF generation error: #{e.message}"
       flash[:error] = "Error generating PDF: #{e.message}"
       redirect_to admin_playlist_path(@playlist)
     end

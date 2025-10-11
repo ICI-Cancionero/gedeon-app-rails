@@ -1,25 +1,72 @@
-<%# OpenPDF HTMLWorker has very limited CSS support, so we use simple HTML tags %>
-<p align="left"><font size="6"><b><%= @playlist.name.titleize %></b></font></p>
-<br/><br/>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      font-size: 12pt;
+    }
 
-<% @playlist.playlist_sections.each do |section| %>
-  <p align="left"><font size="5"><b><%= section.name.titleize %></b></font></p>
-  <br/>
+    h1 {
+      font-size: 24pt;
+      margin-bottom: 30px;
+      text-align: left;
+    }
 
-  <% section.playlist_items.each do |item| %>
-    <% next unless item.song %>
+    h2 {
+      font-size: 18pt;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
 
-    <p align="left"><font size="4"><b><%= "#{item.position}. #{item.song.title.titleize}" %></b></font></p>
+    h3 {
+      font-size: 14pt;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      text-align: left;
+      font-weight: bold;
+    }
 
-    <% if item.song.content.present? %>
-      <% item.song.content.split(/\n+/).each do |para| %>
-        <% next if para.strip.empty? %>
-        <p align="left"><%= para %></p>
+    p {
+      text-align: left;
+      line-height: 1.5;
+      margin: 10px 0;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    .song {
+      margin-bottom: 25px;
+    }
+  </style>
+</head>
+<body>
+  <h1><%= @playlist.name.titleize %></h1>
+
+  <% @playlist.playlist_sections.each do |section| %>
+    <div class="section">
+      <h2><%= section.name.titleize %></h2>
+
+      <% section.playlist_items.each do |item| %>
+        <% next unless item.song %>
+
+        <div class="song">
+          <h3><%= "#{item.position}. #{item.song.title.titleize}" %></h3>
+
+          <% if item.song.content.present? %>
+            <% item.song.content.split(/\n+/).each do |para| %>
+              <% next if para.strip.empty? %>
+              <p><%= para %></p>
+            <% end %>
+          <% end %>
+        </div>
       <% end %>
-    <% end %>
-
-    <br/>
+    </div>
   <% end %>
-
-  <br/>
-<% end %>
+</body>
+</html>

@@ -1,3 +1,5 @@
 jar 'org.jfree:org.jfree.pdf:2.0'
 jar 'com.github.librepdf:openpdf:3.0.0'
 jar 'com.github.librepdf:openpdf-html:3.0.0'
+jar 'org.slf4j:slf4j-api:2.0.9'
+jar 'org.slf4j:slf4j-simple:2.0.9'

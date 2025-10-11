@@ -4,12 +4,12 @@ class OpenPdfHtmlGenerator
   # Set headless mode before any Java AWT imports
   Java::JavaLang::System.setProperty('java.awt.headless', 'true') if defined?(Java)
 
-  java_import 'org.openpdf.text.Document'
-  java_import 'org.openpdf.text.PageSize'
-  java_import 'org.openpdf.text.pdf.PdfWriter'
-  java_import 'org.openpdf.text.html.simpleparser.HTMLWorker'
+  java_import 'org.openpdf.pdf.ITextRenderer'
   java_import 'java.io.ByteArrayOutputStream'
   java_import 'java.io.StringReader'
+  java_import 'javax.xml.parsers.DocumentBuilderFactory'
+  java_import 'org.w3c.dom.Document'
+  java_import 'org.xml.sax.InputSource'
 
   def self.generate_pdf_from_html(html_content)
     new.generate_pdf_from_html(html_content)
@@ -19,26 +19,36 @@ class OpenPdfHtmlGenerator
     # Ensure headless mode for Java AWT
     Java::JavaLang::System.setProperty('java.awt.headless', 'true')
 
-    # Create a new PDF document
-    document = Document.new(PageSize::A4)
-
     begin
       # Create a ByteArrayOutputStream to write the PDF
       output_stream = ByteArrayOutputStream.new
 
-      # Create PdfWriter instance
-      writer = PdfWriter.getInstance(document, output_stream)
+      # Create a DocumentBuilderFactory with relaxed security
+      doc_builder_factory = DocumentBuilderFactory.newInstance
+      doc_builder_factory.setNamespaceAware(false)
+      doc_builder_factory.setValidating(false)
 
-      # Open the document
-      document.open
+      # Disable external entity processing
+      doc_builder_factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false)
+      doc_builder_factory.setFeature("http://xml.org/sax/features/external-general-entities", false)
+      doc_builder_factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false)
 
-      # Parse and add HTML content
-      html_worker = HTMLWorker.new(document)
-      string_reader = StringReader.new(html_content)
-      html_worker.parse(string_reader)
+      # Create document builder and parse HTML
+      doc_builder = doc_builder_factory.newDocumentBuilder
+      input_source = InputSource.new(StringReader.new(html_content))
+      document = doc_builder.parse(input_source)
 
-      # Close the document
-      document.close
+      # Create ITextRenderer instance (from openpdf-html / Flying Saucer)
+      renderer = ITextRenderer.new
+
+      # Set the parsed document
+      renderer.setDocument(document, nil)
+
+      # Layout the document
+      renderer.layout
+
+      # Create the PDF
+      renderer.createPDF(output_stream)
 
       # Convert Java byte array to Ruby string
       java_bytes = output_stream.toByteArray
@@ -46,7 +56,6 @@ class OpenPdfHtmlGenerator
 
       ruby_bytes
     rescue => e
-      document.close if document.isOpen
       raise e
     end
   end

@@ -8,6 +8,8 @@ xalan:xalan:2.7.3:compile:
 xerces:xercesImpl:2.12.2:compile:
 xml-apis:xml-apis:1.4.01:compile:
 org.jfree:org.jfree.pdf:2.0:compile:
+com.github.librepdf:openpdf:3.0.0:compile:
 com.github.librepdf:openpdf-html:3.0.0:compile:
 org.htmlunit:neko-htmlunit:4.14.0:compile:
-com.github.librepdf:openpdf:3.0.0:compile:
+org.slf4j:slf4j-api:2.0.9:compile:
+org.slf4j:slf4j-simple:2.0.9:compile:

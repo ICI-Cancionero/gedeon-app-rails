@@ -31,7 +31,6 @@ latest.dump
 .env.local
 .env.*.local
 .env.test
-bin/*
 /app/assets/builds/*
 !/app/assets/builds/.keep
 app/assets/builds

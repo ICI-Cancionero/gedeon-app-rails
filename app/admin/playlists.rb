@@ -46,6 +46,14 @@ ActiveAdmin.register Playlist do
     link_to 'View PDF', view_pdf_admin_playlist_path(playlist, format: :pdf), target: "_blank"
   end
 
+  action_item :view_jfree, only: [:show, :slides] do
+    link_to 'View JFree PDF', view_jfree_pdf_admin_playlist_path(playlist), target: "_blank"
+  end
+
+  action_item :view_open_pdf, only: [:show, :slides] do
+    link_to 'View OpenPDF HTML', view_open_pdf_admin_playlist_path(playlist), target: "_blank"
+  end
+
   action_item :duplicate, only: :show do
     link_to 'Duplicate', duplicate_admin_playlist_path(playlist)
   end
@@ -79,6 +87,48 @@ ActiveAdmin.register Playlist do
                dpi: 75
                #show_as_html: true
       end
+    end
+  end
+
+  member_action :view_jfree_pdf, method: :get do
+    @playlist = resource
+
+    begin
+      pdf_bytes = JfreePdfGenerator.generate_playlist_pdf(@playlist)
+
+      send_data pdf_bytes,
+                filename: "#{@playlist.name.parameterize}-jfree.pdf",
+                type: 'application/pdf',
+                disposition: 'inline'
+    rescue => e
+      Rails.logger.error "JFree PDF generation error: #{e.message}"
+      flash[:error] = "Error generating PDF: #{e.message}"
+      redirect_to admin_playlist_path(@playlist)
+    end
+  end
+
+  member_action :view_open_pdf, method: :get do
+    @playlist = resource
+
+    begin
+      # Render the HTML from the ERB template
+      html_content = render_to_string(
+        template: 'admin/playlists/view_open_pdf',
+        layout: false
+      )
+
+      # Generate PDF from the HTML
+      pdf_bytes = OpenPdfHtmlGenerator.generate_pdf_from_html(html_content)
+
+      send_data pdf_bytes,
+                filename: "#{@playlist.name.parameterize}-openpdf.pdf",
+                type: 'application/pdf',
+                disposition: 'inline'
+    rescue => e
+      Rails.logger.error "OpenPDF generation error: #{e.message}"
+      Rails.logger.error e.backtrace.join("\n")
+      flash[:error] = "Error generating PDF: #{e.message}"
+      redirect_to admin_playlist_path(@playlist)
     end
   end
 

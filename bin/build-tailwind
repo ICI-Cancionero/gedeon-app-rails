@@ -1,0 +1,8 @@
+#!/bin/bash
+# Build script for Tailwind CSS with JRuby
+# Since tailwindcss-rails doesn't support JRuby, we use yarn to build it
+
+echo "Building Tailwind CSS..."
+mkdir -p public/assets
+yarn tailwindcss -i app/assets/stylesheets/application.tailwind.css -o public/assets/tailwind.css --minify
+echo "✅ Tailwind CSS built successfully to public/assets/tailwind.css!"

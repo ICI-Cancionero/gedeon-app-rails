@@ -1,34 +1,44 @@
-# Puma can serve each request in a thread from an internal thread pool.
-# The `threads` method setting takes two numbers: a minimum and maximum.
-# Any libraries that use thread pools should be configured to match
-# the maximum value specified for Puma. Default is set to 5 threads for minimum
-# and maximum; this matches the default thread size of Active Record.
-#
-threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
-threads threads_count, threads_count
 
-# Specifies the `port` that Puma will listen on to receive requests; default is 3000.
-#
-port        ENV.fetch("PORT") { 3000 }
+# Número de hilos por worker (JRuby usa threads reales)
+# Reducido para eco dynos (512MB RAM) - usar 3-8 threads
+# Para dynos más grandes, configurar RAILS_MAX_THREADS=16 o más
+min_threads = ENV.fetch("RAILS_MIN_THREADS") { 2 }.to_i
+max_threads = ENV.fetch("RAILS_MAX_THREADS") { 8 }.to_i
+threads min_threads, max_threads
 
-# Specifies the `environment` that Puma will run in.
-#
+# Puma escucha en el puerto especificado
+port ENV.fetch("PORT") { 3000 }
+
+# Entorno Rails
 environment ENV.fetch("RAILS_ENV") { "development" }
 
-# Specifies the number of `workers` to boot in clustered mode.
-# Workers are forked webserver processes. If using threads and workers together
-# the concurrency of the application would be max `threads` * `workers`.
-# Workers do not work on JRuby or Windows (both of which do not support
-# processes).
-#
-# workers ENV.fetch("WEB_CONCURRENCY") { 2 }
+# Como JRuby no soporta fork, mantenemos 1 worker
+# Puedes simular "workers" usando múltiples JVMs (p. ej. con Docker)
+workers 0
 
-# Use the `preload_app!` method when specifying a `workers` number.
-# This directive tells Puma to first boot the application and load code
-# before forking the application. This takes advantage of Copy On Write
-# process behavior so workers use less memory.
-#
+# No uses preload_app! en JRuby: no aporta beneficios (no hay Copy-on-Write)
 # preload_app!
 
-# Allow puma to be restarted by `rails restart` command.
+# Configuración del pool de conexiones de ActiveRecord (si usas JDBC)
+before_fork do
+  ActiveRecord::Base.connection_pool.disconnect! if defined?(ActiveRecord)
+end
+
+on_worker_boot do
+  ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
+end
+
+# Usa thread pool dinámico
+worker_timeout 60 if ENV.fetch("RAILS_ENV", "development") == "development"
+
+# Optimización JRuby (recomendado para entornos de producción)
+# Puedes definir estas opciones en JAVA_OPTS o .env
+# Ejemplo:
+# export JAVA_OPTS="-J-Xms512m -J-Xmx1024m -J-XX:+UseG1GC"
+# export JRUBY_OPTS="--server --debug"
+
+# Logging
+stdout_redirect "log/puma.stdout.log", "log/puma.stderr.log", true
+
+# Permitir reinicio con `rails restart`
 plugin :tmp_restart

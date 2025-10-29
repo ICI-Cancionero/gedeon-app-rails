@@ -1,0 +1,15 @@
+isorelax:isorelax:20030108:compile:
+org.nokogiri:nekodtd:0.1.11.noko2:compile:
+net.sourceforge.htmlunit:neko-htmlunit:2.63.0:compile:
+nu.validator:jing:20200702VNU:compile:
+net.sf.saxon:Saxon-HE:9.6.0-4:compile:
+xalan:serializer:2.7.3:compile:
+xalan:xalan:2.7.3:compile:
+xerces:xercesImpl:2.12.2:compile:
+xml-apis:xml-apis:1.4.01:compile:
+org.jfree:org.jfree.pdf:2.0:compile:
+com.github.librepdf:openpdf:3.0.0:compile:
+com.github.librepdf:openpdf-html:3.0.0:compile:
+org.htmlunit:neko-htmlunit:4.14.0:compile:
+org.slf4j:slf4j-api:2.0.9:compile:
+org.slf4j:slf4j-simple:2.0.9:compile:

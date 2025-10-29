@@ -1,7 +1,9 @@
 
 # Número de hilos por worker (JRuby usa threads reales)
-min_threads = ENV.fetch("RAILS_MIN_THREADS") { 5 }.to_i
-max_threads = ENV.fetch("RAILS_MAX_THREADS") { 16 }.to_i
+# Reducido para eco dynos (512MB RAM) - usar 3-8 threads
+# Para dynos más grandes, configurar RAILS_MAX_THREADS=16 o más
+min_threads = ENV.fetch("RAILS_MIN_THREADS") { 2 }.to_i
+max_threads = ENV.fetch("RAILS_MAX_THREADS") { 8 }.to_i
 threads min_threads, max_threads
 
 # Puma escucha en el puerto especificado

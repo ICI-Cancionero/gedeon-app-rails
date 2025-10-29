@@ -61,6 +61,10 @@ gem 'net-smtp', '0.3.3', require: false
 gem 'net-imap', '0.3.6', require: false
 gem 'net-pop', '0.1.2', require: false
 
+# JRuby JAR dependencies - needed for Heroku build
+gem 'jar-dependencies', '~> 0.4'
+gem 'ruby-maven', '~> 3.9'
+
 gem 'ransack', '3.2.1'
 gem 'rswag', '2.9.0'
 gem 'video_player', '1.0.0'

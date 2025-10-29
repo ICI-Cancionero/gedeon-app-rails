@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Heroku pre-compile hook to vendor JAR dependencies
+
+echo "-----> Vendoring JAR dependencies"
+bundle exec lock_jars --vendor-dir vendor/jars

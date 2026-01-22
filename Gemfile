@@ -56,7 +56,7 @@ gem 'ffi', '~> 1.16'
 gem 'thor', '1.2.1'
 gem 'formtastic', '4.0.0.rc1'
 gem 'net-smtp', '0.3.3', require: false
-gem 'net-imap', '0.3.6', require: false
+gem 'net-imap', '0.3.9', require: false
 gem 'net-pop', '0.1.2', require: false
 
 gem 'ransack', '3.2.1'

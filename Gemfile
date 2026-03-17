@@ -37,7 +37,7 @@ gem 'redis', '~> 4.0'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '1.12.0', require: false
 
-gem 'devise', '4.8.1'
+gem 'devise', '5.0.3'
 gem 'activeadmin', '~> 2.13.1'
 gem 'active_skin', '0.0.13'
 gem 'activeadmin_addons', '1.9.0'

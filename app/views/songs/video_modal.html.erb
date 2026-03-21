@@ -16,7 +16,7 @@
               role="tab"
               class="tab"
               aria-label="Video <%= index + 1 %>"
-              <%= 'checked' if index == 0 %>
+              <% if index == 0 %>checked="checked"<% end %>
               data-video-tab="<%= @song.id %>_<%= index %>" />
           <% end %>
         </div>

@@ -16,8 +16,8 @@
               role="tab"
               class="tab"
               aria-label="Video <%= index + 1 %>"
-              <%= 'checked' if index == 0 %>
-              data-video-tab="<%= @song.id %>_<%= index %>" />
+              <% if index == 0 %>checked="checked"<% end %>
+              data-video-tab="<%= @song.id %>_<%= index %>">
           <% end %>
         </div>
 
@@ -33,6 +33,7 @@
                   width="100%"
                   height="100%"
                   src="https://www.youtube.com/embed/<%= video_link.video_id %>"
+                  title="<%= @song.title %> - YouTube video"
                   frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowfullscreen>
@@ -43,6 +44,7 @@
                   width="100%"
                   height="100%"
                   src="https://player.vimeo.com/video/<%= video_link.video_id %>"
+                  title="<%= @song.title %> - Vimeo video"
                   frameborder="0"
                   allow="autoplay; fullscreen; picture-in-picture"
                   allowfullscreen>
@@ -60,6 +62,7 @@
               width="100%"
               height="100%"
               src="https://www.youtube.com/embed/<%= video_link.video_id %>"
+              title="<%= @song.title %> - YouTube video"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen>
@@ -70,6 +73,7 @@
               width="100%"
               height="100%"
               src="https://player.vimeo.com/video/<%= video_link.video_id %>"
+              title="<%= @song.title %> - Vimeo video"
               frameborder="0"
               allow="autoplay; fullscreen; picture-in-picture"
               allowfullscreen>

@@ -3,11 +3,11 @@
   <div class="card bg-base-100 border border-base-300 shadow-sm">
     <div class="card-body items-center text-center">
       <h3 class="card-title">No se encontraron canciones</h3>
+      <p class="text-sm opacity-70">
+        <%= params[:q].present? ? "Intenta ajustar tu búsqueda." : "Aún no hay canciones." %>
+      </p>
       <% if params[:q].present? %>
-        <p class="text-sm opacity-70">Intenta ajustar tu búsqueda.</p>
         <%= link_to 'Limpiar búsqueda', app_path, class: 'btn btn-sm mt-2' %>
-      <% else %>
-        <p class="text-sm opacity-70">Aún no hay canciones.</p>
       <% end %>
     </div>
   </div>

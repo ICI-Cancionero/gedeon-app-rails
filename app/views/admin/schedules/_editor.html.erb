@@ -43,8 +43,9 @@
           <input type="text"
                  placeholder="Search songs..."
                  class="schedule-editor__search"
+                 autocomplete="off"
                  data-schedule-editor-target="songSearch"
-                 data-action="input->schedule-editor#searchSongs" />
+                 data-action="input->schedule-editor#searchSongs">
           <div class="schedule-editor__list"
                data-schedule-editor-target="songList">
             <!-- Songs loaded via JS -->
@@ -70,7 +71,7 @@
                    data-action="dragstart->schedule-editor#dragStartItem">
                 <span class="schedule-editor__item-icon">
                   <% if si.item_type == 'ScheduleImage' %>
-                    <img src="<%= si.item.image.thumb.url %>" class="schedule-editor__item-thumb" />
+                    <%= image_tag si.item.image.thumb.url, alt: si.item.respond_to?(:name) ? si.item.name : "Schedule image", class: "schedule-editor__item-thumb" %>
                   <% elsif si.item_type == 'Song' %>
                     ♪
                   <% else %>
@@ -148,8 +149,9 @@
               <input type="text"
                      placeholder="Filter books..."
                      class="schedule-editor__bible-filter"
+                     autocomplete="off"
                      data-schedule-editor-target="bookFilter"
-                     data-action="input->schedule-editor#filterBooks" />
+                     data-action="input->schedule-editor#filterBooks">
               <div class="schedule-editor__bible-list"
                    data-schedule-editor-target="bookList">
               </div>
@@ -169,8 +171,9 @@
               <input type="text"
                      placeholder="Filter verses..."
                      class="schedule-editor__bible-filter"
+                     autocomplete="off"
                      data-schedule-editor-target="verseFilter"
-                     data-action="input->schedule-editor#filterVerses" />
+                     data-action="input->schedule-editor#filterVerses">
               <div class="schedule-editor__bible-list"
                    data-schedule-editor-target="verseList">
               </div>
@@ -198,12 +201,13 @@
             <input type="text"
                    placeholder="Image name..."
                    class="schedule-editor__search"
-                   data-schedule-editor-target="imageName" />
+                   autocomplete="off"
+                   data-schedule-editor-target="imageName">
             <input type="file"
                    accept="image/*"
                    class="schedule-editor__image-input"
                    data-schedule-editor-target="imageUpload"
-                   data-action="change->schedule-editor#uploadImage" />
+                   data-action="change->schedule-editor#uploadImage">
           </div>
           <div class="schedule-editor__image-grid"
                data-schedule-editor-target="imageList">

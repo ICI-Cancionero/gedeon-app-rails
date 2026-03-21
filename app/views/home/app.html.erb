@@ -67,11 +67,11 @@
   </div>
 
   <div data-tabs-target="panel" data-tab-panel="songs" class="hidden">
-    <%= render 'songs_tab' %>
+    <%= render 'songs_tab', songs: @songs %>
   </div>
 
   <div data-tabs-target="panel" data-tab-panel="playlists" class="hidden">
-    <%= render 'playlists_tab' %>
+    <%= render 'playlists_tab', playlists: @playlists %>
   </div>
 </div>
 

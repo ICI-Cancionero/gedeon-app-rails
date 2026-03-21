@@ -28,7 +28,7 @@ ActiveAdmin.register Study do
     id_column
     column :title
     column :content do |study|
-      div truncate(study.raw_content, length: 150), style: "max-width: 25rem"
+      div truncate(study.raw_content, length: 150), style: 'max-width: 25rem'
     end
     column :created_at
     column :updated_at
@@ -36,8 +36,8 @@ ActiveAdmin.register Study do
     actions
   end
 
-  action_item :view, only: [:show, :edit] do
-    link_to 'View PDF', view_pdf_admin_study_path(study, format: :pdf), target: "_blank"
+  action_item :view, only: %i[show edit] do
+    link_to 'View PDF', view_pdf_admin_study_path(study, format: :pdf), target: '_blank', rel: 'noopener'
   end
 
   member_action :view_pdf, method: :get do
@@ -57,9 +57,8 @@ ActiveAdmin.register Study do
                lowquality: true,
                zoom: 1,
                dpi: 75
-               #show_as_html: true
+        # show_as_html: true
       end
     end
   end
-
 end

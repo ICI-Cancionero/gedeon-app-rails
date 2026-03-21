@@ -10,9 +10,7 @@ ActiveAdmin.register AdminUser do
     column :current_sign_in_at
     column :sign_in_count
     column :created_at
-    if ActsAsTenant.current_tenant.nil?
-      column :account
-    end
+    column :account if ActsAsTenant.current_tenant.nil?
     actions
   end
 
@@ -29,5 +27,4 @@ ActiveAdmin.register AdminUser do
     end
     f.actions
   end
-
 end

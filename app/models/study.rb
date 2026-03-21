@@ -27,7 +27,7 @@ class Study < ApplicationRecord
 
   def set_raw_content
     # Parse the HTML content using Nokogiri
-    doc = Nokogiri::HTML(self.content.to_s)
+    doc = Nokogiri::HTML(content.to_s)
 
     # Extract text from the parsed HTML
     plain_text = doc.text.strip

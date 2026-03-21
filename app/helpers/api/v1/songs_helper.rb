@@ -1,2 +1,6 @@
-module Api::V1::SongsHelper
+module Api
+  module V1
+    module SongsHelper
+    end
+  end
 end

@@ -1,4 +1,4 @@
-RSpec.shared_context "authenticated admin with subdomain" do
+RSpec.shared_context 'authenticated admin with subdomain' do
   let(:account) { create(:account) }
   let(:admin) { create(:admin_user, account: account) }
 

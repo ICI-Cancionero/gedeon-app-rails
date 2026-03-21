@@ -22,8 +22,11 @@ jobs:
         with:
           ruby-version: '3.4.5'
 
-      - name: Install Herb gem
-        run: gem install herb
+      - name: Install gems for linting
+        run: |
+          gem install herb
+          gem install bundler
+          bundle install --jobs 4 --retry 3
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -32,6 +35,9 @@ jobs:
 
       - name: Run Herb lint
         run: herb lint
+
+      - name: Run RuboCop
+        run: bundle exec rubocop
 
   test:
     runs-on: ubuntu-latest

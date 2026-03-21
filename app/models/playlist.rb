@@ -20,7 +20,7 @@
 class Playlist < ApplicationRecord
   acts_as_tenant(:account)
 
-  has_many :playlist_sections, -> { order(created_at: :asc) },  dependent: :destroy
+  has_many :playlist_sections, -> { order(created_at: :asc) }, inverse_of: :playlist, dependent: :destroy
   has_many :playlist_items, -> { order(created_at: :asc) }, through: :playlist_sections
   has_many :songs, -> { order(created_at: :asc) }, through: :playlist_items
   has_many :scriptures, through: :playlist_sections
@@ -31,16 +31,16 @@ class Playlist < ApplicationRecord
   accepts_nested_attributes_for :playlist_sections, reject_if: :all_blank, allow_destroy: true
 
   def song_titles
-    self.songs.pluck(:title)
+    songs.pluck(:title)
   end
 
   def bible_references
-    self.scriptures.collect(&:bible_reference)
+    scriptures.collect(&:bible_reference)
   end
 
   def duplicate
-    new_playlist = self.dup
-    self.playlist_sections.each do |section|
+    new_playlist = dup
+    playlist_sections.each do |section|
       new_section = section.dup
       new_playlist.playlist_sections << new_section
       section.playlist_items.each do |item|

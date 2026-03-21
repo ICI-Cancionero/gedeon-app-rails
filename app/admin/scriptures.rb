@@ -18,7 +18,7 @@ ActiveAdmin.register Scripture do
     id_column
     column :bible_reference
     column :content do |scripture|
-      div scripture.content, style: "max-width: 25rem"
+      div scripture.content, style: 'max-width: 25rem'
     end
     column :playlist
     column :created_at
@@ -27,7 +27,7 @@ ActiveAdmin.register Scripture do
     actions
   end
 
-  batch_action :destroy, confirm: "Are you sure you want to delete these scriptures?" do |ids|
+  batch_action :destroy, confirm: 'Are you sure you want to delete these scriptures?' do |ids|
     batch_action_collection.find(ids).each(&:destroy)
     redirect_to collection_path, notice: "Successfully deleted #{ids.size} scriptures"
   end
@@ -37,7 +37,7 @@ ActiveAdmin.register Scripture do
     before_action :set_bible_from_scripture, only: [:edit]
 
     def set_bible
-      params[:bible_version] ||= "NVI"
+      params[:bible_version] ||= 'NVI'
       @bible = SimpleBibleLoader.load_bible(params[:bible_version])
     end
 
@@ -54,7 +54,7 @@ ActiveAdmin.register Scripture do
   collection_action :books, method: :get do
     @books = @bible.books.map do |book|
       {
-        book_title: book.title,
+        book_title: book.title
       }
     end
 
@@ -66,9 +66,7 @@ ActiveAdmin.register Scripture do
   collection_action :chapters, method: :get do
     @chapters = []
 
-    if params[:book_id]
-      book = @bible.books.find{|book| book.title == params[:book_id]}
-    end
+    book = @bible.books.find { |book| book.title == params[:book_id] } if params[:book_id]
 
     book = @bible.books.first if book.nil?
 
@@ -87,13 +85,9 @@ ActiveAdmin.register Scripture do
   collection_action :verses, method: :get do
     @verses = []
 
-    if params[:book_id]
-      book = @bible.books.find{|book| book.title == params[:book_id]}
-    end
+    book = @bible.books.find { |book| book.title == params[:book_id] } if params[:book_id]
 
-    if params[:chapter_num]
-      chapter = book.chapters.find{|chapter| chapter.num == params[:chapter_num].to_i }
-    end
+    chapter = book.chapters.find { |chapter| chapter.num == params[:chapter_num].to_i } if params[:chapter_num]
 
     book = @bible.books.first if book.nil?
     chapter = book.chapters.first if chapter.nil?

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.feature 'Admin/Dashboard', :type => :feature do
-  include_context "authenticated admin with subdomain"
+RSpec.feature 'Admin/Dashboard', type: :feature do
+  include_context 'authenticated admin with subdomain'
 
   describe 'an authenticated admin' do
     scenario 'can view the dashboard' do

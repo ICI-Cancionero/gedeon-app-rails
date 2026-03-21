@@ -26,11 +26,11 @@
 #
 FactoryBot.define do
   factory :scripture do
-    book_id { "Genesis" }
-    chapter_num { "1" }
+    book_id { 'Genesis' }
+    chapter_num { '1' }
     from { 1 }
     to { 5 }
-    bible_version { "NVI" }
-    content { "In the beginning..." }
+    bible_version { 'NVI' }
+    content { 'In the beginning...' }
   end
 end

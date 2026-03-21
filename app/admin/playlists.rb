@@ -7,8 +7,9 @@ ActiveAdmin.register Playlist do
                   :id,
                   :name,
                   :_destroy,
-                  playlist_items_attributes: [:id, :position, :song_id, :_destroy],
-                  scriptures_attributes: [:id, :bible_version, :book_id, :chapter_num, :content, :from, :to, :_destroy]
+                  { playlist_items_attributes: %i[id position song_id _destroy],
+                    scriptures_attributes: %i[id bible_version book_id chapter_num content from to
+                                              _destroy] }
                 ]
 
   scope :active
@@ -42,8 +43,8 @@ ActiveAdmin.register Playlist do
 
   form partial: 'form'
 
-  action_item :view, only: [:show, :slides] do
-    link_to 'View PDF', view_pdf_admin_playlist_path(playlist, format: :pdf), target: "_blank"
+  action_item :view, only: %i[show slides] do
+    link_to 'View PDF', view_pdf_admin_playlist_path(playlist, format: :pdf), target: '_blank', rel: 'noopener'
   end
 
   action_item :duplicate, only: :show do
@@ -51,13 +52,13 @@ ActiveAdmin.register Playlist do
   end
 
   action_item :slides, only: :show do
-    link_to 'Presentation', slides_admin_playlist_path(playlist), target: "_blank"
+    link_to 'Presentation', slides_admin_playlist_path(playlist), target: '_blank', rel: 'noopener'
   end
 
   member_action :slides, method: :get do
     @playlist = resource
 
-    render layout: "reveal_js"
+    render layout: 'reveal_js'
   end
 
   member_action :view_pdf, method: :get do
@@ -77,7 +78,7 @@ ActiveAdmin.register Playlist do
                lowquality: true,
                zoom: 1,
                dpi: 75
-               #show_as_html: true
+        # show_as_html: true
       end
     end
   end
@@ -87,7 +88,7 @@ ActiveAdmin.register Playlist do
     @new_playlist = @playlist.duplicate
     respond_to do |format|
       format.html do
-        redirect_to edit_admin_playlist_path(@new_playlist), notice: "You have duplicate the playlist succesfully"
+        redirect_to edit_admin_playlist_path(@new_playlist), notice: 'You have duplicate the playlist succesfully'
       end
     end
   end

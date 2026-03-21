@@ -21,29 +21,30 @@ class VideoLink < ApplicationRecord
   private
 
   def set_video_id
-    self.video_id = extract_youtube_video_id(self.url) if self.provider_youtube?
-    self.video_id = extract_vimeo_video_id(self.url) if self.provider_vimeo?
+    self.video_id = extract_youtube_video_id(url) if provider_youtube?
+    self.video_id = extract_vimeo_video_id(url) if provider_vimeo?
   end
 
-  def extract_youtube_video_id(url)
-    # Regular expression pattern to match YouTube video URLs
-    pattern = /(?:youtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
-    # Match the video ID in the URL
-    match = pattern.match(self.url)
+  def extract_youtube_video_id(_url)
+    pattern = %r{
+      (?:
+        youtube(?:-nocookie)?\.com/   # youtube.com or youtube-nocookie.com
+        (?:
+          [^/\n\s]+/\S+/             # channel/user paths
+          |(?:v|e(?:mbed)?)/         # /v/ or /embed/
+          |\S*?[?&]v=               # ?v= or &v= query param
+        )
+        |youtu\.be/                  # short URL
+      )
+      ([a-zA-Z0-9_-]{11})           # 11-char video ID
+    }x
 
-    if match && match[1]
-      return match[1]
-    end
+    url.match(pattern)&.captures&.first
   end
 
-  def extract_vimeo_video_id(url)
-    # Regular expression pattern to match Vimeo video URLs
-    pattern = /vimeo.com\/(?:video\/)?(\d+)/
-    # Match the video ID in the URL
-    match = pattern.match(self.url)
+  def extract_vimeo_video_id(_url)
+    pattern = %r{vimeo\.com/(?:video/)?(\d+)}
 
-    if match && match[1]
-      return match[1]
-    end
+    url.match(pattern)&.captures&.first
   end
 end

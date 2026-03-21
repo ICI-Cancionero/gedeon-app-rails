@@ -11,7 +11,7 @@ class CkeditorAttachmentFileUploader < CarrierWave::Uploader::Base
   # include CarrierWave::ImageScience
 
   # Choose what kind of storage to use for this uploader:
-  #storage :file
+  # storage :file
   storage :aws
 
   # Override the directory where uploaded files will be stored.

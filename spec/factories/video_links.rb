@@ -11,6 +11,7 @@
 #
 FactoryBot.define do
   factory :video_link do
-    
+    provider { :youtube }
+    url { 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' }
   end
 end

@@ -6,10 +6,11 @@ class CkeditorPictureUploader < CarrierWave::Uploader::Base
   # Include RMagick or ImageScience support:
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
+
   # include CarrierWave::ImageScience
 
   # Choose what kind of storage to use for this uploader:
-  #storage :file
+  # storage :file
   storage :aws
 
   # Override the directory where uploaded files will be stored.

@@ -1,7 +1,6 @@
 require 'swagger_helper'
 
 describe Api::V1::SongsController do
-
   path '/api/v1/songs' do
     get 'Retrieves songs' do
       tags 'Songs'
@@ -28,10 +27,9 @@ describe Api::V1::SongsController do
       parameter name: :id, in: :path, type: :string
 
       response '200', 'Song found' do
-
         run_test! do |response|
           json_response = JSON.parse(response.body)
-          expect(json_response["id"]).to eql(id)
+          expect(json_response['id']).to eql(id)
         end
       end
     end

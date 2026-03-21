@@ -20,31 +20,30 @@
 require 'rails_helper'
 
 RSpec.describe Playlist, type: :model do
-  it_behaves_like "acts_as_tenant model"
+  it_behaves_like 'acts_as_tenant model'
 
-  it { should have_many(:playlist_items) }
-  it { should have_many(:playlist_sections) }
-  it { should have_many(:songs).order(created_at: :asc) }
+  it { is_expected.to have_many(:playlist_items) }
+  it { is_expected.to have_many(:playlist_sections) }
+  it { is_expected.to have_many(:songs).order(created_at: :asc) }
 
-
-  context "when playlist has songs" do
+  context 'when playlist has songs' do
     let(:playlist) { FactoryBot.create(:playlist) }
     let(:playlist_section) { FactoryBot.create(:playlist_section, playlist: playlist) }
     let!(:playlist_item) do
       FactoryBot.create(:playlist_item, :with_song, playlist_section: playlist_section)
     end
 
-    describe "#song_titles" do
+    describe '#song_titles' do
       it 'returns songs titles' do
         expect(playlist.song_titles).to eql([playlist_item.song.title])
       end
     end
 
-    describe "#duplicate" do
+    describe '#duplicate' do
       it 'creates a new playlist' do
-        expect {
+        expect do
           playlist.duplicate
-        }.to change { Playlist.count }.by(1)
+        end.to change { Playlist.count }.by(1)
       end
 
       it 'creates a playlist with same songs' do

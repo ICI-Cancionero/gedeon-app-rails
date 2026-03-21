@@ -30,6 +30,6 @@ class ScheduleItem < ApplicationRecord
   private
 
   def destroy_scripture_item
-    item.destroy if item_type == "Scripture"
+    item.destroy if item_type == 'Scripture'
   end
 end

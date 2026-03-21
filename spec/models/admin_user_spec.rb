@@ -25,5 +25,5 @@
 require 'rails_helper'
 
 RSpec.describe AdminUser, type: :model do
-  it_behaves_like "acts_as_tenant model"
+  it_behaves_like 'acts_as_tenant model'
 end

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.feature 'Admin/Songs', :type => :feature do
-  include_context "authenticated admin with subdomain"
+RSpec.feature 'Admin/Songs', type: :feature do
+  include_context 'authenticated admin with subdomain'
 
   describe 'creating a song' do
     scenario 'can create a song with title, content, and author' do
@@ -20,7 +20,7 @@ RSpec.feature 'Admin/Songs', :type => :feature do
       expect(page).to have_text('John Newton')
     end
 
-    scenario 'can create a song with a YouTube video link', js: true do
+    scenario 'can create a song with a YouTube video link', :js do
       visit new_admin_song_path
 
       fill_in 'Title', with: 'Worship Song'
@@ -71,7 +71,7 @@ RSpec.feature 'Admin/Songs', :type => :feature do
       expect(song.author).to eq('New Author')
     end
 
-    scenario 'can add a video link to existing song', js: true do
+    scenario 'can add a video link to existing song', :js do
       visit edit_admin_song_path(song)
 
       find('a', text: /Add New/).click

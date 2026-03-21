@@ -33,18 +33,18 @@ class Scripture < ApplicationRecord
   serialize :verses, Array
 
   def bible_reference
-    "#{book_id} #{chapter_num} : #{from} #{to.present? ? "- #{to}" : nil} #{bible_version}"
+    "#{book_id} #{chapter_num} : #{from} #{"- #{to}" if to.present?} #{bible_version}"
   end
 
   def self.bible_versions
-    ["NVI", "RVR1960"]
+    ['NVI', 'RVR1960']
   end
 
   def self.open_bible_files
     {
-      "NVI": "spa-NVI.xmm.xml",
-      "RVR09": "spa-RVR09.usfx.xml",
-      "RVR1960": "spa-RVR1960.xml"
+      NVI: 'spa-NVI.xmm.xml',
+      RVR09: 'spa-RVR09.usfx.xml',
+      RVR1960: 'spa-RVR1960.xml'
     }
   end
 
@@ -53,10 +53,10 @@ class Scripture < ApplicationRecord
   end
 
   def bible_version
-    super || "NVI"
+    super || 'NVI'
   end
 
   def bible
-    @bible = SimpleBibleLoader.load_bible(self.bible_version)
+    @bible = SimpleBibleLoader.load_bible(bible_version)
   end
 end

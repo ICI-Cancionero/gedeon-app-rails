@@ -37,45 +37,45 @@ gem 'redis', '~> 4.0'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '1.12.0', require: false
 
-gem 'devise', '4.8.1'
 gem 'activeadmin', '~> 2.13.1'
-gem 'active_skin', '0.0.13'
 gem 'activeadmin_addons', '1.9.0'
-gem 'acts_as_tenant', '1.0.1'
-gem 'versionist', '2.0.1'
 gem 'active_model_serializers', '0.10.13'
-gem 'newrelic_rpm', '9.2.2'
-gem 'wicked_pdf', '2.6.3'
-gem 'rollbar', '3.4.0'
-gem 'quiet_safari', '1.0.0'
-gem 'mimemagic', '0.3.10'
-gem 'rack', '2.2.20'
-gem 'nokogiri', '~> 1.18'
-gem 'inherited_resources', '1.13.1'
-gem 'ffi', '~> 1.16'
-gem 'thor', '1.2.1'
-gem 'formtastic', '4.0.0.rc1'
-gem 'mutex_m'
-gem 'bigdecimal'
-gem 'drb'
+gem 'active_skin', '0.0.13'
+gem 'acts_as_tenant', '1.0.1'
 gem 'base64'
-gem 'observer'
 gem 'benchmark'
-gem 'ostruct'
+gem 'bigdecimal'
 gem 'csv'
-gem 'reline'
-gem 'net-smtp', '0.3.3', require: false
+gem 'devise', '4.8.1'
+gem 'drb'
+gem 'ffi', '~> 1.16'
+gem 'formtastic', '4.0.0.rc1'
+gem 'inherited_resources', '1.13.1'
+gem 'mimemagic', '0.3.10'
+gem 'mutex_m'
 gem 'net-imap', '0.3.6', require: false
 gem 'net-pop', '0.1.2', require: false
+gem 'net-smtp', '0.3.3', require: false
+gem 'newrelic_rpm', '9.2.2'
+gem 'nokogiri', '~> 1.18'
+gem 'observer'
+gem 'ostruct'
+gem 'quiet_safari', '1.0.0'
+gem 'rack', '2.2.20'
+gem 'reline'
+gem 'rollbar', '3.4.0'
+gem 'thor', '1.2.1'
+gem 'versionist', '2.0.1'
+gem 'wicked_pdf', '2.6.3'
 
+gem 'carrierwave', '3.0.7'
+gem 'carrierwave-aws', '1.6.0'
+gem 'ckeditor', github: 'galetahub/ckeditor'
+gem 'jquery-rails', '~> 4.5.1'
+gem 'mini_magick', '4.12.0'
 gem 'ransack', '3.2.1'
 gem 'rswag', '2.9.0'
 gem 'video_player', '1.0.0'
-gem 'ckeditor', github: 'galetahub/ckeditor'
-gem 'carrierwave', '3.0.7'
-gem 'carrierwave-aws', '1.6.0'
-gem 'mini_magick', '4.12.0'
-gem 'jquery-rails', '~> 4.5.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -83,20 +83,20 @@ group :development, :test do
   gem 'dotenv-rails', '2.8.1'
   gem 'factory_bot_rails', '6.2.0'
   gem 'faker', '3.2.0'
+  gem 'pry', '0.14.2'
+  gem 'pry-remote', '0.1.8'
   gem 'rspec-rails', '~> 4.0.0'
-  gem "pry", '0.14.2'
-  gem "pry-remote", '0.1.8'
-  gem 'wkhtmltopdf-binary', '0.12.6.10'
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+  gem 'wkhtmltopdf-binary', '0.12.6.10'
 end
 
 group :development do
   gem 'annotate', '3.2.0'
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
   gem 'listen', '3.7.1'
+  gem 'web-console', '>= 3.3.0'
 end
 
 group :production do
@@ -104,11 +104,11 @@ group :production do
 end
 
 group :test do
-  gem "capybara"
-  gem 'selenium-webdriver'
-  gem 'rspec', '~> 3.0'
-  gem 'shoulda-matchers', '~> 5.0'
+  gem 'capybara'
   gem 'database_cleaner-active_record', '2.1.0'
+  gem 'rspec', '~> 3.0'
+  gem 'selenium-webdriver'
+  gem 'shoulda-matchers', '~> 5.0'
   gem 'simplecov', '0.22.0', require: false
 end
 

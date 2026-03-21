@@ -14,7 +14,7 @@ Rails.application.configure do
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
-  if Rails.root.join('tmp', 'caching-dev.txt').exist?
+  if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
 
     config.cache_store = :memory_store
@@ -61,7 +61,7 @@ Rails.application.configure do
 
   # Allow testing subdomains locally (e.g., ici-santiago.localhost:3000)
   config.hosts ||= []
-  config.hosts << "localhost" << "127.0.0.1"
+  config.hosts << 'localhost' << '127.0.0.1'
   config.hosts << /.+\.localhost/
   config.hosts << /.+\.lvh\.me/
   # Allow ngrok tunnels (both legacy and new domains)

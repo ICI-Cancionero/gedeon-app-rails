@@ -22,7 +22,7 @@ ActiveAdmin.register Song do
     id_column
     column :title
     column :content do |song|
-      div song.content, style: "max-width: 25rem"
+      div song.content, style: 'max-width: 25rem'
     end
     column :author
     column :position
@@ -63,7 +63,7 @@ ActiveAdmin.register Song do
       row :video_links do |song|
         song.video_links.each do |video_link|
           div do
-            raw VideoPlayer::player(video_link.url)
+            raw VideoPlayer.player(video_link.url)
           end
         end
       end
@@ -74,9 +74,9 @@ ActiveAdmin.register Song do
 
     div do
       h2 do
-        "Slide"
+        'Slide'
       end
-      iframe src: slide_admin_song_path(song), width: "100%", height: 500 do
+      iframe src: slide_admin_song_path(song), width: '100%', height: 500 do
       end
     end
     active_admin_comments
@@ -86,7 +86,7 @@ ActiveAdmin.register Song do
     @song = resource
 
     respond_to do |format|
-      format.html { render layout: "reveal_js" }
+      format.html { render layout: 'reveal_js' }
     end
   end
 end

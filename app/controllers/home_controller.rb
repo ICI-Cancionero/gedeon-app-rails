@@ -16,6 +16,6 @@ class HomeController < ApplicationController
   private
 
   def home_redirect_url
-    ENV.fetch("HOME_REDIRECT_TO") { "/app" }
+    ENV.fetch('HOME_REDIRECT_TO') { '/app' }
   end
 end

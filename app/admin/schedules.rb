@@ -31,27 +31,25 @@ ActiveAdmin.register Schedule do
   end
 
   action_item :presenter, only: :show do
-    link_to 'Open Presenter', presenter_admin_schedule_path(resource), target: "_blank"
+    link_to 'Open Presenter', presenter_admin_schedule_path(resource), target: '_blank', rel: 'noopener'
   end
 
   # Presenter page - renders in reveal_js layout
   member_action :presenter, method: :get do
     @schedule = resource
-    render layout: "reveal_js_presenter"
+    render layout: 'reveal_js_presenter'
   end
 
   # Search songs
   collection_action :search_songs, method: :get do
-    songs = Song.where("title ILIKE :q OR content ILIKE :q", q: "%#{params[:q]}%").order(title: :asc).limit(20)
+    songs = Song.where('title ILIKE :q OR content ILIKE :q', q: "%#{params[:q]}%").order(title: :asc).limit(20)
     render json: songs.map { |s| { id: s.id, title: s.title, content: s.content } }
   end
 
   # Search scriptures
   collection_action :search_scriptures, method: :get do
     scriptures = Scripture.all.limit(20)
-    if params[:q].present?
-      scriptures = scriptures.where("book_id ILIKE :q OR content ILIKE :q", q: "%#{params[:q]}%")
-    end
+    scriptures = scriptures.where('book_id ILIKE :q OR content ILIKE :q', q: "%#{params[:q]}%") if params[:q].present?
     render json: scriptures.map { |s|
       { id: s.id, bible_reference: s.bible_reference, content: s.content }
     }
@@ -107,15 +105,15 @@ ActiveAdmin.register Schedule do
 
     if item.is_a?(ScheduleImage)
       payload = {
-        action: "present_image",
+        action: 'present_image',
         image_url: item.image.url
       }
       schedule.update_column(:presenter_state, payload)
     elsif item.is_a?(Song)
       verses = item.content.split(/\n\s*\n/).map(&:strip).reject(&:blank?)
       payload = {
-        action: "present",
-        type: "song",
+        action: 'present',
+        type: 'song',
         title: item.title,
         verses: verses
       }
@@ -123,8 +121,8 @@ ActiveAdmin.register Schedule do
     else
       scripture_verses = item.content.split(/\n\s*\n/).map(&:strip).reject(&:blank?)
       payload = {
-        action: "present",
-        type: "scripture",
+        action: 'present',
+        type: 'scripture',
         title: item.bible_reference,
         verses: scripture_verses
       }
@@ -140,13 +138,13 @@ ActiveAdmin.register Schedule do
     schedule = resource
     verse_index = params[:verse_index].to_i
     payload = {
-      action: "navigate_to",
+      action: 'navigate_to',
       verse_index: verse_index
     }
 
     # Update persisted verse_index
     if schedule.presenter_state.present?
-      schedule.update_column(:presenter_state, schedule.presenter_state.merge("verse_index" => verse_index))
+      schedule.update_column(:presenter_state, schedule.presenter_state.merge('verse_index' => verse_index))
     end
 
     ActionCable.server.broadcast("schedule_presenter_#{schedule.id}", payload)
@@ -156,10 +154,10 @@ ActiveAdmin.register Schedule do
   # Black screen
   member_action :black_screen, method: :post do
     schedule = resource
-    payload = { action: "black" }
+    payload = { action: 'black' }
 
     # Persist black state
-    schedule.update_column(:presenter_state, { action: "black" })
+    schedule.update_column(:presenter_state, { action: 'black' })
 
     ActionCable.server.broadcast("schedule_presenter_#{schedule.id}", payload)
     render json: { success: true }
@@ -168,19 +166,19 @@ ActiveAdmin.register Schedule do
   # Current presenter state (for refresh)
   member_action :current_state, method: :get do
     schedule = resource
-    render json: (schedule.presenter_state.presence || { action: "black" })
+    render json: schedule.presenter_state.presence || { action: 'black' }
   end
 
   # Bible lookup: books
   collection_action :bible_books, method: :get do
-    bible = SimpleBibleLoader.load_bible(params[:bible_version] || "NVI")
+    bible = SimpleBibleLoader.load_bible(params[:bible_version] || 'NVI')
     books = bible.books.map { |b| { book_title: b.title } }
     render json: books
   end
 
   # Bible lookup: chapters
   collection_action :bible_chapters, method: :get do
-    bible = SimpleBibleLoader.load_bible(params[:bible_version] || "NVI")
+    bible = SimpleBibleLoader.load_bible(params[:bible_version] || 'NVI')
     book = bible.books.find { |b| b.title == params[:book_id] } || bible.books.first
     chapters = book.chapters.map { |c| { chapter_num: c.num, book_title: c.book_title } }
     render json: chapters
@@ -188,7 +186,7 @@ ActiveAdmin.register Schedule do
 
   # Bible lookup: verses
   collection_action :bible_verses, method: :get do
-    bible = SimpleBibleLoader.load_bible(params[:bible_version] || "NVI")
+    bible = SimpleBibleLoader.load_bible(params[:bible_version] || 'NVI')
     book = bible.books.find { |b| b.title == params[:book_id] } || bible.books.first
     chapter = book.chapters.find { |c| c.num == params[:chapter_num].to_i } || book.chapters.first
     verses = chapter.verses.map { |v| { num: v.num, text: v.text, book_id: v.book_id, chapter_num: v.chapter_num } }
@@ -224,7 +222,7 @@ ActiveAdmin.register Schedule do
     schedule = resource
     image = schedule.schedule_images.find(params[:image_id])
     payload = {
-      action: "present_image",
+      action: 'present_image',
       image_url: image.image.url
     }
 
@@ -241,7 +239,7 @@ ActiveAdmin.register Schedule do
     from_num = verse_nums.first
     to_num = verse_nums.last
 
-    bible = SimpleBibleLoader.load_bible(params[:bible_version] || "NVI")
+    bible = SimpleBibleLoader.load_bible(params[:bible_version] || 'NVI')
     book = bible.books.find { |b| b.title == params[:book_id] }
     chapter = book.chapters.find { |c| c.num == params[:chapter_num].to_i }
     selected_verses = chapter.verses.select { |v| verse_nums.include?(v.num) }
@@ -258,14 +256,14 @@ ActiveAdmin.register Schedule do
 
     position = schedule.schedule_items.count
     schedule_item = schedule.schedule_items.create!(
-      item_type: "Scripture",
+      item_type: 'Scripture',
       item_id: scripture.id,
       position: position
     )
 
     render json: {
       id: schedule_item.id,
-      item_type: "Scripture",
+      item_type: 'Scripture',
       item_id: scripture.id,
       position: position,
       title: scripture.bible_reference,

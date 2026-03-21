@@ -23,7 +23,7 @@
 require 'rails_helper'
 
 RSpec.describe Song, type: :model do
-  it_behaves_like "acts_as_tenant model"
+  it_behaves_like 'acts_as_tenant model'
 
-  it { should have_and_belong_to_many(:playlists) }
+  it { is_expected.to have_and_belong_to_many(:playlists) }
 end

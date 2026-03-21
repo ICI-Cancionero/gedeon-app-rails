@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Admin/Playlists', type: :feature do
-  include_context "authenticated admin with subdomain"
+  include_context 'authenticated admin with subdomain'
 
   describe 'viewing playlist show page' do
     let!(:playlist) { create(:playlist, name: 'Sunday Service', account: account) }
@@ -47,7 +47,10 @@ RSpec.feature 'Admin/Playlists', type: :feature do
   end
 
   describe 'PDF content' do
-    let!(:song) { create(:song, title: 'Amazing Grace', content: "Amazing grace how sweet the sound\nThat saved a wretch like me", account: account) }
+    let!(:song) do
+      create(:song, title: 'Amazing Grace', content: "Amazing grace how sweet the sound\nThat saved a wretch like me",
+                    account: account)
+    end
     let!(:playlist) { create(:playlist, name: 'Sunday Worship', account: account) }
     let!(:playlist_section) { create(:playlist_section, name: 'Opening Worship', playlist: playlist) }
     let!(:playlist_item) { create(:playlist_item, song: song, playlist_section: playlist_section, position: 1) }

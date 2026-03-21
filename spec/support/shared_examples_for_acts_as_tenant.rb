@@ -1,13 +1,13 @@
-RSpec.shared_examples "acts_as_tenant model" do
-  describe "acts_as_tenant behavior" do
+RSpec.shared_examples 'acts_as_tenant model' do
+  describe 'acts_as_tenant behavior' do
     let(:account1) { FactoryBot.create(:account) }
     let(:account2) { FactoryBot.create(:account) }
 
-    it "belongs to account" do
+    it 'belongs to account' do
       expect(described_class.reflect_on_association(:account).macro).to eq(:belongs_to)
     end
 
-    it "scopes records to the current tenant" do
+    it 'scopes records to the current tenant' do
       record1 = nil
       record2 = nil
 
@@ -30,7 +30,7 @@ RSpec.shared_examples "acts_as_tenant model" do
       end
     end
 
-    it "automatically sets account_id on create" do
+    it 'automatically sets account_id on create' do
       record = nil
 
       ActsAsTenant.with_tenant(account1) do
@@ -40,7 +40,7 @@ RSpec.shared_examples "acts_as_tenant model" do
       expect(record.account_id).to eq(account1.id)
     end
 
-    it "prevents accessing records from different tenant" do
+    it 'prevents accessing records from different tenant' do
       record = nil
 
       ActsAsTenant.with_tenant(account1) do

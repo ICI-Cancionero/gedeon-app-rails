@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.feature 'Admin/AdminUsers', :type => :feature do
-  include_context "authenticated admin with subdomain"
+RSpec.feature 'Admin/AdminUsers', type: :feature do
+  include_context 'authenticated admin with subdomain'
 
   let(:text) { 'Admin Users' }
 

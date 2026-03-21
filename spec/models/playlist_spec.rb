@@ -43,7 +43,7 @@ RSpec.describe Playlist, type: :model do
       it 'creates a new playlist' do
         expect do
           playlist.duplicate
-        end.to change { Playlist.count }.by(1)
+        end.to change(described_class, :count).by(1)
       end
 
       it 'creates a playlist with same songs' do

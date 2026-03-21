@@ -1,2 +1,6 @@
-module Api::V1::PlaylistsHelper
+module Api
+  module V1
+    module PlaylistsHelper
+    end
+  end
 end

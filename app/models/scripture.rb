@@ -37,7 +37,7 @@ class Scripture < ApplicationRecord
   end
 
   def self.bible_versions
-    ['NVI', 'RVR1960']
+    %w[NVI RVR1960]
   end
 
   def self.open_bible_files

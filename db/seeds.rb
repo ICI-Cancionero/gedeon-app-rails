@@ -13,7 +13,7 @@ ActsAsTenant.with_tenant(account) do
                       password_confirmation: 'password')
   end
 
-  puts 'Importing songs'
+  Rails.logger.debug 'Importing songs'
   Rake::Task['songs:import'].invoke
   Rake::Task['songs:sort_by_title'].invoke
 end

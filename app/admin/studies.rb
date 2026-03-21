@@ -36,7 +36,7 @@ ActiveAdmin.register Study do
     actions
   end
 
-  action_item :view, only: [:show, :edit] do
+  action_item :view, only: %i[show edit] do
     link_to 'View PDF', view_pdf_admin_study_path(study, format: :pdf), target: '_blank', rel: 'noopener'
   end
 

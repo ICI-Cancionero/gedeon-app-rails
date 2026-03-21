@@ -4,11 +4,11 @@ ActiveAdmin.register Song do
   menu priority: 3
 
   permit_params :title, :content, :position, :author, :chordpro_content,
-                video_links_attributes: [
-                  :id,
-                  :provider,
-                  :url,
-                  :_destroy
+                video_links_attributes: %i[
+                  id
+                  provider
+                  url
+                  _destroy
                 ]
 
   filter :title

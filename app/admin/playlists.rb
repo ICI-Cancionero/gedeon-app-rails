@@ -7,9 +7,9 @@ ActiveAdmin.register Playlist do
                   :id,
                   :name,
                   :_destroy,
-                  { playlist_items_attributes: [:id, :position, :song_id, :_destroy],
-                    scriptures_attributes: [:id, :bible_version, :book_id, :chapter_num, :content, :from, :to,
-                                            :_destroy] }
+                  { playlist_items_attributes: %i[id position song_id _destroy],
+                    scriptures_attributes: %i[id bible_version book_id chapter_num content from to
+                                              _destroy] }
                 ]
 
   scope :active
@@ -43,7 +43,7 @@ ActiveAdmin.register Playlist do
 
   form partial: 'form'
 
-  action_item :view, only: [:show, :slides] do
+  action_item :view, only: %i[show slides] do
     link_to 'View PDF', view_pdf_admin_playlist_path(playlist, format: :pdf), target: '_blank', rel: 'noopener'
   end
 

@@ -1,9 +1,13 @@
-class Api::V1::ApiBaseController < ApplicationController
-  before_action :set_default_tentant
+module Api
+  module V1
+    class ApiBaseController < ApplicationController
+      before_action :set_default_tentant
 
-  def set_default_tentant
-    return unless current_tenant.nil?
+      def set_default_tentant
+        return unless current_tenant.nil?
 
-    ActsAsTenant.current_tenant = Account.find_by(subdomain: 'ici-santiago')
+        ActsAsTenant.current_tenant = Account.find_by(subdomain: 'ici-santiago')
+      end
+    end
   end
 end

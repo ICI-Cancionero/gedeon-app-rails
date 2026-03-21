@@ -15,8 +15,8 @@ Rails.application.routes.draw do
   get '/app/manifest.webmanifest', to: 'manifests#show'
 
   api_version(module: 'api/v1', path: { value: 'api/v1' }, defaults: { format: :json }) do
-    resources :songs, only: [:show, :index]
-    resources :playlists, only: [:show, :index]
+    resources :songs, only: %i[show index]
+    resources :playlists, only: %i[show index]
     get 'audio_songs', to: 'songs#audio_songs'
   end
 end

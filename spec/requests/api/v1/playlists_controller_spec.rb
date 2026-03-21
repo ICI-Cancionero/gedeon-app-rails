@@ -42,10 +42,10 @@ RSpec.describe 'Api::V1::Playlists', type: :request do
         get '/api/v1/playlists'
 
         expect(response).to have_http_status(:ok)
-        json_response = JSON.parse(response.body)
+        json_response = response.parsed_body
 
         expect(json_response.length).to eq(2)
-        playlist_ids = json_response.map { |p| p['id'] }
+        playlist_ids = json_response.pluck('id')
         expect(playlist_ids).to include(active_playlist1.id, active_playlist2.id)
         expect(playlist_ids).not_to include(inactive_playlist.id)
       end
@@ -54,7 +54,7 @@ RSpec.describe 'Api::V1::Playlists', type: :request do
         it 'serializes all playlist attributes correctly' do
           get '/api/v1/playlists'
 
-          json_response = JSON.parse(response.body)
+          json_response = response.parsed_body
           playlist_json = json_response.find { |p| p['id'] == active_playlist1.id }
 
           # Verify all PlaylistSerializer attributes
@@ -71,7 +71,7 @@ RSpec.describe 'Api::V1::Playlists', type: :request do
         it 'serializes playlist_sections with PlaylistSectionSerializer' do
           get '/api/v1/playlists'
 
-          json_response = JSON.parse(response.body)
+          json_response = response.parsed_body
           playlist_json = json_response.find { |p| p['id'] == active_playlist1.id }
           section_json = playlist_json['playlist_sections'].first
 
@@ -87,7 +87,7 @@ RSpec.describe 'Api::V1::Playlists', type: :request do
         it 'serializes playlist_items with PlaylistItemSerializer' do
           get '/api/v1/playlists'
 
-          json_response = JSON.parse(response.body)
+          json_response = response.parsed_body
           playlist_json = json_response.find { |p| p['id'] == active_playlist1.id }
           section_json = playlist_json['playlist_sections'].first
           item_json = section_json['playlist_items'].first
@@ -109,7 +109,7 @@ RSpec.describe 'Api::V1::Playlists', type: :request do
         get '/api/v1/playlists'
 
         expect(response).to have_http_status(:ok)
-        json_response = JSON.parse(response.body)
+        json_response = response.parsed_body
         expect(json_response).to eq([])
       end
     end
@@ -133,7 +133,7 @@ RSpec.describe 'Api::V1::Playlists', type: :request do
       get "/api/v1/playlists/#{playlist.id}"
 
       expect(response).to have_http_status(:ok)
-      json_response = JSON.parse(response.body)
+      json_response = response.parsed_body
 
       expect(json_response['id']).to eq(playlist.id)
       expect(json_response['name']).to eq('Test Playlist')
@@ -142,7 +142,7 @@ RSpec.describe 'Api::V1::Playlists', type: :request do
     it 'includes nested playlist_sections but not deeply nested items in show action' do
       get "/api/v1/playlists/#{playlist.id}"
 
-      json_response = JSON.parse(response.body)
+      json_response = response.parsed_body
       section_json = json_response['playlist_sections'].first
 
       # The show action only includes sections, not the nested items
@@ -162,7 +162,7 @@ RSpec.describe 'Api::V1::Playlists', type: :request do
       it 'serializes all attributes correctly' do
         get "/api/v1/playlists/#{playlist.id}"
 
-        json_response = JSON.parse(response.body)
+        json_response = response.parsed_body
 
         # Verify all PlaylistSerializer attributes
         expect(json_response).to have_key('id')
@@ -178,7 +178,7 @@ RSpec.describe 'Api::V1::Playlists', type: :request do
       it 'serializes playlist_sections with PlaylistSectionSerializer' do
         get "/api/v1/playlists/#{playlist.id}"
 
-        json_response = JSON.parse(response.body)
+        json_response = response.parsed_body
         section_json = json_response['playlist_sections'].first
 
         # Verify PlaylistSectionSerializer basic attributes
@@ -203,12 +203,12 @@ RSpec.describe 'Api::V1::Playlists', type: :request do
 
     it 'only returns playlists from the default tenant (ici-santiago)' do
       get '/api/v1/playlists'
-      json_response = JSON.parse(response.body)
+      json_response = response.parsed_body
 
       # Should include the default account's playlist
-      expect(json_response.map { |p| p['id'] }).to include(account_playlist.id)
+      expect(json_response.pluck('id')).to include(account_playlist.id)
       # Should not include other account's playlist
-      expect(json_response.map { |p| p['id'] }).not_to include(other_account_playlist.id)
+      expect(json_response.pluck('id')).not_to include(other_account_playlist.id)
     end
 
     it 'raises error when trying to access playlist from another tenant' do
@@ -251,7 +251,7 @@ RSpec.describe 'Api::V1::Playlists', type: :request do
     it 'properly serializes complex nested structures in index' do
       get '/api/v1/playlists'
 
-      json_response = JSON.parse(response.body)
+      json_response = response.parsed_body
       playlist_json = json_response.find { |p| p['id'] == playlist.id }
 
       expect(playlist_json['playlist_sections'].length).to eq(2)
@@ -270,7 +270,7 @@ RSpec.describe 'Api::V1::Playlists', type: :request do
     it 'properly serializes sections in show action' do
       get "/api/v1/playlists/#{playlist.id}"
 
-      json_response = JSON.parse(response.body)
+      json_response = response.parsed_body
 
       expect(json_response['playlist_sections'].length).to eq(2)
 

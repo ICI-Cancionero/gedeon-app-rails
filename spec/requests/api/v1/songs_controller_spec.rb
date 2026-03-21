@@ -19,7 +19,7 @@ RSpec.describe 'Api::V1::Songs', type: :request do
         get '/api/v1/songs'
 
         expect(response).to have_http_status(:ok)
-        json_response = JSON.parse(response.body)
+        json_response = response.parsed_body
 
         expect(json_response.length).to eq(2)
         expect(json_response.first['title']).to eq('Amazing Grace')
@@ -30,7 +30,7 @@ RSpec.describe 'Api::V1::Songs', type: :request do
         it 'serializes all song attributes correctly' do
           get '/api/v1/songs'
 
-          json_response = JSON.parse(response.body)
+          json_response = response.parsed_body
           song_json = json_response.first
 
           # Verify all SongSerializer attributes
@@ -49,7 +49,7 @@ RSpec.describe 'Api::V1::Songs', type: :request do
         it 'serializes video_links with VideoLinkSerializer' do
           get '/api/v1/songs'
 
-          json_response = JSON.parse(response.body)
+          json_response = response.parsed_body
           song_with_video = json_response.find { |s| s['id'] == song1.id }
           video_link_json = song_with_video['video_links'].first
 
@@ -71,7 +71,7 @@ RSpec.describe 'Api::V1::Songs', type: :request do
         get '/api/v1/songs'
 
         expect(response).to have_http_status(:ok)
-        json_response = JSON.parse(response.body)
+        json_response = response.parsed_body
         expect(json_response).to eq([])
       end
     end
@@ -89,7 +89,7 @@ RSpec.describe 'Api::V1::Songs', type: :request do
       get "/api/v1/songs/#{song.id}"
 
       expect(response).to have_http_status(:ok)
-      json_response = JSON.parse(response.body)
+      json_response = response.parsed_body
 
       expect(json_response['id']).to eq(song.id)
       expect(json_response['title']).to eq('Test Song')
@@ -106,7 +106,7 @@ RSpec.describe 'Api::V1::Songs', type: :request do
       it 'serializes all attributes correctly' do
         get "/api/v1/songs/#{song.id}"
 
-        json_response = JSON.parse(response.body)
+        json_response = response.parsed_body
 
         # Verify all SongSerializer attributes
         expect(json_response).to have_key('id')
@@ -134,12 +134,12 @@ RSpec.describe 'Api::V1::Songs', type: :request do
 
     it 'only returns songs from the default tenant (ici-santiago)' do
       get '/api/v1/songs'
-      json_response = JSON.parse(response.body)
+      json_response = response.parsed_body
 
       # Should include the default account's song
-      expect(json_response.map { |s| s['id'] }).to include(account_song.id)
+      expect(json_response.pluck('id')).to include(account_song.id)
       # Should not include other account's song
-      expect(json_response.map { |s| s['id'] }).not_to include(other_account_song.id)
+      expect(json_response.pluck('id')).not_to include(other_account_song.id)
     end
 
     it 'raises error when trying to access song from another tenant' do
@@ -164,10 +164,10 @@ RSpec.describe 'Api::V1::Songs', type: :request do
     it 'serializes all video links correctly' do
       get "/api/v1/songs/#{song.id}"
 
-      json_response = JSON.parse(response.body)
+      json_response = response.parsed_body
 
       expect(json_response['video_links'].length).to eq(2)
-      expect(json_response['video_links'].map { |v| v['url'] }).to contain_exactly(
+      expect(json_response['video_links'].pluck('url')).to contain_exactly(
         'https://youtube.com/watch?v=abc',
         'https://youtube.com/watch?v=def'
       )

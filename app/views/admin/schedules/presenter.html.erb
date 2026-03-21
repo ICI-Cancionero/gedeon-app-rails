@@ -2,7 +2,7 @@
 
 <script>
 (function() {
-  var scheduleId = <%= @schedule.id.to_json %>;
+  var scheduleId = <%= raw @schedule.id.to_json %>;
   var presenter = document.getElementById('presenter');
   var slides = [];
   var currentIndex = 0;
@@ -113,7 +113,7 @@
   }
 
   function restoreState() {
-    var url = <%= current_state_admin_schedule_path(@schedule).to_json %>;
+    var url = <%= raw current_state_admin_schedule_path(@schedule).to_json %>;
     fetch(url, { headers: { 'Accept': 'application/json' } })
       .then(function(r) { return r.json(); })
       .then(function(state) {

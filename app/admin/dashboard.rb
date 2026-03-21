@@ -6,7 +6,7 @@ ActiveAdmin.register_page 'Dashboard' do
       column do
         panel 'Recent Songs' do
           ul do
-            Song.order('created_at desc').limit(5).map do |song|
+            Song.order(created_at: :desc).limit(5).map do |song|
               li link_to(song.title, admin_song_path(song))
             end
           end
@@ -15,7 +15,7 @@ ActiveAdmin.register_page 'Dashboard' do
       column do
         panel 'Recent Playlists' do
           ul do
-            Playlist.order('created_at desc').limit(5).map do |playlist|
+            Playlist.order(created_at: :desc).limit(5).map do |playlist|
               li link_to(playlist.name, admin_playlist_path(playlist))
             end
           end
@@ -24,12 +24,12 @@ ActiveAdmin.register_page 'Dashboard' do
       column do
         panel 'Recent Studies' do
           ul do
-            Study.order('created_at desc').limit(5).map do |study|
+            Study.order(created_at: :desc).limit(5).map do |study|
               li link_to(study.title, admin_study_path(study))
             end
           end
         end
       end
     end
-  end # content
+  end
 end

@@ -11,7 +11,7 @@ describe Api::V1::SongsController do
       response '200', :success do
         run_test! do |response|
           json_response = JSON.parse(response.body)
-          expect(json_response.count).to eql(Song.all.count)
+          expect(json_response.count).to eql(Song.count)
         end
       end
     end

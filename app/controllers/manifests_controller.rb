@@ -11,10 +11,6 @@ class ManifestsController < ApplicationController
     icons_base = Rails.public_path.join('icons')
     sub_icons_dir = valid_sub ? icons_base.join(sub) : nil
 
-    def icon_path_if_exists(path)
-      File.exist?(path) ? path.to_s.delete_prefix(Rails.public_path.to_s) : nil
-    end
-
     icon_192 = (sub_icons_dir && icon_path_if_exists(sub_icons_dir.join('icon-192.png'))) ||
                icon_path_if_exists(icons_base.join('icon-192.png'))
     icon_512 = (sub_icons_dir && icon_path_if_exists(sub_icons_dir.join('icon-512.png'))) ||
@@ -52,5 +48,11 @@ class ManifestsController < ApplicationController
     }
 
     render json: manifest, content_type: 'application/manifest+json'
+  end
+
+  private
+
+  def icon_path_if_exists(path)
+    File.exist?(path) ? path.to_s.delete_prefix(Rails.public_path.to_s) : nil
   end
 end

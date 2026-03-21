@@ -20,7 +20,7 @@
 class Playlist < ApplicationRecord
   acts_as_tenant(:account)
 
-  has_many :playlist_sections, -> { order(created_at: :asc) }, dependent: :destroy
+  has_many :playlist_sections, -> { order(created_at: :asc) }, inverse_of: :playlist, dependent: :destroy
   has_many :playlist_items, -> { order(created_at: :asc) }, through: :playlist_sections
   has_many :songs, -> { order(created_at: :asc) }, through: :playlist_items
   has_many :scriptures, through: :playlist_sections

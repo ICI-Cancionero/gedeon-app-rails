@@ -48,7 +48,7 @@ ActiveAdmin.register Schedule do
 
   # Search scriptures
   collection_action :search_scriptures, method: :get do
-    scriptures = Scripture.all.limit(20)
+    scriptures = Scripture.limit(20)
     scriptures = scriptures.where('book_id ILIKE :q OR content ILIKE :q', q: "%#{params[:q]}%") if params[:q].present?
     render json: scriptures.map { |s|
       { id: s.id, bible_reference: s.bible_reference, content: s.content }
@@ -110,7 +110,7 @@ ActiveAdmin.register Schedule do
       }
       schedule.update_column(:presenter_state, payload)
     elsif item.is_a?(Song)
-      verses = item.content.split(/\n\s*\n/).map(&:strip).reject(&:blank?)
+      verses = item.content.split(/\n\s*\n/).map(&:strip).compact_blank
       payload = {
         action: 'present',
         type: 'song',
@@ -119,7 +119,7 @@ ActiveAdmin.register Schedule do
       }
       schedule.update_column(:presenter_state, payload.merge(verse_index: 1))
     else
-      scripture_verses = item.content.split(/\n\s*\n/).map(&:strip).reject(&:blank?)
+      scripture_verses = item.content.split(/\n\s*\n/).map(&:strip).compact_blank
       payload = {
         action: 'present',
         type: 'scripture',

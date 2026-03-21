@@ -13,8 +13,8 @@
 #  index_playlist_sections_on_playlist_id  (playlist_id)
 #
 class PlaylistSection < ApplicationRecord
-  belongs_to :playlist, optional: true
-  has_many :playlist_items, -> { order(created_at: :asc) }, dependent: :destroy
+  belongs_to :playlist, inverse_of: :playlist_sections, optional: true
+  has_many :playlist_items, -> { order(created_at: :asc) }, inverse_of: :playlist_section, dependent: :destroy
   has_many :songs, -> { order(created_at: :asc) }, through: :playlist_items
   has_many :scriptures, dependent: :destroy
 

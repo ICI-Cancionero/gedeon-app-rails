@@ -1,0 +1,61 @@
+inherit_from: .rubocop_todo.yml
+
+plugins:
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 3.4
+  NewCops: enable
+  SuggestExtensions: false
+  Exclude:
+    - 'bin/**/*'
+    - 'db/schema.rb'
+    - 'db/migrate/**/*'
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
+    - 'config/initializers/**/*'
+    - 'lib/tasks/**/*'
+
+# Relaxed line length for Rails projects
+Layout/LineLength:
+  Max: 120
+  AllowedPatterns:
+    - '^\s*#'
+
+# Rails conventions
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: single_quotes
+
+# Allow blocks in RSpec to be longer
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+    - 'config/routes.rb'
+    - 'config/environments/**/*'
+    - 'app/admin/**/*'
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/AbcSize:
+  Max: 25
+
+# ActiveAdmin uses class_eval blocks
+Metrics/ClassLength:
+  Exclude:
+    - 'app/admin/**/*'
+
+Rails/OutputSafety:
+  Exclude:
+    - 'app/helpers/**/*'
+    - 'app/admin/**/*'

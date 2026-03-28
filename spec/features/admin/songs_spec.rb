@@ -94,10 +94,12 @@ RSpec.feature 'Admin/Songs', type: :feature do
   end
 
   describe 'exporting songs as FreeShow zip' do
-    let!(:song1) { Song.create!(title: 'Amazing Grace', content: 'Amazing grace how sweet the sound', author: 'John Newton', position: 1) }
-    let!(:song2) { Song.create!(title: 'Holy Holy Holy', content: 'Holy holy holy Lord God Almighty', author: 'Reginald Heber', position: 2) }
-
     scenario 'downloads a zip file containing all songs as txt files' do
+      Song.create!(title: 'Amazing Grace', content: 'Amazing grace how sweet the sound',
+                   author: 'John Newton', position: 1)
+      Song.create!(title: 'Holy Holy Holy', content: 'Holy holy holy Lord God Almighty',
+                   author: 'Reginald Heber', position: 2)
+
       visit admin_songs_path
 
       expect(page).to have_link('Download for FreeShow')
@@ -123,9 +125,9 @@ RSpec.feature 'Admin/Songs', type: :feature do
     end
 
     context 'when a song title contains invalid filename characters' do
-      let!(:song_special) { Song.create!(title: 'What/Why?', content: 'Special content', position: 3) }
-
       scenario 'sanitizes the filename' do
+        Song.create!(title: 'What/Why?', content: 'Special content', position: 3)
+
         visit export_txt_zip_admin_songs_path
 
         zip_content = page.body
@@ -142,9 +144,9 @@ RSpec.feature 'Admin/Songs', type: :feature do
     end
 
     context 'when a song has a blank title' do
-      let!(:song_blank) { Song.create!(title: '', content: 'No title content', position: 4) }
-
       scenario 'uses a fallback filename with the song id' do
+        song = Song.create!(title: '', content: 'No title content', position: 4)
+
         visit export_txt_zip_admin_songs_path
 
         zip_content = page.body
@@ -155,8 +157,8 @@ RSpec.feature 'Admin/Songs', type: :feature do
           end
         end
 
-        expect(entries).to have_key("song_#{song_blank.id}.txt")
-        expect(entries["song_#{song_blank.id}.txt"]).to eq('No title content')
+        expect(entries).to have_key("song_#{song.id}.txt")
+        expect(entries["song_#{song.id}.txt"]).to eq('No title content')
       end
     end
   end

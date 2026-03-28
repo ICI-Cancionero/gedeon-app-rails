@@ -91,7 +91,7 @@ ActiveAdmin.register Song do
 
     zip_data = Zip::OutputStream.write_buffer do |zip|
       songs.each do |song|
-        filename = song.title.gsub(/[\/\\:*?"<>|]/, '_').strip
+        filename = song.title.gsub(%r{[/\\:*?"<>|]}, '_').strip
         filename = "song_#{song.id}" if filename.blank?
         zip.put_next_entry("#{filename}.txt")
         zip.write(song.content.to_s)

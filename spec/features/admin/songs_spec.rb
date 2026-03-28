@@ -93,6 +93,76 @@ RSpec.feature 'Admin/Songs', type: :feature do
     end
   end
 
+  describe 'exporting songs as FreeShow zip' do
+    scenario 'downloads a zip file containing all songs as txt files' do
+      Song.create!(title: 'Amazing Grace', content: 'Amazing grace how sweet the sound',
+                   author: 'John Newton', position: 1)
+      Song.create!(title: 'Holy Holy Holy', content: 'Holy holy holy Lord God Almighty',
+                   author: 'Reginald Heber', position: 2)
+
+      visit admin_songs_path
+
+      expect(page).to have_link('Download for FreeShow')
+
+      click_link 'Download for FreeShow'
+
+      expect(page.response_headers['Content-Type']).to eq('application/zip')
+      expect(page.response_headers['Content-Disposition']).to include('songs_freeshow.zip')
+
+      # Parse the zip and verify contents
+      zip_content = page.body
+      entries = {}
+      Zip::InputStream.open(StringIO.new(zip_content)) do |zip|
+        while (entry = zip.get_next_entry)
+          entries[entry.name] = zip.read
+        end
+      end
+
+      expect(entries).to have_key('Amazing Grace.txt')
+      expect(entries).to have_key('Holy Holy Holy.txt')
+      expect(entries['Amazing Grace.txt']).to eq('Amazing grace how sweet the sound')
+      expect(entries['Holy Holy Holy.txt']).to eq('Holy holy holy Lord God Almighty')
+    end
+
+    context 'when a song title contains invalid filename characters' do
+      scenario 'sanitizes the filename' do
+        Song.create!(title: 'What/Why?', content: 'Special content', position: 3)
+
+        visit export_txt_zip_admin_songs_path
+
+        zip_content = page.body
+        entries = {}
+        Zip::InputStream.open(StringIO.new(zip_content)) do |zip|
+          while (entry = zip.get_next_entry)
+            entries[entry.name] = zip.read
+          end
+        end
+
+        expect(entries).to have_key('What_Why_.txt')
+        expect(entries['What_Why_.txt']).to eq('Special content')
+      end
+    end
+
+    context 'when a song has a blank title' do
+      scenario 'uses a fallback filename with the song id' do
+        song = Song.create!(title: '', content: 'No title content', position: 4)
+
+        visit export_txt_zip_admin_songs_path
+
+        zip_content = page.body
+        entries = {}
+        Zip::InputStream.open(StringIO.new(zip_content)) do |zip|
+          while (entry = zip.get_next_entry)
+            entries[entry.name] = zip.read
+          end
+        end
+
+        expect(entries).to have_key("song_#{song.id}.txt")
+        expect(entries["song_#{song.id}.txt"]).to eq('No title content')
+      end
+    end
+  end
+
   describe 'viewing song detail page with embedded video' do
     let!(:song) { Song.create!(title: 'Test Song', content: 'Test content', author: 'Test Author', position: 1) }
     let!(:video_link) { VideoLink.create!(provider: 'youtube', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ') }

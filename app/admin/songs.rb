@@ -82,6 +82,26 @@ ActiveAdmin.register Song do
     active_admin_comments
   end
 
+  action_item :export_txt_zip, only: :index do
+    link_to 'Download for FreeShow', export_txt_zip_admin_songs_path
+  end
+
+  collection_action :export_txt_zip, method: :get do
+    songs = Song.all
+
+    zip_data = Zip::OutputStream.write_buffer do |zip|
+      songs.each do |song|
+        filename = song.title.gsub(/[\/\\:*?"<>|]/, '_').strip
+        filename = "song_#{song.id}" if filename.blank?
+        zip.put_next_entry("#{filename}.txt")
+        zip.write(song.content.to_s)
+      end
+    end
+
+    zip_data.rewind
+    send_data zip_data.read, filename: 'songs_freeshow.zip', type: 'application/zip', disposition: 'attachment'
+  end
+
   member_action :slide, method: :get do
     @song = resource
 

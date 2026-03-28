@@ -557,6 +557,7 @@ DEPENDENCIES
   rubocop
   rubocop-rails
   rubocop-rspec
+  rubyzip
   sass-rails (~> 6.0.0)
   selenium-webdriver
   shoulda-matchers (~> 5.0)

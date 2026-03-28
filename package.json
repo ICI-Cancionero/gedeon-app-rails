@@ -13,7 +13,8 @@
     "@hotwired/turbo-rails": "^8.0.0-beta.2",
     "chord-charter": "file:./vendor/charter",
     "daisyui": "^3.0.22",
-    "esbuild": "^0.25.0"
+    "esbuild": "^0.25.0",
+    "yaml": "^2.8.3"
   },
   "scripts": {
     "build": "yarn build:css && esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets",
